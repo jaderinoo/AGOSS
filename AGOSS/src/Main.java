@@ -65,15 +65,19 @@ public class Main {
 		String tempName = scanner.next();
 		BufferedReader reader = new BufferedReader(new FileReader(tempName + ".txt"));
 		String strCurrentLine = null;
-		int tempStats[] = new int[6];
+		int tempStats[] = new int[7];
 		int x = 0;
 		int temp = 0;
+		String tempPlayerLoc = "";
 		
 		//Read and set stats from txt file
 		while ((strCurrentLine = reader.readLine()) != null) {
-		    if(x>=1 && x != 6) {
+			if(x>=1 && x != 6) {
 		    	temp = Integer.parseInt(strCurrentLine);
 		    	tempStats[x] = temp;
+		    }else{
+		    	System.out.println(strCurrentLine);
+		    	tempPlayerLoc = strCurrentLine;
 		    }
 		    x++;
 		}
@@ -84,7 +88,8 @@ public class Main {
 				tempStats[2], 
 				tempStats[3], 
 				tempStats[4], 
-				tempStats[5]);
+				tempStats[5],
+				tempPlayerLoc);
 		
 		//Print player stats
 		System.out.println("Player Stats: \n");
@@ -92,8 +97,9 @@ public class Main {
   				 "\nStrength:    " + player.getStrength() +
   				 "\nAgility:     " + player.getAgility() +
   				 "\nArmor:       " + player.getArmor() +
-  				 "\nMax HP:      " + player.getMaxHP() +
-  				 "\nMax Mana:    " + player.getMaxMana());
+  				 "\nMaxHP:       " + player.getMaxHP() +
+  				 "\nMaxMana:     " + player.getMaxMana() +
+				 "\nLocation:    " + player.getPlayerLoc());
 		
 		//Asks user if they'd like to continue their game
 		System.out.println("Resume Game?: Y/N\n");
@@ -102,7 +108,7 @@ public class Main {
 		switch(reply.toLowerCase()) {
 			case "y":
 				System.out.println("And so it begins!");
-				Adventure.Resume();
+				Adventure.Resume(player);
 				break;
 				
 			case "n":
@@ -128,8 +134,12 @@ public class Main {
 	   ////////////////////////////
 	    
 	    if(newGame == 1) {
-	    	//Set new stats
-		    Player player = new Player(tempName, 5, 5, 5, 50, 10);
+
+			///////////////////////////////
+			//Initialize Character Start//
+			/////////////////////////////
+		    Player player = new Player(tempName, 5, 5, 5, 50, 10, "start");
+		    
 		    //Stat selection screen
 			System.out.println("Now lets set some stats...\nAll stats are automatically set to 5 and will increase on level ups.\nGo ahead and pick 3 stats that you want to increase.\n");
 
@@ -141,8 +151,8 @@ public class Main {
 	    				 "\nStrength:    " + player.getStrength() +
 	    				 "\nAgility:     " + player.getAgility() +
 	    				 "\nArmor:       " + player.getArmor() +
-	    				 "\nMax HP:      " + player.getMaxHP() +
-	    				 "\nMax Mana:    " + player.getMaxMana() + "\n");
+	    				 "\nMaxHP:       " + player.getMaxHP() +
+	    				 "\nMaxMana:     " + player.getMaxMana() + "\n");
 		    	
 		    	//Analyzes user input and adjusts the stats
 			    String statSelect = scanner.next();
@@ -185,7 +195,8 @@ public class Main {
 		    		"\n" + player.getAgility() +
 		    		"\n" + player.getArmor() +
 		    		"\n" + player.getMaxHP() +
-		    		"\n" + player.getMaxMana());
+		    		"\n" + player.getMaxMana() +
+		    		"\n" + player.getPlayerLoc());
 		    
 		    //Print final stat summary
 			System.out.println("Final Stat Summary:\n");	
@@ -193,8 +204,8 @@ public class Main {
    				 "\nStrength:    " + player.getStrength() +
    				 "\nAgility:     " + player.getAgility() +
    				 "\nArmor:       " + player.getArmor() +
-   				 "\nMax HP:      " + player.getMaxHP() +
-   				 "\nMax Mana:    " + player.getMaxMana());
+   				 "\nMaxHP:       " + player.getMaxHP() +
+   				 "\nMaxMana:     " + player.getMaxMana());
 			
 			//Asks user if they'd like to continue or delete thier new character.
 			System.out.println("\nAre you ready to start your adventure? Y/N");
@@ -203,7 +214,7 @@ public class Main {
 			switch(reply.toLowerCase()) {
 			case "y":
 				System.out.println("And so it begins!");
-				Adventure.Resume();
+				Adventure.Resume(player);
 				break;
 				
 			case "n":
