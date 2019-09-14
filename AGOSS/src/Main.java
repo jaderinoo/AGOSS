@@ -161,16 +161,16 @@ public class Main {
    				 "\nMax HP:      " + player.getMaxHP() +
    				 "\nMax Mana:    " + player.getMaxMana());
 			
-			System.out.println("\nAre you ready to start your adventure?");
+			System.out.println("\nAre you ready to start your adventure? Y/N");
 			
 			String reply = scanner.next();
 			
-			if (reply.toLowerCase() == "yes")
+			if (reply == "y")
 			{
 			   System.out.println("And so it begins!");
 			   //adventure();
 			}
-			else 
+			else if(reply == "n")
 			{
 				System.out.println("\nDeleting Character and returning to menu.\n");
 				try
