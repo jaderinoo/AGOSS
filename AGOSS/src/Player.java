@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 public class Player {
 
@@ -48,6 +47,26 @@ public class Player {
 		public int addStrength() {
 			this.strength++;
 			return this.strength;
+		}
+		
+		public int addAgility() {
+			this.agility++;
+			return this.agility;
+		}
+		
+		public int addArmor() {
+			this.armor++;
+			return this.armor;
+		}
+		
+		public int addMaxHP() {
+			this.maxHP += 10;
+			return this.maxHP;
+		}
+		
+		public int addMaxMana() {
+			this.maxMana += 2;
+			return this.maxMana;
 		}
 	    
 	    

@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -61,8 +62,24 @@ public class Main {
     //LOAD A GAME//
    ///////////////
 	
-	public static void loadGame() {
+	public static void loadGame() throws IOException {
+		System.out.print("\nPlease Enter the characters name: ");
+		String tempName = scanner.next();
+		BufferedReader reader = new BufferedReader(new FileReader(tempName + ".txt"));
+		String strCurrentLine = null;
 		
+		while ((strCurrentLine = reader.readLine()) != null) {
+		    System.out.println(strCurrentLine);
+		}
+		/*
+		Player player = new Player(tempname, 
+						tempStrength(), 
+						tempAgility(), 
+						tempArmor(), 
+						tempMaxHP(), 
+						tempMaxMana());
+						*/
+		reader.close();
 	}
 	
 	public static void WriteFile(String tempName, int newGame) throws IOException {
@@ -77,7 +94,7 @@ public class Main {
 	    
 	    if(newGame == 1) {
 	    	//Set new stats
-		    Player player = new Player(tempName, 5, 5, 5, 5, 5);
+		    Player player = new Player(tempName, 5, 5, 5, 50, 10);
 
 		    //Print stats to new file
 		    printWriter.println(player.getName() +
@@ -93,23 +110,42 @@ public class Main {
 		    int x = 0;
 		    while(x != 3) {
 		    	
+		    	//Presents the users current stats
 		    	System.out.println("Player Name: " + player.getName() +
 	    				 "\nStrength:    " + player.getStrength() +
 	    				 "\nAgility:     " + player.getAgility() +
 	    				 "\nArmor:       " + player.getArmor() +
 	    				 "\nMax HP:      " + player.getMaxHP() +
-	    				 "\nMax Mana:    " + player.getMaxMana());
+	    				 "\nMax Mana:    " + player.getMaxMana() + "\n");
 		    	
+		    	//Analyzes user input and adjusts the stats
 			    String statSelect = scanner.next();
-			    
 				switch(statSelect.toLowerCase()) {
 					case "strength":
 						player.addStrength();
 						x++;
 						break;
-					case "agility":
 						
+					case "agility":
+						player.addAgility();
+						x++;
 						break;
+						
+					case "armor":
+						player.addArmor();
+						x++;
+						break;
+						
+					case "maxhp":
+						player.addMaxHP();
+						x++;
+						break;
+						
+					case "maxmana":
+						player.addMaxMana();
+						x++;
+						break;
+						
 					default:
 						System.out.println("Invalid option. Please try again.\n"); 
 						break;
