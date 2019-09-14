@@ -1,25 +1,27 @@
 
 public class Player {
 
-	    private int strength;
-		private int agility;
-		private int armor;
-		private int maxHP;
-		private int special;
+	    int strength;
+		int agility;
+		int armor;
+		int HP;
+		int special;
+		int level;
 		private Object playerLoc;
-		private Object name;
+		Object name;
 
-		public Player(String name, int strength,int agility,int armor,int maxHP,int special, String playerLoc) {
+		public Player(String name, int strength,int agility,int armor,int HP,int special, int level, String playerLoc) {
 
-	    	Object[] Statistics = {name, strength, agility, armor, maxHP, special, playerLoc};
+	    	Object[] Statistics = {name, strength, agility, armor, HP, special, level, playerLoc };
 	    	
 	    	this.name = name;
 	    	this.strength = strength;
 	    	this.agility = agility;
 	    	this.armor = armor;
-	    	this.maxHP = maxHP;
+	    	this.HP = HP;
 	    	this.special = special;
 	    	this.playerLoc = playerLoc;
+	    	this.level = level;
 	   }
 		
 		public Object getName() {
@@ -38,12 +40,16 @@ public class Player {
 	        return armor;
 	    }
 	    
-	    public int getMaxHP() {
-	        return maxHP;
+	    public int getHP() {
+	        return HP;
 	    }
 	    
 	    public int getSpecial() {
 	        return special;
+	    }
+	    
+	    public int getLevel() {
+	        return level;
 	    }
 	    
 	    public Object getPlayerLoc() {
@@ -65,16 +71,14 @@ public class Player {
 			return this.armor;
 		}
 		
-		public int addMaxHP() {
-			this.maxHP += 10;
-			return this.maxHP;
+		public int addHP() {
+			this.HP += 10;
+			return this.HP;
 		}
 		
 		public int addSpecial() {
 			this.special += 2;
 			return this.special;
 		}
-	    
-	    
 }
 

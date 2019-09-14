@@ -72,7 +72,7 @@ public class Main {
 		
 		//Read and set stats from txt file
 		while ((strCurrentLine = reader.readLine()) != null) {
-			if(x>=1 && x != 6) {
+			if(x>=1 && x != 7) {
 		    	temp = Integer.parseInt(strCurrentLine);
 		    	tempStats[x] = temp;
 		    }else{
@@ -89,7 +89,9 @@ public class Main {
 				tempStats[3], 
 				tempStats[4], 
 				tempStats[5],
+				tempStats[6],
 				tempPlayerLoc);
+				
 		
 		//Print player stats
 		System.out.println("Player Stats: \n");
@@ -97,8 +99,9 @@ public class Main {
   				 "\nStrength:    " + player.getStrength() +
   				 "\nAgility:     " + player.getAgility() +
   				 "\nArmor:       " + player.getArmor() +
-  				 "\nMaxHP:       " + player.getMaxHP() +
-  				 "\nspecial:     " + player.getSpecial() +
+  				 "\nHP:          " + player.getHP() +
+  				 "\nSpecial:     " + player.getSpecial() +
+  				 "\nLevel:       " + player.getLevel() +
 				 "\nLocation:    " + player.getPlayerLoc());
 		
 		//Asks user if they'd like to continue their game
@@ -138,7 +141,7 @@ public class Main {
 			///////////////////////////////
 			//Initialize Character Start//
 			/////////////////////////////
-		    Player player = new Player(tempName, 5, 5, 5, 50, 10, "start");
+		    Player player = new Player(tempName, 5, 5, 5, 50, 10, 1, "start");
 		    
 		    //Stat selection screen
 			System.out.println("Now lets set some stats...\nAll stats are automatically set to 5 and will increase on level ups.\nGo ahead and pick 3 stats that you want to increase.\n");
@@ -151,8 +154,9 @@ public class Main {
 	    				 "\nStrength:    " + player.getStrength() +
 	    				 "\nAgility:     " + player.getAgility() +
 	    				 "\nArmor:       " + player.getArmor() +
-	    				 "\nMaxHP:       " + player.getMaxHP() +
-	    				 "\nSpecial:     " + player.getSpecial() + "\n");
+	    				 "\nHP:      	 " + player.getHP() +
+	    				 "\nSpecial:     " + player.getSpecial() + 
+	    				 "\nLevel:       " + player.getLevel() + "\n");
 		    	
 		    	//Analyzes user input and adjusts the stats
 			    String statSelect = scanner.next();
@@ -172,8 +176,8 @@ public class Main {
 						x++;
 						break;
 						
-					case "maxhp":
-						player.addMaxHP();
+					case "HP":
+						player.addHP();
 						x++;
 						break;
 						
@@ -194,8 +198,9 @@ public class Main {
 		    		"\n" + player.getStrength() +
 		    		"\n" + player.getAgility() +
 		    		"\n" + player.getArmor() +
-		    		"\n" + player.getMaxHP() +
+		    		"\n" + player.getHP() +
 		    		"\n" + player.getSpecial() +
+		    		"\n" + player.getLevel() +
 		    		"\n" + player.getPlayerLoc());
 		    
 		    //Print final stat summary
@@ -204,8 +209,9 @@ public class Main {
    				 "\nStrength:    " + player.getStrength() +
    				 "\nAgility:     " + player.getAgility() +
    				 "\nArmor:       " + player.getArmor() +
-   				 "\nMaxHP:       " + player.getMaxHP() +
-   				 "\nSpecial:     " + player.getSpecial());
+   				 "\nHP:      	 " + player.getHP() +
+   				 "\nSpecial:     " + player.getSpecial() +
+   				 "\nLevel:       " + player.getLevel());
 			
 			//Asks user if they'd like to continue or delete their new character.
 			System.out.println("\nAre you ready to start your adventure? Y/N");

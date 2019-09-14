@@ -1,23 +1,25 @@
 
 public class Mob1 {
 
-	    private int strength;
-		private int agility;
-		private int armor;
-		private int maxHP;
-		private int special;
-		private Object name;
+	    int strength;
+		int agility;
+		int armor;
+		int HP;
+		int special;
+		int level;
+		Object name;
 
-		public Mob1(String name, int strength,int agility,int armor,int maxHP,int special) {
+		public Mob1(String name, int strength,int agility,int armor,int HP,int special,int level) {
 
-	    	Object[] Statistics = {name, strength, agility, armor, maxHP, special};
+	    	Object[] Statistics = {name, strength, agility, armor, HP, special, level};
 	    	
 	    	this.name = name;
 	    	this.strength = strength;
 	    	this.agility = agility;
 	    	this.armor = armor;
-	    	this.maxHP = maxHP;
+	    	this.HP = HP;
 	    	this.special = special;
+	    	this.level = level;
 	   }
 		
 		public Object getName() {
@@ -36,12 +38,16 @@ public class Mob1 {
 	        return armor;
 	    }
 	    
-	    public int getMaxHP() {
-	        return maxHP;
+	    public int getHP() {
+	        return HP;
 	    }
 	    
 	    public int getSpecial() {
 	        return special;
-	    }     
+	    } 
+	    
+	    public int getLevel() {
+	        return level;
+	    } 
 }
 
