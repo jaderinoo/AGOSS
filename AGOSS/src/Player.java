@@ -44,6 +44,11 @@ public class Player {
 	    public int getMaxMana() {
 	        return maxMana;
 	    }
+
+		public int addStrength() {
+			this.strength++;
+			return this.strength;
+		}
 	    
 	    
 }
