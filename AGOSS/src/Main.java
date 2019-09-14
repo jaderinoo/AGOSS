@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,7 +8,6 @@ import java.nio.file.DirectoryNotEmptyException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -56,29 +54,66 @@ public class Main {
 		}
 		
 	}
-
-    
+ 
      ///////////////
     //LOAD A GAME//
    ///////////////
 	
+	@SuppressWarnings("null")
 	public static void loadGame() throws IOException {
 		System.out.print("\nPlease Enter the characters name: ");
 		String tempName = scanner.next();
 		BufferedReader reader = new BufferedReader(new FileReader(tempName + ".txt"));
 		String strCurrentLine = null;
+		int tempStats[] = new int[6];
+		int x = 0;
+		int temp = 0;
 		
+		//Read and set stats from txt file
 		while ((strCurrentLine = reader.readLine()) != null) {
-		    System.out.println(strCurrentLine);
+		    if(x>=1 && x != 6) {
+		    	temp = Integer.parseInt(strCurrentLine);
+		    	tempStats[x] = temp;
+		    }
+		    x++;
 		}
-		/*
-		Player player = new Player(tempname, 
-						tempStrength(), 
-						tempAgility(), 
-						tempArmor(), 
-						tempMaxHP(), 
-						tempMaxMana());
-						*/
+		
+		//Set player stats based off save
+		Player player = new Player(tempName, 
+				tempStats[1], 
+				tempStats[2], 
+				tempStats[3], 
+				tempStats[4], 
+				tempStats[5]);
+		
+		//Print player stats
+		System.out.println("Player Stats: \n");
+		System.out.println("Player Name: " + player.getName() +
+  				 "\nStrength:    " + player.getStrength() +
+  				 "\nAgility:     " + player.getAgility() +
+  				 "\nArmor:       " + player.getArmor() +
+  				 "\nMax HP:      " + player.getMaxHP() +
+  				 "\nMax Mana:    " + player.getMaxMana());
+		
+		//Asks user if they'd like to continue their game
+		System.out.println("Resume Game?: Y/N\n");
+		String reply = scanner.next();
+
+		switch(reply.toLowerCase()) {
+			case "y":
+				System.out.println("And so it begins!");
+				Adventure.Resume();
+				break;
+				
+			case "n":
+				System.out.println("Returning to menu\n");
+				break;
+				
+			default:
+				System.out.println("Invalid option. Please try again.\n"); 
+				break;
+		}
+		
 		reader.close();
 	}
 	
@@ -95,15 +130,6 @@ public class Main {
 	    if(newGame == 1) {
 	    	//Set new stats
 		    Player player = new Player(tempName, 5, 5, 5, 50, 10);
-
-		    //Print stats to new file
-		    printWriter.println(player.getName() +
-		    		"\n" + player.getStrength() +
-		    		"\n" + player.getAgility() +
-		    		"\n" + player.getArmor() +
-		    		"\n" + player.getMaxHP() +
-		    		"\n" + player.getMaxMana());
-		    
 		    //Stat selection screen
 			System.out.println("Now lets set some stats...\nAll stats are automatically set to 5 and will increase on level ups.\nGo ahead and pick 3 stats that you want to increase.\n");
 
@@ -153,6 +179,15 @@ public class Main {
 				
 		    }
 		    
+		    //Print stats to new file
+		    printWriter.println(player.getName() +
+		    		"\n" + player.getStrength() +
+		    		"\n" + player.getAgility() +
+		    		"\n" + player.getArmor() +
+		    		"\n" + player.getMaxHP() +
+		    		"\n" + player.getMaxMana());
+		    
+		    //Print final stat summary
 			System.out.println("Final Stat Summary:\n");	
 			System.out.println("Player Name: " + player.getName() +
    				 "\nStrength:    " + player.getStrength() +
@@ -161,17 +196,17 @@ public class Main {
    				 "\nMax HP:      " + player.getMaxHP() +
    				 "\nMax Mana:    " + player.getMaxMana());
 			
+			//Asks user if they'd like to continue or delete thier new character.
 			System.out.println("\nAre you ready to start your adventure? Y/N");
-			
 			String reply = scanner.next();
 			
-			if (reply == "y")
-			{
-			   System.out.println("And so it begins!");
-			   //adventure();
-			}
-			else if(reply == "n")
-			{
+			switch(reply.toLowerCase()) {
+			case "y":
+				System.out.println("And so it begins!");
+				Adventure.Resume();
+				break;
+				
+			case "n":
 				System.out.println("\nDeleting Character and returning to menu.\n");
 				try
 		        { 
@@ -191,8 +226,13 @@ public class Main {
 		        } 
 		          
 		        System.out.println("Deletion successful.\n"); 
-		    }
-			
+				break;
+				
+			default:
+				System.out.println("Invalid option. Please try again.\n"); 
+				break;
+		}
+
 	    }
 	    reader.close();
 	    printWriter.close();
