@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -39,10 +38,9 @@ public class Main {
 	public static void WriteFile(String name) throws IOException {
 		FileWriter fileWriter = new FileWriter("BlockLog.txt", true);
 	    PrintWriter printWriter = new PrintWriter(fileWriter);
-	    File newFile = new File("/saves/save.txt");
-	    if(newFile.length() == 0) {
-	    	printWriter.println(name);
-	    }
+
+	    printWriter.println("name");
+
 	    printWriter.close();
 	}
 }
