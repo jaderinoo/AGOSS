@@ -5,20 +5,20 @@ public class Player {
 		private int agility;
 		private int armor;
 		private int maxHP;
-		private int maxMana;
+		private int special;
 		private Object playerLoc;
 		private Object name;
 
-		public Player(String name, int strength,int agility,int armor,int maxHP,int maxMana, String playerLoc) {
+		public Player(String name, int strength,int agility,int armor,int maxHP,int special, String playerLoc) {
 
-	    	Object[] Statistics = {name, strength, agility, armor, maxHP, maxMana, playerLoc};
+	    	Object[] Statistics = {name, strength, agility, armor, maxHP, special, playerLoc};
 	    	
 	    	this.name = name;
 	    	this.strength = strength;
 	    	this.agility = agility;
 	    	this.armor = armor;
 	    	this.maxHP = maxHP;
-	    	this.maxMana = maxMana;
+	    	this.special = special;
 	    	this.playerLoc = playerLoc;
 	   }
 		
@@ -42,8 +42,8 @@ public class Player {
 	        return maxHP;
 	    }
 	    
-	    public int getMaxMana() {
-	        return maxMana;
+	    public int getSpecial() {
+	        return special;
 	    }
 	    
 	    public Object getPlayerLoc() {
@@ -70,9 +70,9 @@ public class Player {
 			return this.maxHP;
 		}
 		
-		public int addMaxMana() {
-			this.maxMana += 2;
-			return this.maxMana;
+		public int addSpecial() {
+			this.special += 2;
+			return this.special;
 		}
 	    
 	    

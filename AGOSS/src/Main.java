@@ -98,11 +98,11 @@ public class Main {
   				 "\nAgility:     " + player.getAgility() +
   				 "\nArmor:       " + player.getArmor() +
   				 "\nMaxHP:       " + player.getMaxHP() +
-  				 "\nMaxMana:     " + player.getMaxMana() +
+  				 "\nspecial:     " + player.getSpecial() +
 				 "\nLocation:    " + player.getPlayerLoc());
 		
 		//Asks user if they'd like to continue their game
-		System.out.println("Resume Game?: Y/N\n");
+		System.out.println("Resume Game?: Y/N");
 		String reply = scanner.next();
 
 		switch(reply.toLowerCase()) {
@@ -152,7 +152,7 @@ public class Main {
 	    				 "\nAgility:     " + player.getAgility() +
 	    				 "\nArmor:       " + player.getArmor() +
 	    				 "\nMaxHP:       " + player.getMaxHP() +
-	    				 "\nMaxMana:     " + player.getMaxMana() + "\n");
+	    				 "\nSpecial:     " + player.getSpecial() + "\n");
 		    	
 		    	//Analyzes user input and adjusts the stats
 			    String statSelect = scanner.next();
@@ -177,8 +177,8 @@ public class Main {
 						x++;
 						break;
 						
-					case "maxmana":
-						player.addMaxMana();
+					case "special":
+						player.addSpecial();
 						x++;
 						break;
 						
@@ -195,7 +195,7 @@ public class Main {
 		    		"\n" + player.getAgility() +
 		    		"\n" + player.getArmor() +
 		    		"\n" + player.getMaxHP() +
-		    		"\n" + player.getMaxMana() +
+		    		"\n" + player.getSpecial() +
 		    		"\n" + player.getPlayerLoc());
 		    
 		    //Print final stat summary
@@ -205,9 +205,9 @@ public class Main {
    				 "\nAgility:     " + player.getAgility() +
    				 "\nArmor:       " + player.getArmor() +
    				 "\nMaxHP:       " + player.getMaxHP() +
-   				 "\nMaxMana:     " + player.getMaxMana());
+   				 "\nSpecial:     " + player.getSpecial());
 			
-			//Asks user if they'd like to continue or delete thier new character.
+			//Asks user if they'd like to continue or delete their new character.
 			System.out.println("\nAre you ready to start your adventure? Y/N");
 			String reply = scanner.next();
 			
