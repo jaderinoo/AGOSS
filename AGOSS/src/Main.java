@@ -63,7 +63,7 @@ public class Main {
 	public static void loadGame() throws IOException {
 		System.out.print("\nPlease Enter the characters name: ");
 		String tempName = scanner.next();
-		BufferedReader reader = new BufferedReader(new FileReader(tempName + ".txt"));
+		BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + ".txt"));
 		String strCurrentLine = null;
 		int tempStats[] = new int[7];
 		int x = 0;
@@ -128,9 +128,10 @@ public class Main {
 	
 	public static void WriteFile(String tempName, int newGame) throws IOException {
 		
-		FileWriter fileWriter = new FileWriter(tempName + ".txt", true);
+		new File("src\\saves\\" + tempName).mkdir();
+		FileWriter fileWriter = new FileWriter("src\\saves\\" + tempName + "\\" + tempName + ".txt", true);
 	    PrintWriter printWriter = new PrintWriter(fileWriter);
-	    BufferedReader reader = new BufferedReader(new FileReader(tempName + ".txt"));
+	    BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + ".txt"));
 	    
 	     ////////////////////////////
 	    //CREATE A NEW GAME PART 2//
