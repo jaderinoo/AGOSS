@@ -146,7 +146,7 @@ public class Adventure {
 					
 				case 3:
 					
-					
+					System.out.println("Currently not implemented");
 					
 					//Miss
 					if(ThreadLocalRandom.current().nextInt(0, 6) == 2){
@@ -156,8 +156,15 @@ public class Adventure {
 					break;
 					
 				case 4:
-		
+					if(player.getAgility() >= attacker.getAgility()) {
+					System.out.println("Currently not implemented");
 					break;
+					}else {
+						System.out.println("You can't run away");
+						winStatus = false;
+						return winStatus;
+					}
+					
 				default:
 					System.out.println("Invalid option. Please try again.\n"); 
 					break;
