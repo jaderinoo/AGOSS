@@ -18,17 +18,18 @@ public class Player {
 
 	    	Object[] Statistics = {name, strength, agility, armor, maxHp, special, level, currentHp, playerLoc };
 	    	
+	    	//Use this as a ledger for player.txt 
 	    	this.name = name;
 	    	this.strength = strength;
 	    	this.agility = agility;
 	    	this.armor = armor;
 	    	this.maxHp = maxHp;
 	    	this.special = special;
-	    	this.playerLoc = playerLoc;
 	    	this.level = level;
 	    	this.exp = exp;
 	    	this.gold = gold;
 	    	this.currentHp = currentHp;
+	    	this.playerLoc = playerLoc;
 	   }
 		
 		public Object getName() {
@@ -114,7 +115,7 @@ public class Player {
 			this.exp = this.exp + 10;
 			//If the players exp is = to its current level*2
 			if(this.exp == this.level*50) {
-				System.out.println("~LEVEL UP!~");
+				System.out.println("\t\t~LEVEL UP!~");
 				this.exp = 0;
 				this.level++;
 				int x = 0;
@@ -124,44 +125,48 @@ public class Player {
 					case 1:
 						this.addStrength();
 						x++;
-						System.out.println("Strength +1");
+						System.out.println("\t\tStrength +1");
 						break;
 						
 					case 2:
 						this.addAgility();
 						x++;
-						System.out.println("Agility +1");
+						System.out.println("\t\tAgility +1");
 						break;
 						
 					case 3:
 						this.addArmor();
 						x++;
-						System.out.println("Armor +1");
+						System.out.println("\t\tArmor +1");
 						break;
 						
 					case 4:
 						this.addmaxHp();
 						x++;
-						System.out.println("MaxHp +1");
+						System.out.println("\t\tMaxHp +1");
 						break;
 						
 					case 5:
 						this.addSpecial();
 						x++;
-						System.out.println("Special +1");
+						System.out.println("\t\tSpecial +1");
 						break;
 					}
 				}
 			}
 		}
 		
-		public void reward(boolean winStatus) {
+		public void reward(boolean winStatus, Mob1 attacker) {
 			//If the player wins
 			if(winStatus == false) {
-				this.gold = this.gold + 110;
+				//Gold reward = attackers level *110
+				this.gold = this.gold + 110*attacker.level;
+				System.out.println("You gained "+ 110*attacker.level +" Gold!");
 				
 			//Else if the player loses
 			}else if(winStatus == true) {
+				//Lose half players gold
+				System.out.println("You lost " + this.gold / 2 + " Gold!");
 				this.gold = this.gold / 2;
 			}
 			

@@ -208,13 +208,15 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 				System.out.print("\t\t\t|You won the fight!\n");
 				player.levelup();
 				winStatus =  false;
-				player.reward(winStatus);
+				player.reward(winStatus, attacker);
 				return winStatus;
 			}else if(player.getCurrentHp() <= 0) {
 				player.currentHp = 0;
 				System.out.print("You lost the fight \t|\n\n");
 				winStatus = true;
-				player.reward(winStatus);
+				player.reward(winStatus, attacker);
+				//Reset player HP before returning
+				player.currentHp = player.maxHp;
 				return winStatus;
 			}
 		}
