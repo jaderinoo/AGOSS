@@ -67,14 +67,14 @@ public class Main {
 		BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + ".txt"));
 		BufferedReader bagReader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + "_Bag.txt"));
 		String strCurrentLine = null;
-		int tempStats[] = new int[7];
+		int tempStats[] = new int[10];
 		int x = 0;
 		int temp = 0;
 		String tempPlayerLoc = "";
 		
 		//Read and set stats from txt file
 		while ((strCurrentLine = reader.readLine()) != null) {
-			if(x>=1 && x != 7) {
+			if(x>=1 && x != 10) {
 		    	temp = Integer.parseInt(strCurrentLine);
 		    	tempStats[x] = temp;
 		    }else{
@@ -91,6 +91,9 @@ public class Main {
 				tempStats[4], 
 				tempStats[5],
 				tempStats[6],
+				tempStats[7],
+				tempStats[8],
+				tempStats[9],
 				tempPlayerLoc);
 		
 		//Read from bag txt
@@ -116,9 +119,11 @@ public class Main {
   				 "\nStrength:    " + player.getStrength() +
   				 "\nAgility:     " + player.getAgility() +
   				 "\nArmor:       " + player.getArmor() +
-  				 "\nHP:          " + player.getHP() +
+  				 "\nHp:          " + player.getCurrentHp() + "/" + player.getmaxHp() +
   				 "\nSpecial:     " + player.getSpecial() +
   				 "\nLevel:       " + player.getLevel() +
+  				 "\nexp:	     " + player.getExp() +
+  				 "\ngold:        " + player.getGold() +
 				 "\nLocation:    " + player.getPlayerLoc());
 		
 		//Asks user if they'd like to continue their game
@@ -160,7 +165,7 @@ public class Main {
 			///////////////////////////////
 			//Initialize Character Start//
 			/////////////////////////////
-		    Player player = new Player(tempName, 5, 5, 5, 50, 10, 1, "start");
+		    Player player = new Player(tempName, 5, 5, 5, 50, 10, 1, 0, 0, 50, "start");
 		    
 		    //Stat selection screen
 			System.out.println("Now lets set some stats...\nAll stats are automatically set to 5 and will increase on level ups.\nGo ahead and pick 3 stats that you want to increase.\n");
@@ -173,7 +178,7 @@ public class Main {
 	    				 "\nStrength:    " + player.getStrength() +
 	    				 "\nAgility:     " + player.getAgility() +
 	    				 "\nArmor:       " + player.getArmor() +
-	    				 "\nHP:      	 " + player.getHP() +
+	    				 "\nMaxHp:       " + player.getmaxHp() +
 	    				 "\nSpecial:     " + player.getSpecial() + 
 	    				 "\nLevel:       " + player.getLevel() + "\n");
 		    	
@@ -195,8 +200,8 @@ public class Main {
 						x++;
 						break;
 						
-					case "hp":
-						player.addHP();
+					case "maxhp":
+						player.addmaxHp();
 						x++;
 						break;
 						
@@ -217,9 +222,12 @@ public class Main {
 		    		"\n" + player.getStrength() +
 		    		"\n" + player.getAgility() +
 		    		"\n" + player.getArmor() +
-		    		"\n" + player.getHP() +
+		    		"\n" + player.getmaxHp() +
 		    		"\n" + player.getSpecial() +
 		    		"\n" + player.getLevel() +
+		    		"\n" + player.getExp() +
+		    		"\n" + player.getGold() +
+		    		"\n" + player.getmaxHp() +
 		    		"\n" + player.getPlayerLoc());
 		    
 		    //Print final stat summary
@@ -228,7 +236,7 @@ public class Main {
    				 "\nStrength:    " + player.getStrength() +
    				 "\nAgility:     " + player.getAgility() +
    				 "\nArmor:       " + player.getArmor() +
-   				 "\nHP:      	 " + player.getHP() +
+   				 "\nMaxHp:       " + player.getmaxHp() +
    				 "\nSpecial:     " + player.getSpecial() +
    				 "\nLevel:       " + player.getLevel());
 			
@@ -313,9 +321,12 @@ public class Main {
 	    		"\n" + player.getStrength() +
 	    		"\n" + player.getAgility() +
 	    		"\n" + player.getArmor() +
-	    		"\n" + player.getHP() +
+	    		"\n" + player.getmaxHp() +
 	    		"\n" + player.getSpecial() +
 	    		"\n" + player.getLevel() +
+	    		"\n" + player.getExp() +
+	    		"\n" + player.getGold() +
+	    		"\n" + player.getCurrentHp() +
 	    		"\n" + player.getPlayerLoc());
 	    
 	    printWriter.close();
