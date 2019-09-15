@@ -119,7 +119,7 @@ public class Main {
   				 "\nStrength:    " + player.getStrength() +
   				 "\nAgility:     " + player.getAgility() +
   				 "\nArmor:       " + player.getArmor() +
-  				 "\nHp:          " + player.getCurrentHp() + "/" + player.getmaxHp() +
+  				 "\nHp:          " + player.getCurrentHp() + "/" + player.getMaxHp() +
   				 "\nSpecial:     " + player.getSpecial() +
   				 "\nLevel:       " + player.getLevel() +
   				 "\nexp:	     " + player.getExp() +
@@ -178,7 +178,7 @@ public class Main {
 	    				 "\nStrength:    " + player.getStrength() +
 	    				 "\nAgility:     " + player.getAgility() +
 	    				 "\nArmor:       " + player.getArmor() +
-	    				 "\nMaxHp:       " + player.getmaxHp() +
+	    				 "\nMaxHp:       " + player.getMaxHp() +
 	    				 "\nSpecial:     " + player.getSpecial() + 
 	    				 "\nLevel:       " + player.getLevel() + "\n");
 		    	
@@ -222,12 +222,12 @@ public class Main {
 		    		"\n" + player.getStrength() +
 		    		"\n" + player.getAgility() +
 		    		"\n" + player.getArmor() +
-		    		"\n" + player.getmaxHp() +
+		    		"\n" + player.getMaxHp() +
 		    		"\n" + player.getSpecial() +
 		    		"\n" + player.getLevel() +
 		    		"\n" + player.getExp() +
 		    		"\n" + player.getGold() +
-		    		"\n" + player.getmaxHp() +
+		    		"\n" + player.getMaxHp() +
 		    		"\n" + player.getPlayerLoc());
 		    
 		    //Print final stat summary
@@ -236,7 +236,7 @@ public class Main {
    				 "\nStrength:    " + player.getStrength() +
    				 "\nAgility:     " + player.getAgility() +
    				 "\nArmor:       " + player.getArmor() +
-   				 "\nMaxHp:       " + player.getmaxHp() +
+   				 "\nMaxHp:       " + player.getMaxHp() +
    				 "\nSpecial:     " + player.getSpecial() +
    				 "\nLevel:       " + player.getLevel());
 			
@@ -321,7 +321,7 @@ public class Main {
 	    		"\n" + player.getStrength() +
 	    		"\n" + player.getAgility() +
 	    		"\n" + player.getArmor() +
-	    		"\n" + player.getmaxHp() +
+	    		"\n" + player.getMaxHp() +
 	    		"\n" + player.getSpecial() +
 	    		"\n" + player.getLevel() +
 	    		"\n" + player.getExp() +

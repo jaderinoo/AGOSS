@@ -4,17 +4,23 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Fight {
 static Scanner scanner = new Scanner(System.in);
 static Boolean winStatus;
+static int attackerDamage;
+static int attackDamage;
+static int damageTaken;
+static int damageDealt;
 public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 		
 		while(player.getCurrentHp() != 0 || attacker.getCurrentHp() != 0) {
-			System.out.println("\t\t\t|" + player.getName() + "'s current Hp: " + player.getCurrentHp());
-			System.out.println(attacker.getName() + "'s current Hp: " + attacker.getCurrentHp() + " |");
+			System.out.println("--------------------------------------------------");
+			System.out.println("\t\t\t|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp());
+			System.out.println(attacker.getName() + "'s Hp: " + attacker.getCurrentHp() + "/" + attacker.getMaxHp() + "\t|"
+					+ "LVL: " + player.getLevel());
 			System.out.println("LVL: " + attacker.getLevel() + "\t\t\t|\n"
 					+ "--------------------------------------------------");
-			int attackerDamage = 0;
-			int attackDamage = 0;
-			int damageTaken = 0;
-			int damageDealt = 0;
+			attackerDamage = 0;
+			attackDamage = 0;
+			damageTaken = 0;
+			damageDealt = 0;
 			System.out.println("What would you like to do?: \n1:Attack   2:Defend "
 														 + "\n3:Bag      4:Run");
 			
@@ -24,104 +30,21 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 
 					//If the player is faster
 					if(player.getAgility() >= attacker.getAgility()) {
-						//System.out.println("Players Move!");
-						//Miss
-						if(ThreadLocalRandom.current().nextInt(0, 6) == 0){
-							System.out.println("\n\t\t\t|MISS");
-							break;
-						}	
-						//Calculate the damage that the attacker will take
-						attackDamage = player.strength*ThreadLocalRandom.current().nextInt(3, 5);
-						damageDealt = attackDamage - attacker.armor;
-						System.out.println("\n\t\t\t|You dealt: " + damageDealt + "DMG");
-						attacker.currentHp = attacker.currentHp - damageDealt;
-					
-						//Kill check
-						if(attacker.getCurrentHp() <= 0) {
-							break;
-						}else if(player.getCurrentHp() <= 0) {
-							break;
-						}
-						
-						//Miss
-						if(ThreadLocalRandom.current().nextInt(0, 6) == 0){
-							System.out.println("\t\t\t|MISS");
-							break;
-						}
-						
-						//Calculate the damage that the player will take
-						attackerDamage = attacker.strength*ThreadLocalRandom.current().nextInt(3, 5);
-						damageTaken = attackerDamage - player.armor;
-						System.out.println("\t\t\t|You took:  " + damageTaken + "DMG");
-						player.currentHp = player.currentHp - damageTaken;
-						
-						//If damageTaken is less than 0, reset it to 0 so the player doesnt gain currentHp
-						if(damageTaken < 0) {
-							damageTaken = 0;
-						}
-						break;
+						playerMove(player,attacker);
+						attackerMove(player,attacker);
 					}
-					
 					
 					//If the Attacker is faster
 					if(player.getAgility() <= attacker.getAgility()) {
-						//System.out.println("Attackers Move!");
-						//Miss
-						if(ThreadLocalRandom.current().nextInt(0, 6) == 0){
-							System.out.println("\t\t\t|MISS");
-							break;
-						}	
-						//Calculate the damage that the player will take
-						attackerDamage = attacker.strength*ThreadLocalRandom.current().nextInt(3, 5);
-						damageTaken = attackerDamage - player.armor;
-						System.out.println("\n\t\t\t|You took:  " + damageTaken + "DMG");
-						player.currentHp = player.currentHp - damageTaken;
-						
-						//Kill check
-						if(attacker.getCurrentHp() <= 0) {
-							break;
-						}else if(player.getCurrentHp() <= 0) {
-							break;
-						}
-						
-						//Miss
-						if(ThreadLocalRandom.current().nextInt(0, 6) == 0){
-							System.out.println("\n\t\t\t|MISS");
-							break;
-						}
-						//Calculate the damage that the attacker will take
-						attackDamage = player.strength*ThreadLocalRandom.current().nextInt(3, 5);
-						damageDealt = attackDamage - attacker.armor;
-						System.out.println("\t\t\t|You dealt: " + damageDealt + "DMG");
-						attacker.currentHp = attacker.currentHp - damageDealt;
-						
+						attackerMove(player,attacker);
+						playerMove(player,attacker);
 						//If damageTaken is less than 0, reset it to 0 so the player doesnt gain currentHp
-						if(damageTaken < 0) {
-							damageTaken = 0;
 						}
-						break;
-					}
 					break;
 					
 				case 2:
-					//Miss
-					if(ThreadLocalRandom.current().nextInt(0, 6) == 0){
-						System.out.println("\n\t\t\t|MISS");
-						break;
-					}	
 					player.armor += 2;
-					
-					//Calculate the damage that the player will take
-					attackerDamage = attacker.strength*ThreadLocalRandom.current().nextInt(3, 5);
-					damageTaken = attackerDamage - player.armor;
-					
-					//If damageTaken is less than 0, reset it to 0 so the player doesnt gain currentHp
-					if(damageTaken < 0) {
-						damageTaken = 0;
-					}
-					System.out.println("\n\t\t\t|You took: " + damageTaken + "DMG");
-					player.currentHp = player.currentHp - damageTaken;
-					
+					attackerMove(player,attacker);
 					player.armor -= 2;
 					break;
 					
@@ -167,23 +90,7 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 					if(alreadyAtMax = true) {
 						break;
 					}
-					
-					//Miss
-					if(ThreadLocalRandom.current().nextInt(0, 6) == 2){
-						System.out.println("MISS");
-						break;
-					}	
-					
-					//Calculate the damage that the player will take
-					attackerDamage = attacker.strength*ThreadLocalRandom.current().nextInt(3, 5);
-					damageTaken = attackerDamage - player.armor;
-					
-					//If damageTaken is less than 0, reset it to 0 so the player doesnt gain currentHp
-					if(damageTaken < 0) {
-						damageTaken = 0;
-					}
-					System.out.println("\n\t\t\t|You took: " + damageTaken + "DMG");
-					player.currentHp = player.currentHp - damageTaken;
+					attackerMove(player,attacker);
 
 					break;
 					
@@ -205,14 +112,14 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 			//Match win decider
 			if(attacker.getCurrentHp() <= 0) {
 				attacker.currentHp = 0;
-				System.out.print("\t\t\t|You won the fight!\n");
+				System.out.print("You won the fight!\n");
 				player.levelup();
 				winStatus =  false;
 				player.reward(winStatus, attacker);
 				return winStatus;
 			}else if(player.getCurrentHp() <= 0) {
 				player.currentHp = 0;
-				System.out.print("You lost the fight \t|\n\n");
+				System.out.print("You lost the fight \n\n");
 				winStatus = true;
 				player.reward(winStatus, attacker);
 				//Reset player HP before returning
@@ -221,5 +128,55 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 			}
 		}
 		return winStatus;
+	}
+
+	public static void attackerMove(Player player, Mob1 attacker) {
+		//Kill check
+		if(attacker.getCurrentHp() <= 0) {
+			return;
+		}else if(player.getCurrentHp() <= 0) {
+			return;
+		}
+		
+		//Miss
+		if(ThreadLocalRandom.current().nextInt(0, 6) == 0){
+			System.out.println("MISS");
+			return;
+		}
+		//Calculate the damage that the player will take
+		attackerDamage = attacker.strength*ThreadLocalRandom.current().nextInt(3, 5);
+		damageTaken = attackerDamage - player.armor;
+		System.out.println("You took:  " + damageTaken + "DMG");
+		player.currentHp = player.currentHp - damageTaken;
+		
+		//If damageTaken is less than 0, reset it to 0 so the player doesnt gain currentHp
+		if(damageTaken < 0) {
+			damageTaken = 0;
+		}
+		return;
+	}
+	
+	public static void playerMove(Player player, Mob1 attacker) {
+		//Kill check
+		if(attacker.getCurrentHp() <= 0) {
+			return;
+		}else if(player.getCurrentHp() <= 0) {
+			return;
+		}
+		
+		//Miss
+		if(ThreadLocalRandom.current().nextInt(0, 6) == 0){
+			System.out.println("\n" + player.getName() + " MISSED");
+			return;
+		}	
+		//Calculate the damage that the attacker will take
+		attackDamage = player.strength*ThreadLocalRandom.current().nextInt(3, 5);
+		damageDealt = attackDamage - attacker.armor;
+		System.out.println("\nYou dealt: " + damageDealt + "DMG");
+		attacker.currentHp = attacker.currentHp - damageDealt;
+		
+		if(damageTaken < 0) {
+			damageTaken = 0;
+		}
 	}
 }

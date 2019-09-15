@@ -40,7 +40,7 @@ public class Mob1 {
 	        return armor;
 	    }
 	    
-	    public int getmaxHp() {
+	    public int getMaxHp() {
 	        return maxHp;
 	    }
 	    

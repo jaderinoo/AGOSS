@@ -48,7 +48,7 @@ public class Player {
 	        return armor;
 	    }
 	    
-	    public int getmaxHp() {
+	    public int getMaxHp() {
 	        return maxHp;
 	    }
 	    
