@@ -64,6 +64,7 @@ public class Main {
 		System.out.print("\nPlease Enter the characters name: ");
 		String tempName = scanner.next();
 		BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + ".txt"));
+		BufferedReader bagReader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + "_Bag.txt"));
 		String strCurrentLine = null;
 		int tempStats[] = new int[7];
 		int x = 0;
@@ -91,7 +92,24 @@ public class Main {
 				tempStats[5],
 				tempStats[6],
 				tempPlayerLoc);
-				
+		
+		//Read from bag txt
+		int tempBag[] = new int[2];
+		x = 0;
+		temp = 0;
+		
+		
+		//Read bag from txt file
+				while ((strCurrentLine = reader.readLine()) != null) {
+					if(x != 2) {
+				    	temp = Integer.parseInt(strCurrentLine);
+				    	tempBag[x] = temp;
+				    }
+				    x++;
+				}
+		//set bag from txt
+		Bag bag = new Bag(player, tempBag[0], tempBag[1]);
+		
 		
 		//Print player stats
 		System.out.println("Player Stats: \n");
@@ -111,7 +129,7 @@ public class Main {
 		switch(reply.toLowerCase()) {
 			case "y":
 				System.out.println("And so it begins!");
-				Adventure.Resume(player);
+				Adventure.Resume(player,bag);
 				break;
 				
 			case "n":
@@ -124,13 +142,14 @@ public class Main {
 		}
 		
 		reader.close();
+		bagReader.close();
 	}
 	
 	public static void WriteFile(String tempName, int newGame) throws IOException {
 		
 		new File("src\\saves\\" + tempName).mkdir();
 		FileWriter fileWriter = new FileWriter("src\\saves\\" + tempName + "\\" + tempName + ".txt", true);
-	    PrintWriter printWriter = new PrintWriter(fileWriter);
+		PrintWriter printWriter = new PrintWriter(fileWriter);
 	    BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + ".txt"));
 	    
 	     ////////////////////////////
@@ -177,7 +196,7 @@ public class Main {
 						x++;
 						break;
 						
-					case "HP":
+					case "hp":
 						player.addHP();
 						x++;
 						break;
@@ -221,14 +240,16 @@ public class Main {
 			switch(reply.toLowerCase()) {
 			case "y":
 				System.out.println("And so it begins!");
-				Adventure.Resume(player);
+				Bag bag = new Bag(player, 0, 0);
+				WriteBag(tempName, player, bag);
+				Adventure.Resume(player, bag);
 				break;
 				
 			case "n":
 				System.out.println("\nDeleting Character and returning to menu.\n");
 				try
 		        { 
-		            Files.deleteIfExists(Paths.get(tempName + ".txt")); 
+		            Files.deleteIfExists(Paths.get("src\\saves\\" + tempName + "\\" + tempName + ".txt")); 
 		        } 
 		        catch(NoSuchFileException e) 
 		        { 
@@ -254,5 +275,17 @@ public class Main {
 	    }
 	    reader.close();
 	    printWriter.close();
+	}
+	
+	public static Bag WriteBag(String tempName, Player player, Bag bag) throws IOException {
+		FileWriter fileWriter = new FileWriter("src\\saves\\" + tempName + "\\" + tempName + "_Bag.txt", true);
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+	    BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + "_Bag.txt"));
+	    printWriter.println(bag.getPotions() + "\n" + bag.getBoosters());
+	    System.out.println("Bag stuff: "+bag.getPotions());
+		System.out.println(bag.getBoosters());
+		printWriter.close();
+		reader.close();
+	    return bag;
 	}
 }

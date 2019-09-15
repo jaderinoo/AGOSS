@@ -91,8 +91,6 @@ public static Boolean Move(Player player,Mob1 attacker) {
 						break;
 					}
 					break;
-						
-					
 					
 				case 2:
 					//Miss

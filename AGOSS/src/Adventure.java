@@ -7,12 +7,12 @@ public class Adventure {
 	static Scanner scanner = new Scanner(System.in);
 	static Boolean winStatus;
 	
-	public static void Resume(Player player) throws IOException {
+	public static void Resume(Player player, Bag bag) throws IOException {
 		System.out.println("\n--------------\n") ;
 		String tempLocation = (String) player.getPlayerLoc();
 		switch(tempLocation) {
 		case "start":
-			start();
+			start(player, bag);
 			break;
 			
 		case "village":
@@ -32,13 +32,15 @@ public class Adventure {
 		}
 	}
 	
-	public static void start() {
+	public static void start(Player player, Bag bag) {
 		System.out.println("Welcome to AGOSS!\n"
 				+ "This game plays very similarly to other textbased RPGs but with a slight twist\n"
 				+ "Think of it as a pokemon game where you only use one pokemon.");
+		System.out.println(bag.getPotions());
+		System.out.println(bag.getBoosters());
 	}
 	
-	public static void village() {
+	public static void village(Player player, Bag bag) {
 		System.out.println("This is a Village!");
 	}
 	

@@ -80,5 +80,14 @@ public class Player {
 			this.special += 2;
 			return this.special;
 		}
+		
+		//Using items
+		public int usePotion() {
+			return this.HP;
+		}
+		
+		public int useBooster() {
+			return this.strength;
+		}
 }
 
