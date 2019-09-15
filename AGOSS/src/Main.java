@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class Main {
 		} else {
 			//If it doesn't, move on
 			System.out.println("\nNew Player Stat Setup:\n");
-			WriteFile(name, 1);
+			characterCreator(name, 1);
 		}
 		
 	}
@@ -77,7 +78,6 @@ public class Main {
 		    	temp = Integer.parseInt(strCurrentLine);
 		    	tempStats[x] = temp;
 		    }else{
-		    	System.out.println(strCurrentLine);
 		    	tempPlayerLoc = strCurrentLine;
 		    }
 		    x++;
@@ -98,18 +98,17 @@ public class Main {
 		x = 0;
 		temp = 0;
 		
-		
 		//Read bag from txt file
-				while ((strCurrentLine = reader.readLine()) != null) {
+				while ((strCurrentLine = bagReader.readLine()) != null) {
 					if(x != 2) {
 				    	temp = Integer.parseInt(strCurrentLine);
 				    	tempBag[x] = temp;
 				    }
 				    x++;
 				}
+				
 		//set bag from txt
 		Bag bag = new Bag(player, tempBag[0], tempBag[1]);
-		
 		
 		//Print player stats
 		System.out.println("Player Stats: \n");
@@ -145,7 +144,7 @@ public class Main {
 		bagReader.close();
 	}
 	
-	public static void WriteFile(String tempName, int newGame) throws IOException {
+	public static void characterCreator(String tempName, int newGame) throws IOException {
 		
 		new File("src\\saves\\" + tempName).mkdir();
 		FileWriter fileWriter = new FileWriter("src\\saves\\" + tempName + "\\" + tempName + ".txt", true);
@@ -287,5 +286,39 @@ public class Main {
 		printWriter.close();
 		reader.close();
 	    return bag;
+	}
+	
+	//Save bag state
+	public static void bagUpdater(Player player, Bag bag) throws IOException {
+		FileWriter fileWriter = new FileWriter("src\\saves\\" + player.getName() + "\\" + player.getName() + "_Bag.txt", false);
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+	    BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + player.getName() + "\\" + player.getName() + "_Bag.txt"));
+
+	    //Print stats to new file
+	    printWriter.println(bag.getPotions() +
+	    		"\n" + bag.getBoosters());
+	    
+	    printWriter.close();
+	    reader.close();
+	}
+	
+	//Save player state
+	public static void playerUpdater(Player player) throws IOException {
+		FileWriter fileWriter = new FileWriter("src\\saves\\" + player.getName() + "\\" + player.getName() + ".txt", false);
+		PrintWriter printWriter = new PrintWriter(fileWriter);
+	    BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + player.getName() + "\\" + player.getName() + ".txt"));
+
+	    //Print stats to new file
+	    printWriter.println(player.getName() +
+	    		"\n" + player.getStrength() +
+	    		"\n" + player.getAgility() +
+	    		"\n" + player.getArmor() +
+	    		"\n" + player.getHP() +
+	    		"\n" + player.getSpecial() +
+	    		"\n" + player.getLevel() +
+	    		"\n" + player.getPlayerLoc());
+	    
+	    printWriter.close();
+	    reader.close();
 	}
 }

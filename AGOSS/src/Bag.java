@@ -17,6 +17,5 @@ public class Bag {
     public int getBoosters() {
         return boosters;
     }
-
 }
 
