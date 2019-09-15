@@ -31,8 +31,8 @@ public static Boolean Move(Player player,Mob1 attacker) {
 							break;
 						}	
 						//Calculate the damage that the attacker will take
-						attackDamage = attacker.strength*ThreadLocalRandom.current().nextInt(3, 5);
-						damageDealt = attackDamage - player.armor;
+						attackDamage = player.strength*ThreadLocalRandom.current().nextInt(3, 5);
+						damageDealt = attackDamage - attacker.armor;
 						System.out.println("\n\t\t\t|You dealt: " + damageDealt + "DMG");
 						attacker.HP = attacker.HP - damageDealt;
 					
@@ -79,8 +79,8 @@ public static Boolean Move(Player player,Mob1 attacker) {
 							break;
 						}	
 						//Calculate the damage that the attacker will take
-						attackDamage = attacker.strength*ThreadLocalRandom.current().nextInt(3, 5);
-						damageDealt = attackDamage - player.armor;
+						attackDamage = player.strength*ThreadLocalRandom.current().nextInt(3, 5);
+						damageDealt = attackDamage - attacker.armor;
 						System.out.println("\t\t\t|You dealt: " + damageDealt + "DMG");
 						attacker.HP = attacker.HP - damageDealt;
 						
