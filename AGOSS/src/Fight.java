@@ -27,7 +27,7 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 			System.out.print("Selection: ");
 			int selection = scanner.nextInt();
 			System.out.println("--------------------------------------------------");
-			System.out.print("BattleLog:");
+			System.out.println("BattleLog:");
 			switch(selection) {
 				case 1:
 					//If the player is faster
@@ -80,6 +80,9 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 					    		if(player.currentHp > player.maxHp) {
 					    			player.currentHp = player.maxHp;
 					    		}
+					    		
+					    		//Attacker still gets a move
+					    		attackerMove(player,attacker);
 					    		break;
 					    	}
 							break;
@@ -140,8 +143,8 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 		}
 		
 		//Miss
-		if(ThreadLocalRandom.current().nextInt(0, 6) == 0){
-			System.out.println("MISS");
+		if(ThreadLocalRandom.current().nextInt(5, 10) == 5){
+			System.out.println(attacker.getName() + " MISSED");
 			return;
 		}
 		//Calculate the damage that the player will take
@@ -167,13 +170,13 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 		
 		//Miss
 		if(ThreadLocalRandom.current().nextInt(0, 6) == 0){
-			System.out.println("\n" + player.getName() + " MISSED");
+			System.out.println(player.getName() + " MISSED");
 			return;
 		}	
 		//Calculate the damage that the attacker will take
 		attackDamage = player.strength*ThreadLocalRandom.current().nextInt(3, 5);
 		damageDealt = attackDamage - attacker.armor;
-		System.out.println("\nYou dealt: " + damageDealt + "DMG");
+		System.out.println("You dealt: " + damageDealt + "DMG");
 		attacker.currentHp = attacker.currentHp - damageDealt;
 		
 		//If damageTaken is less than 0, reset it to 0 so the player doesnt gain currentHp
