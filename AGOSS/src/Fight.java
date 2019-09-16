@@ -8,14 +8,14 @@ static int attackerDamage;
 static int attackDamage;
 static int damageTaken;
 static int damageDealt;
-public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
+public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) {
 		
 		while(player.getCurrentHp() != 0 || attacker.getCurrentHp() != 0) {
 			System.out.println("--------------------------------------------------");
 			System.out.println("\t\t\t|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp());
 			System.out.println(attacker.getName() + "'s Hp: " + attacker.getCurrentHp() + "/" + attacker.getMaxHp() + "\t|"
 					+ "LVL: " + player.getLevel());
-			System.out.println("LVL: " + attacker.getLevel() + "\t\t\t|\n"
+			System.out.println("LVL: " + attacker.getLevel() + "\t\t\t|EXP: "+ player.exp + "/" + player.level*50 +"\n"
 					+ "--------------------------------------------------");
 			attackerDamage = 0;
 			attackDamage = 0;
@@ -34,10 +34,17 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 					if(player.getAgility() >= attacker.getAgility()) {
 						playerMove(player,attacker);
 						attackerMove(player,attacker);
+						//
+						if(attacker2 != null) {
+							attackerMove(player,attacker2);
+						}
 					}
 					
 					//If the Attacker is faster
 					if(player.getAgility() <= attacker.getAgility()) {
+						if(attacker2 != null) {
+							attackerMove(player,attacker2);
+						}
 						attackerMove(player,attacker);
 						playerMove(player,attacker);
 					}

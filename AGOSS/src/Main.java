@@ -122,8 +122,8 @@ public class Main {
   				 "\nHp:          " + player.getCurrentHp() + "/" + player.getMaxHp() +
   				 "\nSpecial:     " + player.getSpecial() +
   				 "\nLevel:       " + player.getLevel() +
-  				 "\nexp:	     " + player.getExp() +
-  				 "\ngold:        " + player.getGold() +
+  				 "\nExp:	     " + player.getExp() + "/" + player.level*50 + 
+  				 "\nGold:        " + player.getGold() +
 				 "\nLocation:    " + player.getPlayerLoc());
 		
 		//Asks user if they'd like to continue their game
