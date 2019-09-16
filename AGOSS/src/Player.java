@@ -110,9 +110,9 @@ public class Player {
 			return this.strength;
 		}
 		
-		public void levelup() {
+		public void levelup(Mob1 attacker) {
 			//Reward EXP
-			this.exp = this.exp + 10;
+			this.exp = this.exp + attacker.getLevel()*4;
 			//If the players exp is = to its current level*2
 			if(this.exp == this.level*50) {
 				System.out.println("\t\t~LEVEL UP!~");

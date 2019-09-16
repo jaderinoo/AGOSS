@@ -24,10 +24,12 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 			System.out.println("What would you like to do?: \n1:Attack   2:Defend "
 														 + "\n3:Bag      4:Run");
 			
+			System.out.print("Selection: ");
 			int selection = scanner.nextInt();
+			System.out.println("--------------------------------------------------");
+			System.out.print("BattleLog:");
 			switch(selection) {
 				case 1:
-
 					//If the player is faster
 					if(player.getAgility() >= attacker.getAgility()) {
 						playerMove(player,attacker);
@@ -38,8 +40,7 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 					if(player.getAgility() <= attacker.getAgility()) {
 						attackerMove(player,attacker);
 						playerMove(player,attacker);
-						//If damageTaken is less than 0, reset it to 0 so the player doesnt gain currentHp
-						}
+					}
 					break;
 					
 				case 2:
@@ -54,7 +55,7 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 							+ "1: " + bag.getPotions() + "- Potions\n"
 							+ "2: " + bag.getBoosters() + "- Boosters");
 					
-					boolean alreadyAtMax = false;
+					@SuppressWarnings("unused") boolean alreadyAtMax = false;
 					int bagOptions = scanner.nextInt();
 					switch(bagOptions) {
 						case 1:
@@ -113,7 +114,7 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 			if(attacker.getCurrentHp() <= 0) {
 				attacker.currentHp = 0;
 				System.out.print("You won the fight!\n");
-				player.levelup();
+				player.levelup(attacker);
 				winStatus =  false;
 				player.reward(winStatus, attacker);
 				return winStatus;
@@ -175,6 +176,7 @@ public static Boolean Move(Player player,Mob1 attacker, Bag bag) {
 		System.out.println("\nYou dealt: " + damageDealt + "DMG");
 		attacker.currentHp = attacker.currentHp - damageDealt;
 		
+		//If damageTaken is less than 0, reset it to 0 so the player doesnt gain currentHp
 		if(damageTaken < 0) {
 			damageTaken = 0;
 		}
