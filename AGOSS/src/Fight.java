@@ -42,18 +42,22 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 					
 					//If the Attacker is faster
 					if(player.getAgility() <= attacker.getAgility()) {
+						attackerMove(player,attacker);
 						if(attacker2 != null) {
 							attackerMove(player,attacker2);
 						}
-						attackerMove(player,attacker);
 						playerMove(player,attacker);
 					}
 					break;
 					
 				case 2:
-					player.armor += 2;
+					int tempArmor = player.armor;
+					player.armor = player.armor/2 + player.armor;;
 					attackerMove(player,attacker);
-					player.armor -= 2;
+					if(attacker2 != null) {
+						attackerMove(player,attacker2);
+					}
+					player.armor = tempArmor;
 					break;
 					
 				case 3:
@@ -102,6 +106,9 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 						break;
 					}
 					attackerMove(player,attacker);
+					if(attacker2 != null) {
+						attackerMove(player,attacker2);
+					}
 
 					break;
 					
