@@ -14,9 +14,13 @@ import java.util.Scanner;
 public class Main {
 	static Scanner scanner = new Scanner(System.in);
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 
-		
+		System.out.println("Welcome to:\n" +
+			    "  _    __   __  ___  ___\r\n" + 
+				" / \\  |    |  | |    |\r\n" + 
+				"|___| |	 _ |  | |__  |__\r\n" + 
+				"|   | |__| |__| ___| ___|\n------------------------");
 		System.out.println("Please Select an Option:\n  1 - New Game\n  2 - Load Game");
 		
 		int selection = scanner.nextInt();
@@ -37,7 +41,7 @@ public class Main {
      ////////////////////////////
     //CREATE A NEW GAME PART 1//
    ////////////////////////////
-	public static void newGame() throws IOException {
+	public static void newGame() throws Exception {
 		//Asks user for name
 		System.out.println("Welcome to AGOSS\nWhat would you like to name yourself?");
 		String name = scanner.next();
@@ -61,7 +65,7 @@ public class Main {
    ///////////////
 	
 	@SuppressWarnings("null")
-	public static void loadGame() throws IOException {
+	public static void loadGame() throws Exception {
 		System.out.print("\nPlease Enter the characters name: ");
 		String tempName = scanner.next();
 		BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + ".txt"));
@@ -149,7 +153,7 @@ public class Main {
 		bagReader.close();
 	}
 	
-	public static void characterCreator(String tempName, int newGame) throws IOException {
+	public static void characterCreator(String tempName, int newGame) throws Exception {
 		
 		new File("src\\saves\\" + tempName).mkdir();
 		FileWriter fileWriter = new FileWriter("src\\saves\\" + tempName + "\\" + tempName + ".txt", true);

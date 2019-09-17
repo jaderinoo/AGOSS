@@ -7,7 +7,7 @@ public class Adventure {
 	static Scanner scanner = new Scanner(System.in);
 	static Boolean winStatus;
 	
-	public static void Resume(Player player, Bag bag) throws IOException {
+	public static void Resume(Player player, Bag bag) throws Exception {
 		System.out.println("\n--------------\n") ;
 		String tempLocation = (String) player.getPlayerLoc();
 		switch(tempLocation) {
@@ -21,8 +21,9 @@ public class Adventure {
 			
 		case "test":
 			
-			Mob1 attacker = new Mob1("baddie", 5, 5, 5, 50, 10, 2, 50);
-			Fight.Move(player,attacker, null, bag);
+			//Mob1 attacker = new Mob1("baddie", 5, 5, 5, 50, 10, 2, 50);
+			//Fight.Move(player,attacker, null, bag);
+			PlayingField.map(player, bag);
 			Main.bagUpdater(player,bag);
 			Main.playerUpdater(player);
 			
