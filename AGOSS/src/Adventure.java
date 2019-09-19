@@ -21,7 +21,7 @@ public class Adventure {
 			
 		case "test":
 			
-			//Mob1 attacker = new Mob1("baddie", 5, 5, 5, 50, 10, 2, 50);
+			Mob1 attacker = new Mob1("baddie", 5, 5, 5, 50, 10, 2, 50);
 			//Fight.Move(player,attacker, null, bag);
 			PlayingField.map(player, bag);
 			Main.bagUpdater(player,bag);

@@ -7,8 +7,19 @@ public class PlayingField {
 
 	public static void map(Player player, Bag bag) throws Exception {
 	    
-	    String data = inputToString("src\\maps\\test.txt");
+		String[] batch = inputToString("src\\maps\\test.txt");
 	    
+		//Initialize vars
+		String firstLine = batch[0];
+		String secondLine = batch[1];
+		String thirdLine = batch[2];
+		String data = batch[3];
+		
+		//Test prins
+		System.out.println(firstLine);
+		System.out.println(secondLine);
+		System.out.println(thirdLine);
+		
 		char[][] map = saveMap(data);
 		printMap(map);
 	}
@@ -39,10 +50,16 @@ public class PlayingField {
 
 	}
 	
-	public static String inputToString(String fileName)throws Exception 
+	public static String[] inputToString(String fileName)throws Exception 
 	{ 
 		//Initializes the buffered reader
 		BufferedReader reader = new BufferedReader(new FileReader(fileName));
+		
+		//Reads the first lines of the input file so it isnt included in the string
+		String firstLine = reader.readLine(); 
+		String secondLine = reader.readLine();
+		String thirdLine = reader.readLine();
+		
 		//Initialize the variables needed to read in the file
 		String line = null;
 		String data = null;
@@ -58,7 +75,15 @@ public class PlayingField {
 		data = data.replace(",", "");
 		//Remove all line breaks from string
 		data = data.replace("\n", "").replace("\r", "");
-		//Return both firstLine and data
-		return data;
+		//Return all grabbed vars
+		String batch[] = new String[4];
+		
+		//saves all items to batch[]
+		batch[0] = firstLine;
+		batch[1] = secondLine;
+		batch[2] = thirdLine;
+		batch[3] = data;
+		
+		return batch;
 	} 
 }
