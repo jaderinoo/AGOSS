@@ -11,6 +11,8 @@ public class Player {
 		int exp;
 		int gold;
 		int currentHp;
+		int mapX;
+		int mapY;
 		private Object playerLoc;
 		Object name;
 
@@ -99,6 +101,28 @@ public class Player {
 		public int addSpecial() {
 			this.special += 2;
 			return this.special;
+		}
+		
+		//
+		// Map location Stats
+		//
+		public int setMapX(int x) {
+			this.mapX = x;
+			return this.mapX;
+		}
+		
+		public int setMapY(int y) {
+			this.mapY = y;
+			return this.mapY;
+		}
+		
+		//get map locations
+		public int getMapX() {
+			return this.mapX;
+		}
+		
+		public int getMapY() {
+			return this.mapY;
 		}
 		
 		//Using items

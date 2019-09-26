@@ -1,10 +1,12 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 public class PlayingField {
 	static int rows = 15;
 	static int cols = 15;
-
+	static ArrayList<Mob1> mobList = new ArrayList<Mob1>();
+	
 	public static void map(Player player, Bag bag) throws Exception {
 	    
 		String[] batch = inputToString("src\\maps\\test.txt");
@@ -25,21 +27,24 @@ public class PlayingField {
 		printMap(map);
 		int i = 0 ;
 		int values[] = new int[10];
-		int enemyCount = 0;
-		int[][] eLoc = new int[enemyCount][enemyCount];
 
 		//Initial scan
-		values = scanMap(map,values);
+		values = scanMap(player,map,values);
+		System.out.println("playerLoc:" + player.getMapY() +"," + player.getMapX());
 		System.out.println("EnemyCount:" + values[0]);
-		System.out.println("playerLocY:" + values[1]);
-		System.out.println("playerLocX:" + values[2]);
+		System.out.println("Enemy1:" + mobList.get(0).locationX() + "," + mobList.get(0).locationY());
+		System.out.println("Enemy2:" + mobList.get(1).locationX() + "," + mobList.get(1).locationY());
 		
-		while(i != enemyCount){
+		
+		//Fight.Move(player,mobList.get(0), null, bag);
+		
+		//while(i != enemyCount){
 			
-		}
+		//}
 		
 	}
 	
+	//Prints the map for the player
 	public static void printMap(char[][] map) {
 		System.out.println("Playing Field:\n_______________________________________________");
 		for (int i=0; i < rows; i++) {
@@ -52,6 +57,7 @@ public class PlayingField {
 		System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
 	}
 	
+	//Saves map as a local variable
 	public static char[][] saveMap(String data){
 		char [][] map = new char[rows][cols];
 		int next = 0;
@@ -66,29 +72,39 @@ public class PlayingField {
 
 	}
 	
-	public static int[] scanMap(char[][] map, int [] values) {
-		int playerLocY = 0;
-		int playerLocX = 0;
+	//Scans the map for units
+	public static int[] scanMap(Player player, char[][] map, int [] values) {
 		int enemyCount = 0;
 		
-		for (int i=0; i < rows; i++) {
-		    for (int j=0; j < cols; j++) {
-		        if(map[i][j] == 'e') {
+		for (int y=0; y < rows; y++) {
+		    for (int x=0; x < cols; x++) {
+		    	
+		    	//If an e is found, create the object and add it to the arraylist: mobList
+		        if(map[x][y] == 'e') {
 		        	enemyCount++;
+		        	enemyCreate(x,y,'e');
 		        }
-		        if(map[i][j] == 'p') {
-		        	playerLocY = i;
-		        	playerLocX = j;
+		        
+		        //If p is found, save the location 
+		        if(map[x][y] == 'p') {
+		        	player.setMapY(y);
+		        	player.setMapX(x);
 		        }
 		    }
 		}
 		values[0] = enemyCount;
-		values[1] = playerLocY;
-		values[2] = playerLocX;
 		
 		return values;
 	}
 	
+	private static void enemyCreate(int y, int x, char mobType) {
+
+		if(mobType == 'e') {
+			mobList.add(new Mob1("basic", 5, 5, 5, 50, 10, 2, 50, x, y));
+		}
+
+	}
+
 	public static String[] inputToString(String fileName)throws Exception 
 	{ 
 		//Initializes the buffered reader
