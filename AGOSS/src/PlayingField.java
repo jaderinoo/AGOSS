@@ -25,22 +25,53 @@ public class PlayingField {
 		//Prints out the initial map
 		char[][] map = saveMap(data);
 		printMap(map);
-		int i = 0 ;
-		int values[] = new int[10];
 
 		//Initial scan
-		values = scanMap(player,map,values);
+		int enemyCount = scanMap(player,map);
 		System.out.println("playerLoc:" + player.getMapY() +"," + player.getMapX());
-		System.out.println("EnemyCount:" + values[0]);
+		System.out.println("EnemyCount:" + enemyCount);
 		System.out.println("Enemy1:" + mobList.get(0).locationX() + "," + mobList.get(0).locationY());
 		System.out.println("Enemy2:" + mobList.get(1).locationX() + "," + mobList.get(1).locationY());
 		
 		
 		//Fight.Move(player,mobList.get(0), null, bag);
 		
-		//while(i != enemyCount){
+		while(enemyCount != 0){
 			
-		//}
+			//Allow the player to move in any direction, use the bag
+			//if(option 2 is selected) open bag, else option 1 use move()
+			
+			//A class that will decide the movement
+			//if the item p is sent, allow the user to move as they want
+			//if anything other than p is sent, use AI to move towards the player
+			//Possibility of adding different steps per unit by comparing chars
+			//move();
+			
+			
+			//All in all, if the player is killed, end the game else 
+			//if the enemycount goes to 0, show a "You Win + Mapname" 
+			//Make sure to add a Mapname to the vars as the first 3 lines already allow for information
+			
+			
+			//So it will work like this, Mainmenu -> Adventure/do shit -> Select a world to enter
+			//-> complete the world and return to Adventure/ allow a save option in "Adventure"
+			
+			
+			for(int i = 0; i == enemyCount; i++) {
+				//Move towards player
+				System.out.println("Enemy" + i+1 + ":" + mobList.get(i).locationX() + "," + mobList.get(i).locationY());
+				enemyCount--;
+				
+				
+				//If the players loc is below the e, move down one
+				//set the new coordinate in the object
+				//edit the char [] [] by replacing its current position with ' '
+				//put the 'e' in the new position in the [] []
+				
+				
+				
+				}
+		}
 		
 	}
 	
@@ -73,7 +104,7 @@ public class PlayingField {
 	}
 	
 	//Scans the map for units
-	public static int[] scanMap(Player player, char[][] map, int [] values) {
+	public static int scanMap(Player player, char[][] map) {
 		int enemyCount = 0;
 		
 		for (int y=0; y < rows; y++) {
@@ -92,15 +123,22 @@ public class PlayingField {
 		        }
 		    }
 		}
-		values[0] = enemyCount;
-		
-		return values;
+		//returns total enemies
+		return enemyCount;
 	}
 	
 	private static void enemyCreate(int y, int x, char mobType) {
 
 		if(mobType == 'e') {
-			mobList.add(new Mob1("basic", 5, 5, 5, 50, 10, 2, 50, x, y));
+			mobList.add(new Mob1("FootSoldier", 5, 5, 5, 50, 10, 2, 50, x, y));
+		}
+		
+		if(mobType == 'k') {
+			mobList.add(new Mob1("Knight", 5, 5, 5, 50, 10, 2, 75, x, y));
+		}
+		
+		if(mobType == 'g') {
+			mobList.add(new Mob1("General", 5, 5, 5, 50, 10, 2, 100, x, y));
 		}
 
 	}
