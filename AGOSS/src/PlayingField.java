@@ -15,13 +15,29 @@ public class PlayingField {
 		String thirdLine = batch[2];
 		String data = batch[3];
 		
-		//Test prins
+		//Test additional map information
 		System.out.println(firstLine);
 		System.out.println(secondLine);
 		System.out.println(thirdLine);
 		
+		//Prints out the initial map
 		char[][] map = saveMap(data);
 		printMap(map);
+		int i = 0 ;
+		int values[] = new int[10];
+		int enemyCount = 0;
+		int[][] eLoc = new int[enemyCount][enemyCount];
+
+		//Initial scan
+		values = scanMap(map,values);
+		System.out.println("EnemyCount:" + values[0]);
+		System.out.println("playerLocY:" + values[1]);
+		System.out.println("playerLocX:" + values[2]);
+		
+		while(i != enemyCount){
+			
+		}
+		
 	}
 	
 	public static void printMap(char[][] map) {
@@ -48,6 +64,29 @@ public class PlayingField {
 		}
 		return map;
 
+	}
+	
+	public static int[] scanMap(char[][] map, int [] values) {
+		int playerLocY = 0;
+		int playerLocX = 0;
+		int enemyCount = 0;
+		
+		for (int i=0; i < rows; i++) {
+		    for (int j=0; j < cols; j++) {
+		        if(map[i][j] == 'e') {
+		        	enemyCount++;
+		        }
+		        if(map[i][j] == 'p') {
+		        	playerLocY = i;
+		        	playerLocX = j;
+		        }
+		    }
+		}
+		values[0] = enemyCount;
+		values[1] = playerLocY;
+		values[2] = playerLocX;
+		
+		return values;
 	}
 	
 	public static String[] inputToString(String fileName)throws Exception 
