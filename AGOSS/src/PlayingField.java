@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class PlayingField {
 	static int rows = 15;
@@ -8,7 +9,7 @@ public class PlayingField {
 	static ArrayList<Mob1> mobList = new ArrayList<Mob1>();
 	
 	public static void map(Player player, Bag bag) throws Exception {
-	    
+		Scanner input = new Scanner(System.in);
 		String[] batch = inputToString("src\\maps\\test.txt");
 	    
 		//Initialize vars
@@ -38,8 +39,34 @@ public class PlayingField {
 		
 		while(enemyCount != 0){
 			
+			//Print out current user stats
+			System.out.println("--------------------------------------------------");
+			System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp());
+			System.out.println("|LVL: " + player.getLevel());
+			System.out.println("|EXP: "+ player.exp + "/" + player.level*50 +"\n"
+					+ "--------------------------------------------------");
+			
+			
 			//Allow the player to move in any direction, use the bag
 			//if(option 2 is selected) open bag, else option 1 use move()
+			
+			System.out.println("Please make a selection: \n"
+					+ "1: Player move\n"
+					+ "2: Bag Menu");
+			
+			int temp = input.nextInt();
+			switch(temp) {
+			case 1:
+				//Allows the player to pick which direction they would like to move in
+				playerMove(player);
+				break;
+				
+			case 2:
+				//Uses the bag menu
+				Fight.useBag(player,bag,null);
+				break;
+			}
+			
 			
 			//A class that will decide the movement
 			//if the item p is sent, allow the user to move as they want
@@ -72,9 +99,13 @@ public class PlayingField {
 				
 				}
 		}
-		
+		input.close();
 	}
 	
+	public static void playerMove(Player player) {
+		
+	}
+		
 	//Prints the map for the player
 	public static void printMap(char[][] map) {
 		System.out.println("Playing Field:\n_______________________________________________");
@@ -177,6 +208,7 @@ public class PlayingField {
 		batch[2] = thirdLine;
 		batch[3] = data;
 		
+		reader.close();
 		return batch;
 	} 
 }

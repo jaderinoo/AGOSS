@@ -1,7 +1,4 @@
-import java.io.IOException;
-import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Adventure {
 	static Scanner scanner = new Scanner(System.in);
@@ -21,12 +18,14 @@ public class Adventure {
 			
 		case "test":
 			
-			//Mob1 attacker = new Mob1("baddie", 5, 5, 5, 50, 10, 2, 50);
-			//Fight.Move(player,attacker, null, bag);
-			PlayingField.map(player, bag);
+			Mob1 attacker = new Mob1("baddie", 5, 5, 5, 50, 10, 2, 50,0,0);
+			boolean winStatus = Fight.Move(player,attacker, null, bag);
 			Main.bagUpdater(player,bag);
 			Main.playerUpdater(player);
-			
+			if(winStatus = false) {
+				PlayingField.map(player, bag);
+			}
+
 			break;
 			
 		default:

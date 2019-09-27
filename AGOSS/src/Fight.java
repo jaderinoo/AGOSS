@@ -9,27 +9,27 @@ static int attackDamage;
 static int damageTaken;
 static int damageDealt;
 public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) {
+	
+	while(player.getCurrentHp() != 0 || attacker.getCurrentHp() != 0) {
+		System.out.println("--------------------------------------------------");
+		System.out.println("\t\t\t|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp());
+		System.out.println(attacker.getName() + "'s Hp: " + attacker.getCurrentHp() + "/" + attacker.getMaxHp() + "\t|"
+				+ "LVL: " + player.getLevel());
+		System.out.println("LVL: " + attacker.getLevel() + "\t\t\t|EXP: "+ player.exp + "/" + player.level*50 +"\n"
+				+ "--------------------------------------------------");
+		attackerDamage = 0;
+		attackDamage = 0;
+		damageTaken = 0;
+		damageDealt = 0;
+		System.out.println("What would you like to do?: \n1:Attack   2:Defend "
+													 + "\n3:Bag      4:Run");
 		
-		while(player.getCurrentHp() != 0 || attacker.getCurrentHp() != 0) {
-			System.out.println("--------------------------------------------------");
-			System.out.println("\t\t\t|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp());
-			System.out.println(attacker.getName() + "'s Hp: " + attacker.getCurrentHp() + "/" + attacker.getMaxHp() + "\t|"
-					+ "LVL: " + player.getLevel());
-			System.out.println("LVL: " + attacker.getLevel() + "\t\t\t|EXP: "+ player.exp + "/" + player.level*50 +"\n"
-					+ "--------------------------------------------------");
-			attackerDamage = 0;
-			attackDamage = 0;
-			damageTaken = 0;
-			damageDealt = 0;
-			System.out.println("What would you like to do?: \n1:Attack   2:Defend "
-														 + "\n3:Bag      4:Run");
-			
-			System.out.print("Selection: ");
-			int selection = scanner.nextInt();
-			System.out.println("--------------------------------------------------");
-			System.out.println("BattleLog:");
+		System.out.print("Selection: ");
+		int selection = scanner.nextInt();
+		System.out.println("--------------------------------------------------");
 			switch(selection) {
 				case 1:
+					System.out.println("BattleLog:");
 					//If the player is faster
 					if(player.getAgility() >= attacker.getAgility()) {
 						playerMove(player,attacker);
@@ -51,6 +51,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 					break;
 					
 				case 2:
+					System.out.println("BattleLog:");
 					int tempArmor = player.armor;
 					player.armor = player.armor/2 + player.armor;;
 					attackerMove(player,attacker);
@@ -61,54 +62,8 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 					break;
 					
 				case 3:
-					//Bag menu
-					System.out.println("What item would you like to use?: \n"
-							+ "1: " + bag.getPotions() + "- Potions\n"
-							+ "2: " + bag.getBoosters() + "- Boosters");
-					
-					@SuppressWarnings("unused") boolean alreadyAtMax = false;
-					int bagOptions = scanner.nextInt();
-					switch(bagOptions) {
-						case 1:
-						//Output potion menu
-							if(bag.potions == 0) {
-					    		System.out.println("No Potions can be used.");
-					    		break;
-					    	}else if(bag.potions >= 0) {
-					    		//Check if players current hp is already maxed out
-					    		//If it is revert back to the player menu
-					    		if(player.currentHp == player.maxHp) {
-					    			System.out.println("Player is already at max Hp");
-					    			alreadyAtMax = true;
-					    			break;
-					    		}
-					    		//Refill players Hp by 25 hp
-					    		System.out.println("Potion used, 25maxHp recovered.");
-					    		player.currentHp = player.currentHp + 25;
-					    		bag.potions--;
-					    		
-					    		//If the currenthp after heals is over max, reset it
-					    		if(player.currentHp > player.maxHp) {
-					    			player.currentHp = player.maxHp;
-					    		}
-					    		
-					    		//Attacker still gets a move
-					    		attackerMove(player,attacker);
-					    		break;
-					    	}
-							break;
-						//Output booster menu
-						case 2:
-							System.out.println("No Booster can be used.");
-				    		break;
-					}
-					if(alreadyAtMax = true) {
-						break;
-					}
-					attackerMove(player,attacker);
-					if(attacker2 != null) {
-						attackerMove(player,attacker2);
-					}
+					System.out.println("Bag Menu:");
+					useBag(player,bag,attacker);
 
 					break;
 					
@@ -134,14 +89,15 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				player.levelup(attacker);
 				winStatus =  false;
 				player.reward(winStatus, attacker);
+				System.out.println("Returning to overworld\n");
 				return winStatus;
 			}else if(player.getCurrentHp() <= 0) {
 				player.currentHp = 0;
 				System.out.print("You lost the fight \n\n");
 				winStatus = true;
 				player.reward(winStatus, attacker);
-				//Reset player HP before returning
 				player.currentHp = player.maxHp;
+				System.out.println("Returning to mainmenu\n");
 				return winStatus;
 			}
 		}
@@ -198,4 +154,56 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 			damageTaken = 0;
 		}
 	}
+	
+    public static void useBag(Player player,Bag bag,Mob1 attacker) {
+    	//Bag menu
+		System.out.println("What item would you like to use?: \n"
+				+ "1: " + bag.getPotions() + "- Potions\n"
+				+ "2: " + bag.getBoosters() + "- Boosters");
+		
+    	@SuppressWarnings("unused") boolean alreadyAtMax = false;
+    	int bagOptions = scanner.nextInt();
+		switch(bagOptions) {
+			case 1:
+			//Output potion menu
+				if(bag.potions == 0) {
+		    		System.out.println("No Potions can be used.");
+		    		break;
+		    	}else if(bag.potions >= 0) {
+		    		//Check if players current hp is already maxed out
+		    		//If it is revert back to the player menu
+		    		if(player.currentHp == player.maxHp) {
+		    			System.out.println("Player is already at max Hp");
+		    			alreadyAtMax = true;
+		    			break;
+		    		}
+		    		//Refill players Hp by 25 hp
+		    		System.out.println("Potion used, 25maxHp recovered.");
+		    		player.currentHp = player.currentHp + 25;
+		    		bag.potions--;
+		    		
+		    		//If the currenthp after heals is over max, reset it
+		    		if(player.currentHp > player.maxHp) {
+		    			player.currentHp = player.maxHp;
+		    		}
+		    		//Attacker still gets a move
+		    		if(attacker!=null) {
+		    			System.out.println("--------------------------------------------------");
+		    			System.out.println("BattleLog:");
+		    			attackerMove(player,attacker);
+		    		}
+		    		break;
+		    	}
+				break;
+			//Output booster menu
+			case 2:
+				System.out.println("No Booster can be used.");
+	    		break;
+		}
+		if(alreadyAtMax = true) {
+			return;
+		}
+		return;
+    }
+	
 }

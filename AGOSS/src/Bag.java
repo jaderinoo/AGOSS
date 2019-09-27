@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Bag {
 	int potions;
@@ -17,5 +18,6 @@ public class Bag {
     public int getBoosters() {
         return boosters;
     }
+    
 }
 
