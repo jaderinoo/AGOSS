@@ -32,8 +32,8 @@ public class PlayingField {
 		int enemyMoveCount = enemyCount;
 		System.out.println("playerLoc:" + player.getMapY() +"," + player.getMapX());
 		System.out.println("EnemyCount:" + enemyCount);
-		System.out.println("Enemy1:" + mobList.get(0).locationX() + "," + mobList.get(0).locationY());
-		System.out.println("Enemy2:" + mobList.get(1).locationX() + "," + mobList.get(1).locationY());
+		System.out.println("Enemy1:" + mobList.get(0).getMapX() + "," + mobList.get(0).getMapY());
+		System.out.println("Enemy2:" + mobList.get(1).getMapX() + "," + mobList.get(1).getMapY());
 		
 		
 		//Fight.Move(player,mobList.get(0), null, bag);
@@ -89,7 +89,9 @@ public class PlayingField {
 			
 			for(int i = 0; i == enemyMoveCount; i++) {
 				//Move towards player
-				System.out.println("Enemy" + i+1 + ":" + mobList.get(i).locationX() + "," + mobList.get(i).locationY());
+				System.out.println("Enemy" + i+1 + ":" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY());
+				enemyMove(mobList.get(i));
+				
 				enemyMoveCount--;
 				
 				
@@ -101,11 +103,23 @@ public class PlayingField {
 				
 				
 				}
+			Main.bagUpdater(player,bag);
+			Main.playerUpdater(player);
 		}
+		
+		//This section will be used after the enemycount is set to 0.
+		//Return to a menu that doesnt exist yet xd
+		
+		
+		
 		input.close();
 	}
 	
 	public static void playerMove(Player player) {
+		
+	}
+	
+	public static void enemyMove(Mob1 enemy) {
 		
 	}
 		

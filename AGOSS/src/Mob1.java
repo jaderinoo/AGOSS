@@ -8,16 +8,16 @@ public class Mob1 {
 		int special;
 		int level;
 		int currentHp;
-		int locationY;
-		int locationX;
+		int getMapY;
+		int getMapX;
 		Object name;
 
-		public Mob1(String name, int strength,int agility,int armor,int maxHp,int special,int level,int currentHp,int locationX, int locationY) {
+		public Mob1(String name, int strength,int agility,int armor,int maxHp,int special,int level,int currentHp,int getMapX, int getMapY) {
 
-	    	Object[] Statistics = {name, strength, agility, armor, maxHp, special, level, locationX, locationY};
+	    	Object[] Statistics = {name, strength, agility, armor, maxHp, special, level, getMapX, getMapY};
 	    	
-	    	this.locationX = locationX;
-	    	this.locationY = locationY;
+	    	this.getMapX = getMapX;
+	    	this.getMapY = getMapY;
 	    	this.name = name;
 	    	this.strength = strength;
 	    	this.agility = agility;
@@ -28,13 +28,23 @@ public class Mob1 {
 	    	this.currentHp = maxHp;
 	   }
 		
-		public int locationY() {
-	        return locationY;
+		public int getMapY() {
+	        return getMapY;
 	    }
 		
-		public int locationX() {
-	        return locationX;
+		public int getMapX() {
+	        return getMapX;
 	    }
+		
+		public int setMapX(int x) {
+			this.getMapX = x;
+			return this.getMapX;
+		}
+		
+		public int setMapY(int y) {
+			this.getMapY = y;
+			return this.getMapY;
+		}
 		
 		public Object getName() {
 	        return name;
