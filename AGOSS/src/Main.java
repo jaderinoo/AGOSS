@@ -244,7 +244,11 @@ public class Main {
    				 "\nLevel:       " + player.getLevel());
 			
 			//Asks user if they'd like to continue or delete their new character.
-			System.out.println("\nAre you ready to start your adventure? Y/N");
+			System.out.println("\nAs a final note, this game uses autosaves."
+					+ "\nAfter each battle, the game will save your stats."
+					+ "\nIf you lose a battle, you will be returned to the menu with half your"
+					+ "\ngold removed and your Healthpoints replenished."
+					+ "\nAre you ready to start your adventure? Y/N");
 			String reply = scanner.next();
 			
 			switch(reply.toLowerCase()) {
