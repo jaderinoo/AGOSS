@@ -54,9 +54,24 @@ public class PlayingField {
 			
 			int temp = input.nextInt();
 			switch(temp) {
-			case 1:
-				//Allows the player to pick which direction they would like to move in
+			case 1:		
+				//Player move first, then allow all enemys move
 				playerMove(player);
+				
+				//Reset move counter
+				enemyMoveCount = enemyCount;
+				
+				//Enemy moves
+				for(int i = 0; i == enemyMoveCount; i++) {
+					//Move towards player
+					enemyMove(mobList.get(i),i);
+					enemyMoveCount--;
+				}
+				
+				//Save stats and bags
+				Main.bagUpdater(player,bag);
+				Main.playerUpdater(player);
+				
 				break;
 				
 			case 2:
@@ -66,33 +81,13 @@ public class PlayingField {
 				Main.playerUpdater(player);
 				break;
 			}
-			//Reset move counter
-			enemyMoveCount = enemyCount;
-			
-			//A class that will decide the movement
-			//if the item p is sent, allow the user to move as they want
-			//if anything other than p is sent, use AI to move towards the player
-			//Possibility of adding different steps per unit by comparing chars
-			//move();
-			
-			
+		
 			//All in all, if the player is killed, end the game else 
 			//if the enemycount goes to 0, show a "You Win + Mapname" 
 			//Make sure to add a Mapname to the vars as the first 3 lines already allow for information
 			
-			
 			//So it will work like this, Mainmenu -> Adventure/do shit -> Select a world to enter
 			//-> complete the world and return to Adventure/ allow a save option in "Adventure"
-			
-			
-			for(int i = 0; i == enemyMoveCount; i++) {
-				//Move towards player
-				enemyMove(mobList.get(i),i);
-				enemyMoveCount--;
-
-				}
-			Main.bagUpdater(player,bag);
-			Main.playerUpdater(player);
 		}
 		
 		//This section will be used after the enemycount is set to 0.
