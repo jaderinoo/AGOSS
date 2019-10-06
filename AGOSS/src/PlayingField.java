@@ -35,9 +35,6 @@ public class PlayingField {
 		System.out.println("Enemy1:" + mobList.get(0).getMapX() + "," + mobList.get(0).getMapY());
 		System.out.println("Enemy2:" + mobList.get(1).getMapX() + "," + mobList.get(1).getMapY());
 		
-		
-		//Fight.Move(player,mobList.get(0), null, bag);
-		
 		while(enemyCount != 0){
 			
 			//Print out current user stats
@@ -69,6 +66,7 @@ public class PlayingField {
 				Main.playerUpdater(player);
 				break;
 			}
+			//Reset move counter
 			enemyMoveCount = enemyCount;
 			
 			//A class that will decide the movement
@@ -89,19 +87,9 @@ public class PlayingField {
 			
 			for(int i = 0; i == enemyMoveCount; i++) {
 				//Move towards player
-				System.out.println("Enemy" + i+1 + ":" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY());
-				enemyMove(mobList.get(i));
-				
+				enemyMove(mobList.get(i),i);
 				enemyMoveCount--;
-				
-				
-				//If the players loc is below the e, move down one
-				//set the new coordinate in the object
-				//edit the char [] [] by replacing its current position with ' '
-				//put the 'e' in the new position in the [] []
-				
-				
-				
+
 				}
 			Main.bagUpdater(player,bag);
 			Main.playerUpdater(player);
@@ -109,18 +97,47 @@ public class PlayingField {
 		
 		//This section will be used after the enemycount is set to 0.
 		//Return to a menu that doesnt exist yet xd
-		
-		
-		
+			
 		input.close();
 	}
 	
 	public static void playerMove(Player player) {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Please make a selection: \n"
+				+ "1: Up\n"
+				+ "2: Down\n"
+				+ "3: Left\n"
+				+ "4: Right");
 		
+		int temp = input.nextInt();
+		switch(temp) {
+		case 1:
+			//Up
+			break;
+			
+		case 2:
+			//Down
+			break;
+			
+		case 3:
+			//Left
+			break;
+			
+		case 4:
+			//Right
+			break;
+		}
+		input.close();
 	}
 	
-	public static void enemyMove(Mob1 enemy) {
-		
+	public static void enemyMove(Mob1 enemy,int i) {
+		//Post enemy positions
+		System.out.println("Enemy" + i+1 + ":" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY());
+
+		//If the players loc is below the e, move down one
+		//set the new coordinate in the object
+		//edit the char [] [] by replacing its current position with ' '
+		//put the 'e' in the new position in the [] []
 	}
 		
 	//Prints the map for the player
