@@ -29,6 +29,7 @@ public class PlayingField {
 
 		//Initial scan
 		int enemyCount = scanMap(player,map);
+		int enemyMoveCount = enemyCount;
 		System.out.println("playerLoc:" + player.getMapY() +"," + player.getMapX());
 		System.out.println("EnemyCount:" + enemyCount);
 		System.out.println("Enemy1:" + mobList.get(0).locationX() + "," + mobList.get(0).locationY());
@@ -68,7 +69,7 @@ public class PlayingField {
 				Main.playerUpdater(player);
 				break;
 			}
-			
+			enemyMoveCount = enemyCount;
 			
 			//A class that will decide the movement
 			//if the item p is sent, allow the user to move as they want
@@ -86,10 +87,10 @@ public class PlayingField {
 			//-> complete the world and return to Adventure/ allow a save option in "Adventure"
 			
 			
-			for(int i = 0; i == enemyCount; i++) {
+			for(int i = 0; i == enemyMoveCount; i++) {
 				//Move towards player
 				System.out.println("Enemy" + i+1 + ":" + mobList.get(i).locationX() + "," + mobList.get(i).locationY());
-				enemyCount--;
+				enemyMoveCount--;
 				
 				
 				//If the players loc is below the e, move down one
