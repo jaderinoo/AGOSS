@@ -62,8 +62,10 @@ public class PlayingField {
 				break;
 				
 			case 2:
-				//Uses the bag menu
+				//Uses the bag menu and update player information
 				Fight.useBag(player,bag,null);
+				Main.bagUpdater(player,bag);
+				Main.playerUpdater(player);
 				break;
 			}
 			

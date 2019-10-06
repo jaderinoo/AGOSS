@@ -22,7 +22,8 @@ public class Adventure {
 			boolean winStatus = Fight.Move(player,attacker, null, bag);
 			Main.bagUpdater(player,bag);
 			Main.playerUpdater(player);
-			if(winStatus = false) {
+			System.out.println("Winstatus: " + winStatus);
+			if(winStatus == false) {
 				PlayingField.map(player, bag);
 			}
 
