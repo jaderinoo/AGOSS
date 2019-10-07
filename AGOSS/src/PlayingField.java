@@ -1,17 +1,30 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
 
+//NOTES
+/*		
+			//All in all, if the player is killed, end the game else 
+			//if the enemycount goes to 0, show a "You Win + Mapname" 
+			//Make sure to add a Mapname to the vars as the first 3 lines already allow for information
+			
+			//So it will work like this, Mainmenu -> Adventure/do shit -> Select a world to enter
+			//-> complete the world and return to Adventure/ allow a save option in "Adventure"
+ */
+
 public class PlayingField {
 	static int rows = 15;
 	static int cols = 15;
 	static ArrayList<Mob1> mobList = new ArrayList<Mob1>();
+	static Scanner input = new Scanner(System.in);
+	static int enemyCount = 0;
 	
 	public static void map(Player player, Bag bag) throws Exception {
-		Scanner input = new Scanner(System.in);
+
 		String[] batch = inputToString("src\\maps\\test.txt");
 	    
 		//Initialize vars
@@ -30,7 +43,7 @@ public class PlayingField {
 		printMap(map);
 
 		//Initial scan
-		int enemyCount = scanMap(player,map);
+		enemyCount = scanMap(player,map);
 		int enemyMoveCount = enemyCount;
 		System.out.println("playerLoc:" + player.getMapY() +"," + player.getMapX());
 		System.out.println("EnemyCount:" + enemyCount);
@@ -58,7 +71,7 @@ public class PlayingField {
 			switch(temp) {
 			case 1:		
 				//Player move first, then allow all enemys move
-				playerMove(map, player);
+				playerMove(map, player, bag);
 
 				break;
 				
@@ -82,66 +95,11 @@ public class PlayingField {
 			//Save stats and bags
 			Main.bagUpdater(player,bag);
 			Main.playerUpdater(player);
-			
-			//All in all, if the player is killed, end the game else 
-			//if the enemycount goes to 0, show a "You Win + Mapname" 
-			//Make sure to add a Mapname to the vars as the first 3 lines already allow for information
-			
-			//So it will work like this, Mainmenu -> Adventure/do shit -> Select a world to enter
-			//-> complete the world and return to Adventure/ allow a save option in "Adventure"
 		}
 		
 		//This section will be used after the enemycount is set to 0.
 		//Return to a menu that doesnt exist yet xd
 
-	}
-	
-	public static void playerMove(char[][] map, Player player) {
-		Scanner input2 = new Scanner(System.in);
-		System.out.println("Please make a selection: \n"
-				+ "1: Up\n"
-				+ "2: Down\n"
-				+ "3: Left\n"
-				+ "4: Right");
-		
-		int temp2 = input2.nextInt();
-		switch(temp2) {
-		case 1:
-			//Up
-			map[player.getMapX()][player.getMapY()] = ' ';
-			map[player.getMapX()][player.getMapY()-1] = 'p';
-			player.setMapY(player.getMapY()-1);
-			System.out.println("PLAYER LOCATION " + player.getMapX() + "," + player.getMapY());
-			printMap(map);
-			break;
-			
-		case 2:
-			//Down
-			map[player.getMapX()][player.getMapY()] = ' ';
-			map[player.getMapX()][player.getMapY()+1] = 'p';
-			player.setMapY(player.getMapY()-1);
-			System.out.println("PLAYER LOCATION " + player.getMapX() + "," + player.getMapY());
-			printMap(map);
-			break;
-			
-		case 3:
-			//Left
-			map[player.getMapX()][player.getMapY()] = ' ';
-			map[player.getMapX()-1][player.getMapY()] = 'p';
-			player.setMapX(player.getMapX()-1);
-			System.out.println("PLAYER LOCATION " + player.getMapX() + "," + player.getMapY());
-			printMap(map);
-			break;
-			
-		case 4:
-			//Right
-			map[player.getMapX()][player.getMapY()] = ' ';
-			map[player.getMapX()+1][player.getMapY()] = 'p';
-			player.setMapX(player.getMapX()-1);
-			System.out.println("PLAYER LOCATION " + player.getMapX() + "," + player.getMapY());
-			printMap(map);
-			break;
-		}
 	}
 	
 	public static void enemyMove(char[][] map, Mob1 enemy,int i) {
@@ -153,6 +111,113 @@ public class PlayingField {
 		//edit the char [] [] by replacing its current position with ' '
 		//put the 'e' in the new position in the [] []
 	}
+	
+	public static void playerMove(char[][] map, Player player, Bag bag) throws IOException {
+		
+		//Prompts the user to move in a direction
+		System.out.println("Please make a selection: \n"
+				+ "1: Up\n"
+				+ "2: Down\n"
+				+ "3: Left\n"
+				+ "4: Right");
+		
+		//Allows the user to choose where they would like to move
+		//If they move their icon will as well
+		int temp2 = input.nextInt();
+		switch(temp2) {
+		case 1:
+			//Up
+			map[player.getMapX()][player.getMapY()] = ' ';
+			map[player.getMapX()][player.getMapY()-1] = 'p';
+			player.setMapY(player.getMapY()-1);
+			printMap(map);
+			playerCheckAttack(player,map,bag);
+			break;
+			
+		case 2:
+			//Down
+			map[player.getMapX()][player.getMapY()] = ' ';
+			map[player.getMapX()][player.getMapY()+1] = 'p';
+			player.setMapY(player.getMapY()-1);
+			printMap(map);
+			break;
+			
+		case 3:
+			//Left
+			map[player.getMapX()][player.getMapY()] = ' ';
+			map[player.getMapX()-1][player.getMapY()] = 'p';
+			player.setMapX(player.getMapX()-1);
+			printMap(map);
+			break;
+			
+		case 4:
+			//Right
+			map[player.getMapX()][player.getMapY()] = ' ';
+			map[player.getMapX()+1][player.getMapY()] = 'p';
+			player.setMapX(player.getMapX()-1);
+			printMap(map);
+			break;
+		}
+	}
+	
+	public static void playerCheckAttack(Player player, char[][] map, Bag bag) throws IOException {
+
+		//Compares the players location to the moblist locations
+		for(int i = 0; i != enemyCount; i++) {
+
+			System.out.println(player.getName() + ": (" + player.getMapX() + "," + player.getMapY() + ")");
+			System.out.println(mobList.get(i).getName() + ": (" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY() + ")");
+			//check if above
+	        if(map[player.getMapX()][player.getMapY()-1] == map[mobList.get(i).getMapX()][mobList.get(i).getMapY()]){
+	        	enemyFound(player, map, mobList.get(i), bag);
+	        }
+	        //check if below
+	        if(map[player.getMapX()][player.getMapY()+1] == map[mobList.get(i).getMapX()][mobList.get(i).getMapY()]){
+	        	enemyFound(player, map, mobList.get(i), bag);
+	        }
+	        //check if left
+	        if(map[player.getMapX()-1][player.getMapY()] == map[mobList.get(i).getMapX()][mobList.get(i).getMapY()]){
+	        	enemyFound(player, map, mobList.get(i), bag);
+	        }
+	        //check if right
+	        if(map[player.getMapX()+1][player.getMapY()] == map[mobList.get(i).getMapX()][mobList.get(i).getMapY()]){
+	        	enemyFound(player, map, mobList.get(i), bag);
+	        }
+		}
+	}
+	
+	public static void enemyFound(Player player,char[][] map, Mob1 enemy, Bag bag) throws IOException {
+		
+		//Prompts the user about a nearby enemy
+    	System.out.println("Would you like to attack? Y/N");
+        char Answer = Character.toLowerCase(input.next().charAt(0));
+        
+        //If player wants to attack:
+        if (Answer =='y') {
+            
+            //Initiate the fight
+            System.out.println("Attacking!");
+            boolean winStatus = Fight.Move(player, enemy, null, bag);
+            
+            //Update the stats and bags
+			Main.bagUpdater(player,bag);
+			Main.playerUpdater(player);
+			System.out.println("Winstatus: " + winStatus);
+			
+			//If the player wins
+			if(winStatus == false) {
+				//Reduce the enemyCount
+				enemyCount--;
+				
+				//Remove the space from the map
+				map[enemy.getMapX()][enemy.getMapY()] = ' ';
+				
+				//Move the enemy to 0,0
+				enemy.setMapX(0);
+				enemy.setMapY(0);
+			}
+        }
+    }
 		
 	//Prints the map for the player
 	public static void printMap(char[][] map) {
@@ -192,7 +257,7 @@ public class PlayingField {
 		    	//If an e is found, create the object and add it to the arraylist: mobList
 		        if(map[x][y] == 'e') {
 		        	enemyCount++;
-		        	enemyCreate(x,y,'e');
+		        	enemyCreate(y,x,'e');
 		        }
 		        
 		        //If p is found, save the location 

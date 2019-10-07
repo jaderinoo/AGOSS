@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -8,7 +9,7 @@ static int attackerDamage;
 static int attackDamage;
 static int damageTaken;
 static int damageDealt;
-public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) {
+public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) throws IOException {
 	
 	while(player.getCurrentHp() != 0 || attacker.getCurrentHp() != 0) {
 		System.out.println("--------------------------------------------------");
@@ -90,6 +91,8 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				winStatus =  false;
 				player.reward(winStatus, attacker);
 				System.out.println("Returning to overworld\n");
+				Main.bagUpdater(player,bag);
+				Main.playerUpdater(player);
 				return winStatus;
 			}else if(player.getCurrentHp() <= 0) {
 				player.currentHp = 0;
@@ -98,6 +101,8 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				player.reward(winStatus, attacker);
 				player.currentHp = player.maxHp;
 				System.out.println("Returning to mainmenu\n");
+				Main.bagUpdater(player,bag);
+				Main.playerUpdater(player);
 				return winStatus;
 			}
 		}
