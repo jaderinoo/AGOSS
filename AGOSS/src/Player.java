@@ -139,7 +139,7 @@ public class Player {
 			this.exp = this.exp + attacker.getLevel()*4;
 			System.out.println("You gained "+ attacker.getLevel()*4 +" EXP!");
 			//If the players exp is = to its current level*2
-			if(this.exp == this.level*50) {
+			if(this.exp >= this.level*50) {
 				System.out.println("\t\t~LEVEL UP!~");
 				this.exp = 0;
 				this.level++;

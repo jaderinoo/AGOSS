@@ -3,6 +3,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 public class PlayingField {
 	static int rows = 15;
 	static int cols = 15;
@@ -56,22 +58,8 @@ public class PlayingField {
 			switch(temp) {
 			case 1:		
 				//Player move first, then allow all enemys move
-				playerMove(player);
-				
-				//Reset move counter
-				enemyMoveCount = enemyCount;
-				
-				//Enemy moves
-				for(int i = 0; i == enemyMoveCount; i++) {
-					//Move towards player
-					enemyMove(mobList.get(i),i);
-					enemyMoveCount--;
-				}
-				
-				//Save stats and bags
-				Main.bagUpdater(player,bag);
-				Main.playerUpdater(player);
-				
+				playerMove(map, player);
+
 				break;
 				
 			case 2:
@@ -81,7 +69,20 @@ public class PlayingField {
 				Main.playerUpdater(player);
 				break;
 			}
-		
+			
+			//Reset move counter
+			enemyMoveCount = enemyCount;
+
+			//Enemy moves
+			for(int i = 0; i != enemyMoveCount; i++) {
+				//Move towards player
+				enemyMove(map, mobList.get(i),i);
+			}
+
+			//Save stats and bags
+			Main.bagUpdater(player,bag);
+			Main.playerUpdater(player);
+			
 			//All in all, if the player is killed, end the game else 
 			//if the enemycount goes to 0, show a "You Win + Mapname" 
 			//Make sure to add a Mapname to the vars as the first 3 lines already allow for information
@@ -92,42 +93,48 @@ public class PlayingField {
 		
 		//This section will be used after the enemycount is set to 0.
 		//Return to a menu that doesnt exist yet xd
-			
-		input.close();
+
 	}
 	
-	public static void playerMove(Player player) {
-		Scanner input = new Scanner(System.in);
+	public static void playerMove(char[][] map, Player player) {
+		Scanner input2 = new Scanner(System.in);
 		System.out.println("Please make a selection: \n"
 				+ "1: Up\n"
 				+ "2: Down\n"
 				+ "3: Left\n"
 				+ "4: Right");
 		
-		int temp = input.nextInt();
-		switch(temp) {
+		int temp2 = input2.nextInt();
+		switch(temp2) {
 		case 1:
 			//Up
+			map[player.getMapX()][player.getMapY()] = ' ';
+			map[player.getMapX()][player.getMapY()-1] = 'p';
+			player.setMapY(player.getMapY()-1);
+			System.out.println("PLAYER LOCATION " + player.getMapX() + "," + player.getMapY());
+			printMap(map);
 			break;
 			
 		case 2:
 			//Down
+			player.setMapY(player.getMapY()+1);
 			break;
 			
 		case 3:
 			//Left
+			player.setMapX(player.getMapX()-1);
 			break;
 			
 		case 4:
 			//Right
+			player.setMapX(player.getMapX()+1);
 			break;
 		}
-		input.close();
 	}
 	
-	public static void enemyMove(Mob1 enemy,int i) {
+	public static void enemyMove(char[][] map, Mob1 enemy,int i) {
 		//Post enemy positions
-		System.out.println("Enemy" + i+1 + ":" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY());
+		System.out.println(enemy.getName() + ": (" + enemy.getMapX() + "," + enemy.getMapY() + ")");
 
 		//If the players loc is below the e, move down one
 		//set the new coordinate in the object
@@ -138,10 +145,10 @@ public class PlayingField {
 	//Prints the map for the player
 	public static void printMap(char[][] map) {
 		System.out.println("Playing Field:\n_______________________________________________");
-		for (int i=0; i < rows; i++) {
+		for (int y=0; y < rows; y++) {
 			System.out.print("|");
-		    for (int j=0; j < cols; j++) {
-		        System.out.print("[" + map[i][j] + "]");
+		    for (int x=0; x < cols; x++) {
+		        System.out.print("[" + map[x][y] + "]");
 		    }
 		    System.out.println("|");
 		}
@@ -154,9 +161,9 @@ public class PlayingField {
 		int next = 0;
 		double maxRow = 0;
 		maxRow = Math.sqrt(data.length());
-		for (int i=0; i < maxRow; i++) {
-		    for (int j=0; j < maxRow; j++) {
-		    	map[i][j] = data.charAt(next++);
+		for (int y=0; y < maxRow; y++) {
+		    for (int x=0; x < maxRow; x++) {
+		    	map[x][y] = data.charAt(next++);
 		    }
 		}
 		return map;
@@ -180,6 +187,7 @@ public class PlayingField {
 		        if(map[x][y] == 'p') {
 		        	player.setMapY(y);
 		        	player.setMapX(x);
+		        	System.out.println("PLAYER LOCATION " + player.getMapX() + "," + player.getMapY());
 		        }
 		    }
 		}

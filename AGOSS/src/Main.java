@@ -14,14 +14,13 @@ public class Main {
 	static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) throws Exception {
-
 		System.out.println("Welcome to:\n" +
 			    "  _    __   __  ___  ___\r\n" + 
 				" / \\  |    |  | |    |\r\n" + 
 				"|___| |	 _ |  | |__  |__\r\n" + 
 				"|   | |__| |__| ___| ___|\n------------------------");
 		System.out.println("Please Select an Option:\n  1 - New Game\n  2 - Load Game");
-		
+
 		int selection = scanner.nextInt();
 		switch(selection) {
 			case 1:
