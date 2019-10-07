@@ -117,17 +117,29 @@ public class PlayingField {
 			
 		case 2:
 			//Down
-			player.setMapY(player.getMapY()+1);
+			map[player.getMapX()][player.getMapY()] = ' ';
+			map[player.getMapX()][player.getMapY()+1] = 'p';
+			player.setMapY(player.getMapY()-1);
+			System.out.println("PLAYER LOCATION " + player.getMapX() + "," + player.getMapY());
+			printMap(map);
 			break;
 			
 		case 3:
 			//Left
+			map[player.getMapX()][player.getMapY()] = ' ';
+			map[player.getMapX()-1][player.getMapY()] = 'p';
 			player.setMapX(player.getMapX()-1);
+			System.out.println("PLAYER LOCATION " + player.getMapX() + "," + player.getMapY());
+			printMap(map);
 			break;
 			
 		case 4:
 			//Right
-			player.setMapX(player.getMapX()+1);
+			map[player.getMapX()][player.getMapY()] = ' ';
+			map[player.getMapX()+1][player.getMapY()] = 'p';
+			player.setMapX(player.getMapX()-1);
+			System.out.println("PLAYER LOCATION " + player.getMapX() + "," + player.getMapY());
+			printMap(map);
 			break;
 		}
 	}
