@@ -10,11 +10,12 @@ public class Mob1 {
 		int currentHp;
 		int getMapY;
 		int getMapX;
+		char type;
 		Object name;
 
-		public Mob1(String name, int strength,int agility,int armor,int maxHp,int special,int level,int currentHp,int getMapX, int getMapY) {
+		public Mob1(String name, int strength,int agility,int armor,int maxHp,int special,int level,int currentHp,int getMapX, int getMapY, char type) {
 
-	    	Object[] Statistics = {name, strength, agility, armor, maxHp, special, level, getMapX, getMapY};
+	    	Object[] Statistics = {name, strength, agility, armor, maxHp, special, level, getMapX, getMapY, type};
 	    	
 	    	this.getMapX = getMapX;
 	    	this.getMapY = getMapY;
@@ -26,7 +27,12 @@ public class Mob1 {
 	    	this.special = special;
 	    	this.level = level;
 	    	this.currentHp = maxHp;
+	    	this.type = type;
 	   }
+		
+		public char getType() {
+	        return type;
+	    }
 		
 		public int getMapY() {
 	        return getMapY;

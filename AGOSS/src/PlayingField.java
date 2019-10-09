@@ -25,8 +25,9 @@ public class PlayingField {
 	static int enemyMoveCount = 0;
 	static int enemyKillCount = 0;
 	static String firstLine = "";
-	static char [] collisionSet = {'/','|','\\','_','e'};
 	static boolean movementCheck = false;
+	//Collision based items
+	static char [] collisionSet = {'/','|','\\','_','e'};
 	
 	public static void map(Player player, Bag bag) throws Exception {
 
@@ -134,7 +135,7 @@ public class PlayingField {
 							//If X has enough clears, it'll pass this check
 							if(x == collisionSet.length) {
 								map[enemy.getMapX()][enemy.getMapY()] = ' ';
-								map[enemy.getMapX()-1][enemy.getMapY()] = 'e';
+								map[enemy.getMapX()-1][enemy.getMapY()] = enemy.getType();
 								enemy.setMapX(enemy.getMapX()-1);
 							}
 						}
@@ -148,7 +149,7 @@ public class PlayingField {
 							//If X has enough clears, it'll pass this check
 							if(x == collisionSet.length) {
 								map[enemy.getMapX()][enemy.getMapY()] = ' ';
-								map[enemy.getMapX()][enemy.getMapY()-1] = 'e';
+								map[enemy.getMapX()][enemy.getMapY()-1] = enemy.getType();
 								enemy.setMapY(enemy.getMapY()-1);
 							}
 						}
@@ -162,7 +163,7 @@ public class PlayingField {
 							//If X has enough clears, it'll pass this check
 							if(x == collisionSet.length) {
 								map[enemy.getMapX()][enemy.getMapY()] = ' ';
-								map[enemy.getMapX()][enemy.getMapY()+1] = 'e';
+								map[enemy.getMapX()][enemy.getMapY()+1] = enemy.getType();
 								enemy.setMapY(enemy.getMapY()+1);
 							}
 						}
@@ -176,7 +177,7 @@ public class PlayingField {
 							//If X has enough clears, it'll pass this check
 							if(x == collisionSet.length) {
 								map[enemy.getMapX()][enemy.getMapY()] = ' ';
-								map[enemy.getMapX()+1][enemy.getMapY()] = 'e';
+								map[enemy.getMapX()+1][enemy.getMapY()] = enemy.getType();
 								enemy.setMapX(enemy.getMapX()+1);
 							}
 						}
@@ -444,15 +445,15 @@ public class PlayingField {
 	private static void enemyCreate(int y, int x, char mobType) {
 
 		if(mobType == 'e') {
-			mobList.add(new Mob1("FootSoldier", 5, 5, 5, 50, 10, 2, 50, x, y));
+			mobList.add(new Mob1("FootSoldier", 5, 5, 5, 50, 10, 2, 50, x, y, mobType));
 		}
 		
 		if(mobType == 'k') {
-			mobList.add(new Mob1("Knight", 5, 5, 5, 50, 10, 2, 75, x, y));
+			mobList.add(new Mob1("Knight", 5, 5, 5, 50, 10, 2, 75, x, y, mobType));
 		}
 		
 		if(mobType == 'g') {
-			mobList.add(new Mob1("General", 5, 5, 5, 50, 10, 2, 100, x, y));
+			mobList.add(new Mob1("General", 5, 5, 5, 50, 10, 2, 100, x, y, mobType));
 		}
 
 	}
