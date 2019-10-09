@@ -164,7 +164,8 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
     	//Bag menu
 		System.out.println("What item would you like to use?: \n"
 				+ "1: " + bag.getPotions() + "- Potions\n"
-				+ "2: " + bag.getBoosters() + "- Boosters");
+				+ "2: " + bag.getBoosters() + "- Boosters\n"
+				+ "3: Exit");
 		
     	@SuppressWarnings("unused") boolean alreadyAtMax = false;
     	int bagOptions = scanner.nextInt();
@@ -183,7 +184,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 		    			break;
 		    		}
 		    		//Refill players Hp by 25 hp
-		    		System.out.println("Potion used, 25maxHp recovered.");
+		    		System.out.println("--------------------------------------------------\n\tPotion used, 25maxHp recovered.");
 		    		player.currentHp = player.currentHp + 25;
 		    		bag.potions--;
 		    		
@@ -202,7 +203,12 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				break;
 			//Output booster menu
 			case 2:
-				System.out.println("No Booster can be used.");
+				System.out.println("No Booster can be used.\n--------------------------------------------------");
+	    		break;
+	    		
+	    	//Output booster menu
+			case 3:
+				System.out.println("--------------------------------------------------");
 	    		break;
 		}
 		if(alreadyAtMax = true) {

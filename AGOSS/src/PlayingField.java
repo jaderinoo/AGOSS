@@ -27,7 +27,7 @@ public class PlayingField {
 	static String firstLine = "";
 	static boolean movementCheck = false;
 	//Collision based items
-	static char [] collisionSet = {'/','|','\\','_','e'};
+	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G'};
 	
 	public static void map(Player player, Bag bag) throws Exception {
 
@@ -44,9 +44,8 @@ public class PlayingField {
 		System.out.println(secondLine);
 		System.out.println(thirdLine);
 		
-		//Prints out the initial map
+		//Saves the initial map
 		char[][] map = saveMap(data);
-		printMap(map);
 
 		//Initial scan
 		enemyCount = scanMap(player,map);
@@ -72,12 +71,17 @@ public class PlayingField {
 		
 		while(enemyCount != 0){
 			
+			printMap(map);
+			
+			//Prints out enemyCount
+			System.out.println("Enemies remaining: " + enemyCount);
+			
 			//Print out current user stats
-			System.out.println("--------------------------------------------------");
-			System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp());
-			System.out.println("|LVL: " + player.getLevel());
-			System.out.println("|EXP: "+ player.exp + "/" + player.level*50 +"\n"
-					+ "--------------------------------------------------");
+			System.out.println("-----------------------------------------------");
+			System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp() +"\t |");
+			System.out.println("|LVL: " + player.getLevel() + "\t\t\t |Wpn Bonus: null");
+			System.out.println("|EXP: "+ player.exp + "/" + player.level*50 +"\t\t |Arm Bonus: null"
+					+ "\n-----------------------------------------------");
 			
 			
 			//Allow the player to move in any direction, use the bag
@@ -91,15 +95,17 @@ public class PlayingField {
 			switch(temp) {
 			case 1:		
 				//Player move first, then allow all enemys move
+				System.out.println("-----------------------------------------------");
 				playerMove(map, player, bag);
-
 				break;
 				
 			case 2:
 				//Uses the bag menu and update player information
+				System.out.println("-----------------------------------------------");
 				Fight.useBag(player,bag,null);
 				Main.bagUpdater(player,bag);
 				Main.playerUpdater(player);
+				System.out.println("-----------------------------------------------");
 				printMap(map);
 				break;
 			}
@@ -117,20 +123,15 @@ public class PlayingField {
 	}
 	
 	public static void enemyMove(Player player, Bag bag, char[][] map, Mob1 enemy,int i) throws InterruptedException, IOException {
-		//Post enemy positions
-		Thread.sleep(200);
 		int x = 0;
-		System.out.println(enemy.getName() + ": (" + enemy.getMapX() + "," + enemy.getMapY() + ")");
 		//Checks to see if the player moved
 		if(movementCheck == true) {
 			//Checks if the mob is in 0,0
 			if(map[enemy.getMapX()][enemy.getMapY()] != map[0][0]) {
-					
 				// Left
 				if(enemy.getMapX() > player.getMapX()) {
 					for(int z = 0; z != collisionSet.length; z++) {
 						if(map[enemy.getMapX()-1][enemy.getMapY()] != (collisionSet[z])) {
-							System.out.println(x);
 							x++;
 							//If X has enough clears, it'll pass this check
 							if(x == collisionSet.length) {
@@ -144,7 +145,6 @@ public class PlayingField {
 				}else if(enemy.getMapY() > player.getMapY()){
 					for(int z = 0; z != collisionSet.length; z++) {
 						if(map[enemy.getMapX()][enemy.getMapY()-1] != (collisionSet[z])) {
-							System.out.println(x);
 							x++;
 							//If X has enough clears, it'll pass this check
 							if(x == collisionSet.length) {
@@ -158,7 +158,6 @@ public class PlayingField {
 				}else if(enemy.getMapY() < player.getMapY()){
 					for(int z = 0; z != collisionSet.length; z++) {
 						if(map[enemy.getMapX()][enemy.getMapY()+1] != (collisionSet[z])) {
-							System.out.println(x);
 							x++;
 							//If X has enough clears, it'll pass this check
 							if(x == collisionSet.length) {
@@ -172,7 +171,6 @@ public class PlayingField {
 				}else if(enemy.getMapX() < player.getMapX()) {
 					for(int z = 0; z != collisionSet.length; z++) {
 						if(map[enemy.getMapX()+1][enemy.getMapY()] != (collisionSet[z])) {
-							System.out.println(x);
 							x++;
 							//If X has enough clears, it'll pass this check
 							if(x == collisionSet.length) {
@@ -201,11 +199,12 @@ public class PlayingField {
 					+ "2: Down\n"
 					+ "3: Left\n"
 					+ "4: Right\n"
-					+ "5: Don't Move");
+					+ "5: Stand Ground");
 			
 			//Ask user for movement input
 			int x = 0;
 			int temp2 = input.nextInt();
+			System.out.println("-----------------------------------------------");
 			switch(temp2) {
 			
 			case 1:
@@ -223,15 +222,14 @@ public class PlayingField {
 				if(movementCheck == true){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
-					map[player.getMapX()][player.getMapY()-1] = 'p';
+					map[player.getMapX()][player.getMapY()-1] = 'P';
 					player.setMapY(player.getMapY()-1);
-					printMap(map);
 					playerCheckAttack(player,map,bag);
 					break;
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				    System.out.println("You cannot move in that direction.\n--------------------------------------------------");
+				    System.out.println("You cannot move in that direction.\n-----------------------------------------------");
 				    break;
 				}
 				
@@ -251,15 +249,14 @@ public class PlayingField {
 				if(movementCheck == true){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
-					map[player.getMapX()][player.getMapY()+1] = 'p';
+					map[player.getMapX()][player.getMapY()+1] = 'P';
 					player.setMapY(player.getMapY()+1);
-					printMap(map);
 					playerCheckAttack(player,map,bag);
 					break;
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				    System.out.println("You cannot move in that direction.\n--------------------------------------------------");
+				    System.out.println("You cannot move in that direction.\n-----------------------------------------------");
 				    break;
 				}
 				
@@ -279,15 +276,14 @@ public class PlayingField {
 				if(movementCheck == true){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
-					map[player.getMapX()-1][player.getMapY()] = 'p';
+					map[player.getMapX()-1][player.getMapY()] = 'P';
 					player.setMapX(player.getMapX()-1);
-					printMap(map);
 					playerCheckAttack(player,map,bag);
 					break;
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				    System.out.println("You cannot move in that direction.\n--------------------------------------------------");
+				    System.out.println("You cannot move in that direction.\n-----------------------------------------------");
 				    break;
 				}
 				
@@ -307,21 +303,19 @@ public class PlayingField {
 				if(movementCheck == true){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
-					map[player.getMapX()+1][player.getMapY()] = 'p';
+					map[player.getMapX()+1][player.getMapY()] = 'P';
 					player.setMapX(player.getMapX()+1);
-					printMap(map);
 					playerCheckAttack(player,map,bag);
 					break;
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				    System.out.println("You cannot move in that direction.\n--------------------------------------------------");
+				    System.out.println("You cannot move in that direction.\n-----------------------------------------------");
 				    break;
 				}
 				
 			case 5:
-				//Dont Move
-				printMap(map);
+				//Stand Ground
 				playerCheckAttack(player,map,bag);
 				movementCheck = true;
 				break;
@@ -396,7 +390,7 @@ public class PlayingField {
 		for (int y=0; y < rows; y++) {
 			System.out.print("|");
 		    for (int x=0; x < cols; x++) {
-		        System.out.print("[" + map[x][y] + "]");
+		        System.out.print(" " + map[x][y] + " ");
 		    }
 		    System.out.println("|");
 		}
@@ -425,14 +419,24 @@ public class PlayingField {
 		for (int y=0; y < rows; y++) {
 		    for (int x=0; x < cols; x++) {
 		    	
-		    	//If an e is found, create the object and add it to the arraylist: mobList
-		        if(map[x][y] == 'e') {
+		    	//If an F is found, create the object and add it to the arraylist: mobList
+		        if(map[x][y] == 'F') {
 		        	enemyCount++;
-		        	enemyCreate(y,x,'e');
+		        	enemyCreate(y,x,'F');
+		        }
+		        //If an K is found, create the object and add it to the arraylist: mobList
+		        if(map[x][y] == 'K') {
+		        	enemyCount++;
+		        	enemyCreate(y,x,'K');
+		        }
+		        //If an G is found, create the object and add it to the arraylist: mobList
+		        if(map[x][y] == 'G') {
+		        	enemyCount++;
+		        	enemyCreate(y,x,'G');
 		        }
 		        
-		        //If p is found, save the location 
-		        if(map[x][y] == 'p') {
+		        //If P is found, save the location 
+		        if(map[x][y] == 'P') {
 		        	player.setMapY(y);
 		        	player.setMapX(x);
 		        }
@@ -444,15 +448,15 @@ public class PlayingField {
 	
 	private static void enemyCreate(int y, int x, char mobType) {
 
-		if(mobType == 'e') {
+		if(mobType == 'F') {
 			mobList.add(new Mob1("FootSoldier", 5, 5, 5, 50, 10, 2, 50, x, y, mobType));
 		}
 		
-		if(mobType == 'k') {
+		if(mobType == 'K') {
 			mobList.add(new Mob1("Knight", 5, 5, 5, 50, 10, 2, 75, x, y, mobType));
 		}
 		
-		if(mobType == 'g') {
+		if(mobType == 'G') {
 			mobList.add(new Mob1("General", 5, 5, 5, 50, 10, 2, 100, x, y, mobType));
 		}
 

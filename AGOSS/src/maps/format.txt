@@ -1,6 +1,6 @@
-Testmap
-null
-A basic test map used for testing :)
+Mapname
+Mapstats
+Description
 /-------------\
 |  F       F  |
 |             |
