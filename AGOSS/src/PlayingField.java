@@ -150,51 +150,92 @@ public class PlayingField {
 				+ "4: Right\n"
 				+ "5: Don't Move");
 		
+		boolean movementCheck = false;
 		//Allows the user to choose where they would like to move
 		//If they move their icon will as well
-		int temp2 = input.nextInt();
-		switch(temp2) {
-		case 1:
-			//Up
-			map[player.getMapX()][player.getMapY()] = ' ';
-			map[player.getMapX()][player.getMapY()-1] = 'p';
-			player.setMapY(player.getMapY()-1);
-			printMap(map);
-			playerCheckAttack(player,map,bag);
-			break;
-			
-		case 2:
-			//Down
-			map[player.getMapX()][player.getMapY()] = ' ';
-			map[player.getMapX()][player.getMapY()+1] = 'p';
-			player.setMapY(player.getMapY()+1);
-			printMap(map);
-			playerCheckAttack(player,map,bag);
-			break;
-			
-		case 3:
-			//Left
-			map[player.getMapX()][player.getMapY()] = ' ';
-			map[player.getMapX()-1][player.getMapY()] = 'p';
-			player.setMapX(player.getMapX()-1);
-			printMap(map);
-			playerCheckAttack(player,map,bag);
-			break;
-			
-		case 4:
-			//Right
-			map[player.getMapX()][player.getMapY()] = ' ';
-			map[player.getMapX()+1][player.getMapY()] = 'p';
-			player.setMapX(player.getMapX()+1);
-			printMap(map);
-			playerCheckAttack(player,map,bag);
-			break;
-			
-		case 5:
-			//Dont Move
-			printMap(map);
-			playerCheckAttack(player,map,bag);
-			break;
+		while(movementCheck  = false) {
+			int temp2 = input.nextInt();
+			switch(temp2) {
+			case 1:
+				//Up
+		        if(map[player.getMapX()][player.getMapY()-1] != '/') {
+		        	//Move up and print map
+					map[player.getMapX()][player.getMapY()] = ' ';
+					map[player.getMapX()][player.getMapY()-1] = 'p';
+					player.setMapY(player.getMapY()-1);
+					printMap(map);
+					playerCheckAttack(player,map,bag);
+					movementCheck = true;
+		        	break;
+		        } else {
+		        	//Print map and tell the player to move elsewhere
+		        	printMap(map);
+		        	System.out.println("You cannot move in that direction.\n--------------------------------------------------");
+		        	break;
+		        }
+		        
+			case 2:
+				//Down
+		        if(map[player.getMapX()][player.getMapY()+1] != '/') {
+			        //Move down and print map
+					map[player.getMapX()][player.getMapY()] = ' ';
+					map[player.getMapX()][player.getMapY()+1] = 'p';
+					player.setMapY(player.getMapY()+1);
+					printMap(map);
+					playerCheckAttack(player,map,bag);
+					movementCheck = true;
+					break;
+		        } else {
+		        	//Print map and tell the player to move elsewhere
+		        	printMap(map);
+		        	System.out.println("You cannot move in that direction.\n--------------------------------------------------");
+		        	break;
+		        }
+				
+			case 3:
+				//Left
+				//Down
+		        if(map[player.getMapX()-1][player.getMapY()] != '/') {
+			        //Move left and print map
+					map[player.getMapX()][player.getMapY()] = ' ';
+					map[player.getMapX()-1][player.getMapY()] = 'p';
+					player.setMapX(player.getMapX()-1);
+					printMap(map);
+					playerCheckAttack(player,map,bag);
+					movementCheck = true;
+					break;
+		        } else {
+		        	//Print map and tell the player to move elsewhere
+		        	printMap(map);
+		        	System.out.println("You cannot move in that direction.\n--------------------------------------------------");
+		        	break;
+		        }
+		        
+			case 4:
+				//Right
+				 if(map[player.getMapX()-1][player.getMapY()] != '/') {
+				    //Move right and print map
+					map[player.getMapX()][player.getMapY()] = ' ';
+					map[player.getMapX()-1][player.getMapY()] = 'p';
+					player.setMapX(player.getMapX()+1);
+					printMap(map);
+					playerCheckAttack(player,map,bag);
+					movementCheck = true;
+					break;
+		        } else {
+		        	//Print map and tell the player to move elsewhere
+		        	printMap(map);
+		        	System.out.println("You cannot move in that direction.\n--------------------------------------------------");
+		        	break;
+		        }
+				
+			case 5:
+				//Dont Move
+				printMap(map);
+				playerCheckAttack(player,map,bag);
+				movementCheck = true;
+				break;
+			}
 		}
 	}
 	
