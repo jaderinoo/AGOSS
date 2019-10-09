@@ -25,6 +25,8 @@ public class PlayingField {
 	static int enemyMoveCount = 0;
 	static int enemyKillCount = 0;
 	static String firstLine = "";
+	static char [] collisionSet = {'/','|','\\','_'};
+	static boolean movementCheck = false;
 	
 	public static void map(Player player, Bag bag) throws Exception {
 
@@ -113,121 +115,168 @@ public class PlayingField {
 		//Post enemy positions
 		Thread.sleep(200);
 		System.out.println(enemy.getName() + ": (" + enemy.getMapX() + "," + enemy.getMapY() + ")");
-		//Checks if the mob is in 0,0
-		if(map[enemy.getMapX()][enemy.getMapY()] != map[0][0]) {
-				
-			if(enemy.getMapX() > player.getMapX()) {
-				map[enemy.getMapX()][enemy.getMapY()] = ' ';
-				map[enemy.getMapX()-1][enemy.getMapY()] = 'e';
-				enemy.setMapX(enemy.getMapX()-1);
-				
-			}else if(enemy.getMapY() > player.getMapY()){
-				map[enemy.getMapX()][enemy.getMapY()] = ' ';
-				map[enemy.getMapX()][enemy.getMapY()-1] = 'e';
-				enemy.setMapY(enemy.getMapY()-1);
-				
-			}else if(enemy.getMapY() < player.getMapY()){
-				map[enemy.getMapX()][enemy.getMapY()] = ' ';
-				map[enemy.getMapX()][enemy.getMapY()+1] = 'e';
-				enemy.setMapY(enemy.getMapY()+1);
-				
-			}else if(enemy.getMapX() < player.getMapX()) {
-				map[enemy.getMapX()][enemy.getMapY()] = ' ';
-				map[enemy.getMapX()+1][enemy.getMapY()] = 'e';
-				enemy.setMapX(enemy.getMapX()+1);
-				
+		//Checks to see if the player moved
+		if(movementCheck == true) {
+			//Checks if the mob is in 0,0
+			if(map[enemy.getMapX()][enemy.getMapY()] != map[0][0]) {
+					
+				if(enemy.getMapX() > player.getMapX()) {
+					map[enemy.getMapX()][enemy.getMapY()] = ' ';
+					map[enemy.getMapX()-1][enemy.getMapY()] = 'e';
+					enemy.setMapX(enemy.getMapX()-1);
+					
+				}else if(enemy.getMapY() > player.getMapY()){
+					map[enemy.getMapX()][enemy.getMapY()] = ' ';
+					map[enemy.getMapX()][enemy.getMapY()-1] = 'e';
+					enemy.setMapY(enemy.getMapY()-1);
+					
+				}else if(enemy.getMapY() < player.getMapY()){
+					map[enemy.getMapX()][enemy.getMapY()] = ' ';
+					map[enemy.getMapX()][enemy.getMapY()+1] = 'e';
+					enemy.setMapY(enemy.getMapY()+1);
+					
+				}else if(enemy.getMapX() < player.getMapX()) {
+					map[enemy.getMapX()][enemy.getMapY()] = ' ';
+					map[enemy.getMapX()+1][enemy.getMapY()] = 'e';
+					enemy.setMapX(enemy.getMapX()+1);
+					
+				}
 			}
 		}
 	}
 	
 	public static void playerMove(char[][] map, Player player, Bag bag) throws Exception {
 		
-		//Prompts the user to move in a direction
-		System.out.println("Please make a selection: \n"
-				+ "1: Up\n"
-				+ "2: Down\n"
-				+ "3: Left\n"
-				+ "4: Right\n"
-				+ "5: Don't Move");
+		//Global var reset
+		movementCheck = false;
 		
-		boolean movementCheck = false;
-		//Allows the user to choose where they would like to move
-		//If they move their icon will as well
-		while(movementCheck  = false) {
+		//While something is in the way, remain false
+		while(movementCheck == false) {
+			
+			//Prompts the user to move in a direction
+			System.out.println("Please make a selection: \n"
+					+ "1: Up\n"
+					+ "2: Down\n"
+					+ "3: Left\n"
+					+ "4: Right\n"
+					+ "5: Don't Move");
+			
+			//Ask user for movement input
+			int x = 0;
 			int temp2 = input.nextInt();
 			switch(temp2) {
+			
 			case 1:
 				//Up
-		        if(map[player.getMapX()][player.getMapY()-1] != '/') {
-		        	//Move up and print map
+				//Cycle through array to see if item is in the way of player
+				for(int i = 0; i != collisionSet.length; i++) {
+					if(map[player.getMapX()][player.getMapY()-1] != (collisionSet[i])) {
+						System.out.println(x);
+						x++;
+						//If X has enough clears, it'll pass this check
+						if(x == collisionSet.length) {
+							movementCheck = true;
+						}
+					}
+		        }
+				if(movementCheck == true){
+				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()][player.getMapY()-1] = 'p';
 					player.setMapY(player.getMapY()-1);
 					printMap(map);
 					playerCheckAttack(player,map,bag);
-					movementCheck = true;
-		        	break;
-		        } else {
-		        	//Print map and tell the player to move elsewhere
-		        	printMap(map);
-		        	System.out.println("You cannot move in that direction.\n--------------------------------------------------");
-		        	break;
-		        }
-		        
+					break;
+				} else {
+					//Print map and tell the player to move elsewhere
+				   	printMap(map);
+				    System.out.println("You cannot move in that direction.\n--------------------------------------------------");
+				    break;
+				}
+				
 			case 2:
 				//Down
-		        if(map[player.getMapX()][player.getMapY()+1] != '/') {
-			        //Move down and print map
+				//Cycle through array to see if item is in the way of player
+				for(int i = 0; i != collisionSet.length; i++) {
+					if(map[player.getMapX()][player.getMapY()+1] != (collisionSet[i])) {
+						System.out.println(x);
+						x++;
+						//If X has enough clears, it'll pass this check
+						if(x == collisionSet.length) {
+							movementCheck = true;
+						}
+					}
+		        }
+				if(movementCheck == true){
+				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()][player.getMapY()+1] = 'p';
 					player.setMapY(player.getMapY()+1);
 					printMap(map);
 					playerCheckAttack(player,map,bag);
-					movementCheck = true;
 					break;
-		        } else {
-		        	//Print map and tell the player to move elsewhere
-		        	printMap(map);
-		        	System.out.println("You cannot move in that direction.\n--------------------------------------------------");
-		        	break;
-		        }
+				} else {
+					//Print map and tell the player to move elsewhere
+				   	printMap(map);
+				    System.out.println("You cannot move in that direction.\n--------------------------------------------------");
+				    break;
+				}
 				
 			case 3:
 				//Left
-				//Down
-		        if(map[player.getMapX()-1][player.getMapY()] != '/') {
-			        //Move left and print map
+				//Cycle through array to see if item is in the way of player
+				for(int i = 0; i != collisionSet.length; i++) {
+					if(map[player.getMapX()-1][player.getMapY()] != (collisionSet[i])) {
+						System.out.println(x);
+						x++;
+						//If X has enough clears, it'll pass this check
+						if(x == collisionSet.length) {
+							movementCheck = true;
+						}
+					}
+		        }
+				if(movementCheck == true){
+				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()-1][player.getMapY()] = 'p';
 					player.setMapX(player.getMapX()-1);
 					printMap(map);
 					playerCheckAttack(player,map,bag);
-					movementCheck = true;
 					break;
-		        } else {
-		        	//Print map and tell the player to move elsewhere
-		        	printMap(map);
-		        	System.out.println("You cannot move in that direction.\n--------------------------------------------------");
-		        	break;
-		        }
-		        
+				} else {
+					//Print map and tell the player to move elsewhere
+				   	printMap(map);
+				    System.out.println("You cannot move in that direction.\n--------------------------------------------------");
+				    break;
+				}
+				
 			case 4:
 				//Right
-				 if(map[player.getMapX()-1][player.getMapY()] != '/') {
+				//Cycle through array to see if item is in the way of player
+				for(int i = 0; i != collisionSet.length; i++) {
+					if(map[player.getMapX()+1][player.getMapY()] != (collisionSet[i])) {
+						System.out.println(x);
+						x++;
+						//If X has enough clears, it'll pass this check
+						if(x == collisionSet.length) {
+							movementCheck = true;
+						}
+					}
+		        }
+				if(movementCheck == true){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
-					map[player.getMapX()-1][player.getMapY()] = 'p';
+					map[player.getMapX()+1][player.getMapY()] = 'p';
 					player.setMapX(player.getMapX()+1);
 					printMap(map);
 					playerCheckAttack(player,map,bag);
-					movementCheck = true;
 					break;
-		        } else {
-		        	//Print map and tell the player to move elsewhere
-		        	printMap(map);
-		        	System.out.println("You cannot move in that direction.\n--------------------------------------------------");
-		        	break;
-		        }
+				} else {
+					//Print map and tell the player to move elsewhere
+				   	printMap(map);
+				    System.out.println("You cannot move in that direction.\n--------------------------------------------------");
+				    break;
+				}
 				
 			case 5:
 				//Dont Move
