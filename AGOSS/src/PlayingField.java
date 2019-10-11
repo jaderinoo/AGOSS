@@ -18,6 +18,7 @@ public class PlayingField {
 	static int rows = 15;
 	static int cols = 15;
 	static ArrayList<Mob1> mobList = new ArrayList<Mob1>();
+	static Merchant merchant = new Merchant(0,0);
 	static Scanner input = new Scanner(System.in);
 	static int enemyCount = 0;
 	static int enemyMoveCount = 0;
@@ -25,7 +26,7 @@ public class PlayingField {
 	static String firstLine = "";
 	static boolean movementCheck = false;
 	//Collision based items
-	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G'};
+	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G','M'};
 	static String divider = "----------------------------------------------|";
 	
 	public static void map(Player player, Bag bag) throws Exception {
@@ -72,6 +73,9 @@ public class PlayingField {
 			
 			printMap(map);
 			
+			boolean found = findMerchant(map, merchant, player);
+			
+			System.out.println("found status:" + found);
 			//Prints out enemyCount
 			System.out.println("Enemies remaining: " + enemyCount);
 			
@@ -441,12 +445,37 @@ public class PlayingField {
 		        }
 		        
 		        if(map[x][y] == 'M') {
-		        	Merchant merchant = new Merchant(x,y);
+		        	merchant.setMapX(x);
+		        	merchant.setMapY(y);
 		        }
 		    }
 		}
 		//returns total enemies
 		return enemyCount;
+	}
+	
+	public static boolean findMerchant(char[][] map, Merchant merchant, Player player) {
+		boolean found = false;
+		
+		//check if above
+        if(map[player.getMapX()][player.getMapY()-1] == map[merchant.getMapX()][merchant.getMapY()]){
+        	found = true;
+        }
+        //check if below
+        if(map[player.getMapX()][player.getMapY()+1] == map[merchant.getMapX()][merchant.getMapY()]){
+        	found = true;
+        }
+        //check if left
+        if(map[player.getMapX()-1][player.getMapY()] == map[merchant.getMapX()][merchant.getMapY()]){
+        	found = true;
+        }
+        //check if right
+        if(map[player.getMapX()+1][player.getMapY()] == map[merchant.getMapX()][merchant.getMapY()]){
+        	found = true;
+		}
+        
+        //return found
+		return found;
 	}
 	
 	private static void enemyCreate(int y, int x, char mobType) {
