@@ -128,6 +128,7 @@ public class PlayingField {
 						check = true;
 						System.out.println(divider);
 						//Use merchant menu
+						useMerchant(player,merchant,bag);
 					}else {
 						System.out.println(divider + "\nPlease choose a valid option.");
 					}
@@ -501,6 +502,10 @@ public class PlayingField {
         
         //return found
 		return found;
+	}
+	
+	public static void useMerchant(Player player,Merchant merchant,Bag bag) {
+		
 	}
 	
 	private static void enemyCreate(int y, int x, char mobType) {
