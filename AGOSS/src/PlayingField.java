@@ -28,6 +28,7 @@ public class PlayingField {
 	static boolean movementCheck = false;
 	//Collision based items
 	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G'};
+	static String divider = "----------------------------------------------|";
 	
 	public static void map(Player player, Bag bag) throws Exception {
 
@@ -77,11 +78,11 @@ public class PlayingField {
 			System.out.println("Enemies remaining: " + enemyCount);
 			
 			//Print out current user stats
-			System.out.println("-----------------------------------------------");
+			System.out.println(divider);
 			System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp() +"\t |");
 			System.out.println("|LVL: " + player.getLevel() + "\t\t\t |Wpn Bonus: null");
-			System.out.println("|EXP: "+ player.exp + "/" + player.level*50 +"\t\t |Arm Bonus: null"
-					+ "\n-----------------------------------------------");
+			System.out.println("|EXP: "+ player.exp + "/" + player.level*50 +"\t\t |Arm Bonus: null\n"
+					+ divider);
 			
 			
 			//Allow the player to move in any direction, use the bag
@@ -95,17 +96,17 @@ public class PlayingField {
 			switch(temp) {
 			case 1:		
 				//Player move first, then allow all enemys move
-				System.out.println("-----------------------------------------------");
+				System.out.println(divider);
 				playerMove(map, player, bag);
 				break;
 				
 			case 2:
 				//Uses the bag menu and update player information
-				System.out.println("-----------------------------------------------");
+				System.out.println(divider);
 				Fight.useBag(player,bag,null);
 				Main.bagUpdater(player,bag);
 				Main.playerUpdater(player);
-				System.out.println("-----------------------------------------------");
+				System.out.println(divider);
 				printMap(map);
 				break;
 			}
@@ -204,7 +205,7 @@ public class PlayingField {
 			//Ask user for movement input
 			int x = 0;
 			int temp2 = input.nextInt();
-			System.out.println("-----------------------------------------------");
+			System.out.println(divider);
 			switch(temp2) {
 			
 			case 1:
@@ -229,7 +230,7 @@ public class PlayingField {
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				    System.out.println("You cannot move in that direction.\n-----------------------------------------------");
+				    System.out.println("You cannot move in that direction.\n" + divider);
 				    break;
 				}
 				
@@ -256,7 +257,7 @@ public class PlayingField {
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				    System.out.println("You cannot move in that direction.\n-----------------------------------------------");
+				    System.out.println("You cannot move in that direction.\n" + divider);
 				    break;
 				}
 				
@@ -283,7 +284,7 @@ public class PlayingField {
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				    System.out.println("You cannot move in that direction.\n-----------------------------------------------");
+				    System.out.println("You cannot move in that direction.\n" + divider);
 				    break;
 				}
 				
@@ -310,7 +311,7 @@ public class PlayingField {
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				    System.out.println("You cannot move in that direction.\n-----------------------------------------------");
+				    System.out.println("You cannot move in that direction.\n" + divider);
 				    break;
 				}
 				
@@ -394,7 +395,7 @@ public class PlayingField {
 		    }
 		    System.out.println("|");
 		}
-		System.out.println("¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯");
+		System.out.println(divider);
 	}
 	
 	//Saves map as a local variable

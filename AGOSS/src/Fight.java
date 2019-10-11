@@ -9,15 +9,16 @@ static int attackerDamage;
 static int attackDamage;
 static int damageTaken;
 static int damageDealt;
+static String divider = "----------------------------------------------|";
 public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) throws IOException {
 	
 	while(player.getCurrentHp() != 0 || attacker.getCurrentHp() != 0) {
-		System.out.println("--------------------------------------------------");
+		System.out.println(divider);
 		System.out.println("\t\t\t|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp());
 		System.out.println(attacker.getName() + "'s Hp: " + attacker.getCurrentHp() + "/" + attacker.getMaxHp() + "\t|"
 				+ "LVL: " + player.getLevel());
 		System.out.println("LVL: " + attacker.getLevel() + "\t\t\t|EXP: "+ player.exp + "/" + player.level*50 +"\n"
-				+ "--------------------------------------------------");
+				+ divider);
 		attackerDamage = 0;
 		attackDamage = 0;
 		damageTaken = 0;
@@ -27,13 +28,15 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 		
 		System.out.print("Selection: ");
 		int selection = scanner.nextInt();
-		System.out.println("--------------------------------------------------");
+		System.out.println(divider);
 			switch(selection) {
 				case 1:
-					System.out.println("BattleLog:");
+					System.out.println("BattleLog:\n-");
 					//If the player is faster
 					if(player.getAgility() >= attacker.getAgility()) {
+						System.out.println("You moved first");
 						playerMove(player,attacker);
+						System.out.println("-");
 						attackerMove(player,attacker);
 						//
 						if(attacker2 != null) {
@@ -43,16 +46,18 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 					
 					//If the Attacker is faster
 					if(player.getAgility() <= attacker.getAgility()) {
+						System.out.println(attacker.getName() + " moved first");
 						attackerMove(player,attacker);
 						if(attacker2 != null) {
 							attackerMove(player,attacker2);
 						}
+						System.out.println("-");
 						playerMove(player,attacker);
 					}
 					break;
 					
 				case 2:
-					System.out.println("BattleLog:");
+					System.out.println("BattleLog:\n-");
 					int tempArmor = player.armor;
 					player.armor = player.armor/2 + player.armor;;
 					attackerMove(player,attacker);
@@ -184,7 +189,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 		    			break;
 		    		}
 		    		//Refill players Hp by 25 hp
-		    		System.out.println("--------------------------------------------------\n\tPotion used, 25maxHp recovered.");
+		    		System.out.println(divider + "\n\tPotion used, 25maxHp recovered.");
 		    		player.currentHp = player.currentHp + 25;
 		    		bag.potions--;
 		    		
@@ -194,7 +199,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 		    		}
 		    		//Attacker still gets a move
 		    		if(attacker!=null) {
-		    			System.out.println("--------------------------------------------------");
+		    			System.out.println(divider);
 		    			System.out.println("BattleLog:");
 		    			attackerMove(player,attacker);
 		    		}
@@ -203,12 +208,12 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				break;
 			//Output booster menu
 			case 2:
-				System.out.println("No Booster can be used.\n--------------------------------------------------");
+				System.out.println("No Booster can be used.\n" + divider);
 	    		break;
 	    		
 	    	//Output booster menu
 			case 3:
-				System.out.println("--------------------------------------------------");
+				System.out.println(divider);
 	    		break;
 		}
 		if(alreadyAtMax = true) {
