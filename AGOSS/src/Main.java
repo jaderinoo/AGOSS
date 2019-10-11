@@ -188,7 +188,7 @@ public class Main {
 			    String statSelect = scanner.next();
 				switch(statSelect.toLowerCase()) {
 					case "strength":
-						player.addStrength(0);
+						player.addStrength(1);
 						x++;
 						break;
 						
@@ -198,7 +198,7 @@ public class Main {
 						break;
 						
 					case "armor":
-						player.addArmor(0);
+						player.addArmor(1);
 						x++;
 						break;
 						
@@ -294,7 +294,7 @@ public class Main {
 		FileWriter fileWriter = new FileWriter("src\\saves\\" + tempName + "\\" + tempName + "_Bag.txt", true);
 		PrintWriter printWriter = new PrintWriter(fileWriter);
 	    BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + "_Bag.txt"));
-	    printWriter.println(bag.getPotions() + "\n" + bag.getBoosters() + "\n" + bag.getWeapon());
+	    printWriter.println(bag.getPotions() + "\n" + bag.getBoosters() + "\n" + bag.getWeapon()+ "\n" + bag.getShield());
 	    System.out.println("Bag stuff: "+bag.getPotions());
 		System.out.println(bag.getBoosters());
 		printWriter.close();
