@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
-
 //NOTES
 /*		
 			//All in all, if the player is killed, end the game else 
@@ -79,9 +77,9 @@ public class PlayingField {
 			
 			//Print out current user stats
 			System.out.println(divider);
-			System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp() +"\t |");
-			System.out.println("|LVL: " + player.getLevel() + "\t\t\t |Wpn Bonus: null");
-			System.out.println("|EXP: "+ player.exp + "/" + player.level*50 +"\t\t |Arm Bonus: null\n"
+			System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp() +"    |Bonuses:");
+			System.out.println("|LVL: " + player.getLevel() + "\t\t      |Weapon: " + bag.getWeaponName() + "(+" + bag.getWeapon() + ")");
+			System.out.println("|EXP: "+ player.exp + "/" + player.level*50 +"\t      |Shield: " + bag.getShieldName() + "(+" + bag.getShield() + ")\n"
 					+ divider);
 			
 			

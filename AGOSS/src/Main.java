@@ -99,13 +99,13 @@ public class Main {
 				tempPlayerLoc);
 		
 		//Read from bag txt
-		int tempBag[] = new int[2];
+		int tempBag[] = new int[4];
 		x = 0;
 		temp = 0;
 		
 		//Read bag from txt file
 				while ((strCurrentLine = bagReader.readLine()) != null) {
-					if(x != 2) {
+					if(x != 4) {
 				    	temp = Integer.parseInt(strCurrentLine);
 				    	tempBag[x] = temp;
 				    }
@@ -113,7 +113,7 @@ public class Main {
 				}
 				
 		//set bag from txt
-		Bag bag = new Bag(player, tempBag[0], tempBag[1]);
+		Bag bag = new Bag(player, tempBag[0], tempBag[1], tempBag[2], tempBag[3]);
 		
 		//Print player stats
 		System.out.println("Player Stats: \n");
@@ -188,7 +188,7 @@ public class Main {
 			    String statSelect = scanner.next();
 				switch(statSelect.toLowerCase()) {
 					case "strength":
-						player.addStrength();
+						player.addStrength(0);
 						x++;
 						break;
 						
@@ -198,7 +198,7 @@ public class Main {
 						break;
 						
 					case "armor":
-						player.addArmor();
+						player.addArmor(0);
 						x++;
 						break;
 						
@@ -253,7 +253,7 @@ public class Main {
 			switch(reply.toLowerCase()) {
 			case "y":
 				System.out.println("And so it begins!");
-				Bag bag = new Bag(player, 0, 0);
+				Bag bag = new Bag(player, 0, 0, 0, 0);
 				WriteBag(tempName, player, bag);
 				Adventure.Resume(player, bag);
 				break;
@@ -294,7 +294,7 @@ public class Main {
 		FileWriter fileWriter = new FileWriter("src\\saves\\" + tempName + "\\" + tempName + "_Bag.txt", true);
 		PrintWriter printWriter = new PrintWriter(fileWriter);
 	    BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + "_Bag.txt"));
-	    printWriter.println(bag.getPotions() + "\n" + bag.getBoosters());
+	    printWriter.println(bag.getPotions() + "\n" + bag.getBoosters() + "\n" + bag.getWeapon());
 	    System.out.println("Bag stuff: "+bag.getPotions());
 		System.out.println(bag.getBoosters());
 		printWriter.close();
@@ -310,7 +310,9 @@ public class Main {
 
 	    //Print stats to new file
 	    printWriter.println(bag.getPotions() +
-	    		"\n" + bag.getBoosters());
+	    		"\n" + bag.getBoosters() +
+	    		"\n" + bag.getWeapon() +
+	    		"\n" + bag.getShield());
 	    
 	    printWriter.close();
 	    reader.close();

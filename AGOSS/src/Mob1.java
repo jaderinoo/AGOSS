@@ -83,5 +83,6 @@ public class Mob1 {
 	    public int getCurrentHp() {
 	    	return currentHp;
 	    }
+	    
 }
 

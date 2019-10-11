@@ -12,6 +12,9 @@ static int damageDealt;
 static String divider = "----------------------------------------------|";
 public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) throws IOException {
 	
+	player.setWpnBonus(bag.getWeapon());
+	player.setShieldBonus(bag.getWeapon());
+	
 	while(player.getCurrentHp() != 0 || attacker.getCurrentHp() != 0) {
 		System.out.println(divider);
 		System.out.println("\t\t\t|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp());
@@ -90,6 +93,11 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 			
 			//Match win decider
 			if(attacker.getCurrentHp() <= 0) {
+				//Reset player wpnbonus and shieldbonus
+				player.resetShieldBonus(bag.getWeapon());
+				player.resetWpnBonus(bag.getWeapon());
+				
+				//Return player
 				attacker.currentHp = 0;
 				System.out.print("You won the fight!\n");
 				player.levelup(attacker);
@@ -100,6 +108,11 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				Main.playerUpdater(player);
 				return winStatus;
 			}else if(player.getCurrentHp() <= 0) {
+				//Reset player wpnbonus and shieldbonus
+				player.resetWpnBonus(bag.getWeapon());
+				player.resetShieldBonus(bag.getWeapon());
+				
+				//Reset player
 				player.currentHp = 0;
 				System.out.print("You lost the fight \n\n");
 				winStatus = true;
