@@ -9,7 +9,7 @@ A basic test map used for testing :)
 |             |
 |             |
 |      _      |
-|             |
+|      M      |
 |             |
 |   _     _   |
 |             |

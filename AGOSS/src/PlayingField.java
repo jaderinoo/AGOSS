@@ -439,6 +439,10 @@ public class PlayingField {
 		        	player.setMapY(y);
 		        	player.setMapX(x);
 		        }
+		        
+		        if(map[x][y] == 'M') {
+		        	Merchant merchant = new Merchant(x,y);
+		        }
 		    }
 		}
 		//returns total enemies
