@@ -73,6 +73,7 @@ public class PlayingField {
 			
 			printMap(map);
 			
+			//Decides what menu will be presented to the user
 			boolean found = findMerchant(map, merchant, player);
 			
 			System.out.println("found status:" + found);
@@ -88,31 +89,55 @@ public class PlayingField {
 			
 			
 			//Allow the player to move in any direction, use the bag
-			//if(option 2 is selected) open bag, else option 1 use move()
-			
-			System.out.println("Please make a selection: \n"
-					+ "1: Player move\n"
-					+ "2: Bag Menu");
-			
-			int temp = input.nextInt();
-			switch(temp) {
-			case 1:		
-				//Player move first, then allow all enemys move
-				System.out.println(divider);
-				playerMove(map, player, bag);
-				break;
+			//If found == true, give the user the option to use the merchant
+			boolean check = false;
+			do {
+				if(found == false) {
+				System.out.println("Please make a selection: \n"
+						+ "1: Player move\n"
+						+ "2: Bag Menu");
+				}else if(found == true) {
+					System.out.println("Please make a selection: \n"
+							+ "1: Player move\n"
+							+ "2: Bag Menu\n"
+							+ "3: Merchant Menu");
+				}
 				
-			case 2:
-				//Uses the bag menu and update player information
-				System.out.println(divider);
-				Fight.useBag(player,bag,null);
-				Main.bagUpdater(player,bag);
-				Main.playerUpdater(player);
-				System.out.println(divider);
-				printMap(map);
-				break;
-			}
-
+				int temp = input.nextInt();
+				switch(temp) {
+				case 1:		
+					//Player move first, then allow all enemys move
+					check = true;
+					System.out.println(divider);
+					playerMove(map, player, bag);
+					break;
+					
+				case 2:
+					//Uses the bag menu and update player information
+					check = true;
+					System.out.println(divider);
+					Fight.useBag(player,bag,null);
+					Main.bagUpdater(player,bag);
+					Main.playerUpdater(player);
+					System.out.println(divider);
+					printMap(map);
+					break;
+					
+				case 3:
+					if(found == true) {
+						check = true;
+						System.out.println(divider);
+						//Use merchant menu
+					}else {
+						System.out.println(divider + "\nPlease choose a valid option.");
+					}
+					break;
+					
+				default:
+					System.out.println(divider + "\nPlease choose a valid option.");
+					break;
+				}
+			}while(check == false);
 			//Enemy moves
 			for(int i = enemyKillCount; i != enemyMoveCount; i++) {
 				//Move towards player
