@@ -76,15 +76,14 @@ public class PlayingField {
 			//Decides what menu will be presented to the user
 			boolean found = findMerchant(map, merchant, player);
 			
-			System.out.println("found status:" + found);
 			//Prints out enemyCount
 			System.out.println("Enemies remaining: " + enemyCount);
 			
 			//Print out current user stats
 			System.out.println(divider);
-			System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp() +"      |Bonuses:");
-			System.out.println("|LVL: " + player.getLevel() + "\t\t      |Weapon: " + bag.getWeaponName() + "(+" + bag.getWeapon() + ")");
-			System.out.println("|EXP: "+ player.exp + "/" + player.level*50 +"\t      |Shield: " + bag.getShieldName() + "(+" + bag.getShield() + ")\n"
+			System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp() +"\t|Bonuses:");
+			System.out.println("|LVL: " + player.getLevel() + "\t\t\t|Weapon: " + bag.getWeaponName() + "(+" + bag.getWeapon() + ")");
+			System.out.println("|EXP: "+ player.exp + "/" + player.level*50 +"\t\t|Shield: " + bag.getShieldName() + "(+" + bag.getShield() + ")\n"
 					+ divider);
 			
 			
@@ -506,7 +505,7 @@ public class PlayingField {
 	
 	public static void useMerchant(Player player,Merchant merchant,Bag bag) throws IOException {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Current Gold:" + player.getGold() + "\nWhat item would you like to buy?: \n"
+		System.out.println("Current Gold:" + player.getGold() + "\n" + divider + "\nWhat item would you like to buy?: \n"
 				+ "1: " + bag.getPotions() + " - Potions (250g)\n"
 				+ "2: " + bag.getBoosters() + " - Boosters (250g)\n"
 				+ "3: " + (bag.getWeapon()+1) + "/4 - Weapon Upgrade (1000g)\n"
