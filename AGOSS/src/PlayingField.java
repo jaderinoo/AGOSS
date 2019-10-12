@@ -504,13 +504,14 @@ public class PlayingField {
 	}
 	
 	public static void useMerchant(Player player,Merchant merchant,Bag bag) throws IOException {
+		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Current Gold:" + player.getGold() + "\n" + divider + "\nWhat item would you like to buy?: \n"
+		System.out.println("Merchant Menu\nCurrent Gold:" + player.getGold() + "\n" + divider + "\nWhat item would you like to buy?: \n"
 				+ "1: " + bag.getPotions() + " - Potions (250g)\n"
 				+ "2: " + bag.getBoosters() + " - Boosters (250g)\n"
 				+ "3: " + (bag.getWeapon()+1) + "/4 - Weapon Upgrade (1000g)\n"
 				+ "4: " + (bag.getShield()+1) + "/4 - Shield Upgrade (1000g)\n"
-				+ "5: Exit");
+				+ "5: Leave");
 		
     	@SuppressWarnings("unused") boolean alreadyAtMax = false;
     	int amount = 0;
@@ -594,7 +595,6 @@ public class PlayingField {
 		if(mobType == 'G') {
 			mobList.add(new Mob1("General", 5, 5, 5, 50, 10, 2, 100, x, y, mobType));
 		}
-
 	}
 
 	public static String[] inputToString(String fileName)throws Exception 
