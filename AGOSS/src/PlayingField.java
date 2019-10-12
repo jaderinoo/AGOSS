@@ -82,7 +82,7 @@ public class PlayingField {
 			
 			//Print out current user stats
 			System.out.println(divider);
-			System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp() +"    |Bonuses:");
+			System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp() +"      |Bonuses:");
 			System.out.println("|LVL: " + player.getLevel() + "\t\t      |Weapon: " + bag.getWeaponName() + "(+" + bag.getWeapon() + ")");
 			System.out.println("|EXP: "+ player.exp + "/" + player.level*50 +"\t      |Shield: " + bag.getShieldName() + "(+" + bag.getShield() + ")\n"
 					+ divider);
@@ -504,8 +504,82 @@ public class PlayingField {
 		return found;
 	}
 	
-	public static void useMerchant(Player player,Merchant merchant,Bag bag) {
+	public static void useMerchant(Player player,Merchant merchant,Bag bag) throws IOException {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Current Gold:" + player.getGold() + "\nWhat item would you like to buy?: \n"
+				+ "1: " + bag.getPotions() + " - Potions (250g)\n"
+				+ "2: " + bag.getBoosters() + " - Boosters (250g)\n"
+				+ "3: " + (bag.getWeapon()+1) + "/4 - Weapon Upgrade (1000g)\n"
+				+ "4: " + (bag.getShield()+1) + "/4 - Shield Upgrade (1000g)\n"
+				+ "5: Exit");
 		
+    	@SuppressWarnings("unused") boolean alreadyAtMax = false;
+    	int amount = 0;
+    	int userOption = scanner.nextInt();
+		switch(userOption) {
+			//Purchase potions
+			case 1:
+				while(amount <= 0) {
+					System.out.println("How many would you like to purchase?");
+					amount = scanner.nextInt();
+					if(amount <= 0) {
+						System.out.println("Please choose a number larger than 0\n" + divider);
+					}
+				}
+				System.out.println(divider);
+				player.purchase(amount*250);
+				for(int i = 0; i != amount;i++) {
+					bag.potions++;
+				}
+				System.out.println("You spent " + amount*250 + "g and recieved " + amount + " potion\n" + divider);
+				break;
+			
+			//Purchase boosters
+			case 2:
+				while(amount <= 0) {
+					System.out.println("How many would you like to purchase?");
+					amount = scanner.nextInt();
+					if(amount <= 0) {
+						System.out.println("Please choose a number larger than 0\n" + divider);
+					}
+				}
+				System.out.println(divider);
+				player.purchase(amount*250);
+				for(int i = 0; i != amount;i++) {
+					bag.potions++;
+				}
+				System.out.println("You spent " + amount*250 + "g and recieved " + amount + " Boosters\n" + divider);
+				break;
+				
+				//Upgrade weapon
+			case 3:
+				if(bag.weapon != 3) {
+					bag.weapon++;
+					player.purchase(1000);
+					System.out.println("You spent 1000g and recieved a new weapon\n" + divider);
+
+				}else {
+					System.out.println("Your weapon is at it's max level.\n" + divider);
+				}
+				break;
+				
+				//Upgrade shield
+			case 4:
+				if(bag.shield != 3) {
+					bag.shield++;
+					player.purchase(1000);
+					System.out.println("You spent 1000g and recieved a new shield\n" + divider);
+
+				}else {
+					System.out.println("Your shield is at it's max level.\n" + divider);
+				}
+				break;
+				
+			default:
+				System.out.println("invalid selection\n" + divider);
+		}
+		Main.bagUpdater(player,bag);
+		Main.playerUpdater(player);
 	}
 	
 	private static void enemyCreate(int y, int x, char mobType) {

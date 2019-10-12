@@ -70,6 +70,14 @@ public class Player {
 	        return gold;
 	    }
 	    
+	    public int purchase(int price) {
+	    	if(this.gold >= price) {
+	    		this.gold = gold - price;
+	    	}else {
+	    		System.out.println("Insufficient funds");
+	    	}
+	    	return gold;
+	    }
 	    public int getCurrentHp() {
 	    	return currentHp;
 	    }
@@ -242,7 +250,7 @@ public class Player {
 			    while(x != 3) {
 					switch(ThreadLocalRandom.current().nextInt(1, 5)) {
 					case 1:
-						this.addStrength(0);
+						this.addStrength(1);
 						x++;
 						System.out.println("\t\tStrength +1");
 						break;
@@ -254,7 +262,7 @@ public class Player {
 						break;
 						
 					case 3:
-						this.addArmor(0);
+						this.addArmor(1);
 						x++;
 						System.out.println("\t\tArmor +1");
 						break;
