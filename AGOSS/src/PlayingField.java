@@ -36,13 +36,22 @@ public class PlayingField {
 	    
 		//Initialize vars
 		firstLine = batch[0];
-		String secondLine = batch[1];
+		String [] secondLine = batch[1].split(" ");
 		String thirdLine = batch[2];
 		String data = batch[3];
 		
+		//parses the size of the grid and places it into rows and cols
+		int[] stats = new int[secondLine.length];
+		for (int i = 0; i < secondLine.length; i++) {
+			String numberAsString = secondLine[i];
+			stats[i] = Integer.parseInt(numberAsString);
+		}
+		rows = stats[0];
+		cols = stats[1];
+		
 		//Test additional map information
 		System.out.println(firstLine);
-		System.out.println(secondLine);
+		System.out.println(batch[1]);
 		System.out.println(thirdLine);
 		
 		//Saves the initial map
@@ -79,7 +88,7 @@ public class PlayingField {
 			
 			//Prints out enemyCount
 			System.out.println("Enemies remaining: " + enemyCount);
-			System.out.println("Turn # " + turn);
+			System.out.println("Turn #" + turn);
 			
 			//Print out current user stats
 			System.out.println(divider);
@@ -119,7 +128,6 @@ public class PlayingField {
 					check = Fight.useBag(player,bag,null);
 					Main.bagUpdater(player,bag);
 					Main.playerUpdater(player);
-					System.out.println(divider);
 					if (check == false) {
 						printMap(map);
 					}
@@ -511,10 +519,10 @@ public class PlayingField {
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Merchant Menu\nCurrent Gold:" + player.getGold() + "\n" + divider + "\nWhat item would you like to buy?: \n"
-				+ "1: " + bag.getPotions() + " - Potions (250g)\n"
-				+ "2: " + bag.getBoosters() + " - Boosters (250g)\n"
-				+ "3: " + (bag.getWeapon()+1) + "/4 - Weapon Upgrade (1000g)\n"
-				+ "4: " + (bag.getShield()+1) + "/4 - Shield Upgrade (1000g)\n"
+				+ "1: " + bag.getPotions() + " \t- Potions (250g)\n"
+				+ "2: " + bag.getBoosters() + " \t- Boosters (250g)\n"
+				+ "3: " + (bag.getWeapon()+1) + "/4 \t- Weapon Upgrade (1000g)\n"
+				+ "4: " + (bag.getShield()+1) + "/4 \t- Shield Upgrade (1000g)\n"
 				+ "5: Leave");
 		
     	@SuppressWarnings("unused") boolean alreadyAtMax = false;

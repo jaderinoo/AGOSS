@@ -1,5 +1,5 @@
 Testmap
-null
+15 15
 A basic test map used for testing :)
 /-------------\
 |  F       F  |

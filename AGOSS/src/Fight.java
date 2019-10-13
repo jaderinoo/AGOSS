@@ -181,8 +181,8 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
     public static boolean useBag(Player player,Bag bag,Mob1 attacker) {
     	//Bag menu
 		System.out.println("What item would you like to use?: \n"
-				+ "1: " + bag.getPotions() + "- Potions\n"
-				+ "2: " + bag.getBoosters() + "- Boosters\n"
+				+ "1: " + bag.getPotions() + "\t- Potions\n"
+				+ "2: " + bag.getBoosters() + "\t- Boosters\n"
 				+ "3: Exit");
 		
     	@SuppressWarnings("unused") boolean alreadyAtMax = false;
