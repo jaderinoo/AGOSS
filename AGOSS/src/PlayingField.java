@@ -153,7 +153,6 @@ public class PlayingField {
 			
 			//Enemy moves
 			for(int i = 0; i != enemyMoveCount; i++) {
-				System.out.println("i = " + i);
 				if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
 				//Move towards player
 				enemyMove(player, bag, map, mobList.get(i),i);
@@ -282,7 +281,6 @@ public class PlayingField {
 				//Cycle through array to see if item is in the way of player
 				for(int i = 0; i != collisionSet.length; i++) {
 					if(map[player.getMapX()][player.getMapY()+1] != (collisionSet[i])) {
-						System.out.println(x);
 						x++;
 						//If X has enough clears, it'll pass this check
 						if(x == collisionSet.length) {
@@ -309,7 +307,6 @@ public class PlayingField {
 				//Cycle through array to see if item is in the way of player
 				for(int i = 0; i != collisionSet.length; i++) {
 					if(map[player.getMapX()-1][player.getMapY()] != (collisionSet[i])) {
-						System.out.println(x);
 						x++;
 						//If X has enough clears, it'll pass this check
 						if(x == collisionSet.length) {
@@ -336,7 +333,6 @@ public class PlayingField {
 				//Cycle through array to see if item is in the way of player
 				for(int i = 0; i != collisionSet.length; i++) {
 					if(map[player.getMapX()+1][player.getMapY()] != (collisionSet[i])) {
-						System.out.println(x);
 						x++;
 						//If X has enough clears, it'll pass this check
 						if(x == collisionSet.length) {
@@ -371,7 +367,6 @@ public class PlayingField {
 
 		//Compares the players location to the moblist locations
 		for(int i = 0; i != enemyMoveCount; i++) {
-			System.out.println("i = " + i);
 			if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
 				
 				//check if above
@@ -402,7 +397,7 @@ public class PlayingField {
 	public static void enemyFound(Player player,char[][] map, Mob1 enemy, Bag bag, int i) throws Exception {
 
         //Initiate the fight
-        System.out.println("Battle Start! int i = " + i);
+        System.out.println("Battle Start!");
         boolean winStatus = Fight.Move(player, enemy, null, bag);
         
         //Update the stats and bags
