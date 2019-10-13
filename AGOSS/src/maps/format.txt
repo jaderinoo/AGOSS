@@ -1,5 +1,5 @@
 Mapname
-Mapstats
+Mapstats / Set map size, cols and rows NEED to be =
 Description
 /-------------\
 |  F       F  |
