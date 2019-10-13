@@ -178,7 +178,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 		}
 	}
 	
-    public static void useBag(Player player,Bag bag,Mob1 attacker) {
+    public static boolean useBag(Player player,Bag bag,Mob1 attacker) {
     	//Bag menu
 		System.out.println("What item would you like to use?: \n"
 				+ "1: " + bag.getPotions() + "- Potions\n"
@@ -224,15 +224,15 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				System.out.println("No Booster can be used.\n" + divider);
 	    		break;
 	    		
-	    	//Output booster menu
+	    	//Exit button
 			case 3:
 				System.out.println(divider);
-	    		break;
+				return false;
 		}
 		if(alreadyAtMax = true) {
-			return;
+			return true;
 		}
-		return;
+		return true;
     }
 	
 }

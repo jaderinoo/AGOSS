@@ -24,6 +24,7 @@ public class PlayingField {
 	static int enemyMoveCount = 0;
 	static int enemyKillCount = 0;
 	static String firstLine = "";
+	static int turn = 0;
 	static boolean movementCheck = false;
 	//Collision based items
 	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G','M'};
@@ -70,7 +71,7 @@ public class PlayingField {
 		}
 		
 		while(enemyCount != 0){
-			
+			turn++;
 			printMap(map);
 			
 			//Decides what menu will be presented to the user
@@ -78,6 +79,7 @@ public class PlayingField {
 			
 			//Prints out enemyCount
 			System.out.println("Enemies remaining: " + enemyCount);
+			System.out.println("Turn # " + turn);
 			
 			//Print out current user stats
 			System.out.println(divider);
@@ -113,13 +115,14 @@ public class PlayingField {
 					
 				case 2:
 					//Uses the bag menu and update player information
-					check = true;
 					System.out.println(divider);
-					Fight.useBag(player,bag,null);
+					check = Fight.useBag(player,bag,null);
 					Main.bagUpdater(player,bag);
 					Main.playerUpdater(player);
 					System.out.println(divider);
-					printMap(map);
+					if (check == false) {
+						printMap(map);
+					}
 					break;
 					
 				case 3:
@@ -138,6 +141,7 @@ public class PlayingField {
 					break;
 				}
 			}while(check == false);
+			
 			//Enemy moves
 			for(int i = enemyKillCount; i != enemyMoveCount; i++) {
 				//Move towards player
