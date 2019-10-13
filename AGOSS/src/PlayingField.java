@@ -150,10 +150,14 @@ public class PlayingField {
 				}
 			}while(check == false);
 			
+			
 			//Enemy moves
-			for(int i = enemyKillCount; i != enemyMoveCount; i++) {
+			for(int i = 0; i != enemyMoveCount; i++) {
+				System.out.println("i = " + i);
+				if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
 				//Move towards player
 				enemyMove(player, bag, map, mobList.get(i),i);
+				}
 			}
 
 			//Save stats and bags
@@ -366,28 +370,29 @@ public class PlayingField {
 	public static void playerCheckAttack(Player player, char[][] map, Bag bag) throws Exception {
 
 		//Compares the players location to the moblist locations
-		for(int i = enemyKillCount; i != enemyMoveCount; i++) {
-			if(map[mobList.get(i).getMapX()][mobList.get(i).getMapY()] != map[0][0]) {
-					
+		for(int i = 0; i != enemyMoveCount; i++) {
+			System.out.println("i = " + i);
+			if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
+				
 				//check if above
-		        if(map[player.getMapX()][player.getMapY()-1] == map[mobList.get(i).getMapX()][mobList.get(i).getMapY()]){
+		        if(player.getMapX() == mobList.get(i).getMapX() && player.getMapY()-1 == mobList.get(i).getMapY()){
 		        	enemyFound(player, map, mobList.get(i), bag, i);
-		        	break;
+		        	i = 0;
 		        }
 		        //check if below
-		        if(map[player.getMapX()][player.getMapY()+1] == map[mobList.get(i).getMapX()][mobList.get(i).getMapY()]){
+		        if(player.getMapX() == mobList.get(i).getMapX() && player.getMapY()+1 == mobList.get(i).getMapY()){
 		        	enemyFound(player, map, mobList.get(i), bag, i);
-		        	break;
+		        	i = 0;
 		        }
 		        //check if left
-		        if(map[player.getMapX()-1][player.getMapY()] == map[mobList.get(i).getMapX()][mobList.get(i).getMapY()]){
+		        if(player.getMapX()-1 == mobList.get(i).getMapX() && player.getMapY() == mobList.get(i).getMapY()){
 		        	enemyFound(player, map, mobList.get(i), bag, i);
-		        	break;
+		        	i = 0;
 		        }
 		        //check if right
-		        if(map[player.getMapX()+1][player.getMapY()] == map[mobList.get(i).getMapX()][mobList.get(i).getMapY()]){
+		        if(player.getMapX()+1 == mobList.get(i).getMapX() && player.getMapY() == mobList.get(i).getMapY()){
 		        	enemyFound(player, map, mobList.get(i), bag, i);
-		        	break;
+		        	i = 0;
 		        
 				}
 			}
@@ -397,7 +402,7 @@ public class PlayingField {
 	public static void enemyFound(Player player,char[][] map, Mob1 enemy, Bag bag, int i) throws Exception {
 
         //Initiate the fight
-        System.out.println("Battle Start!");
+        System.out.println("Battle Start! int i = " + i);
         boolean winStatus = Fight.Move(player, enemy, null, bag);
         
         //Update the stats and bags
@@ -405,23 +410,28 @@ public class PlayingField {
 		Main.playerUpdater(player);
 
 		//If the player wins
-		if(winStatus == false) {
+		if(winStatus == true) {
 			//Reduce the enemyCount
 			enemyCount--;
 			
 			//Increase enemyKillCount
 			enemyKillCount++;
-			
+
 			//Remove the space from the map
-			map[enemy.getMapX()][enemy.getMapY()] = ' ';
+			map[mobList.get(i).getMapX()][mobList.get(i).getMapY()] = ' ';
 			
 			//Move the enemy to 0,0
 			mobList.get(i).setMapX(0);
 			mobList.get(i).setMapY(0);
-			
+
 			//Return to player menu
 			playerMenu(player, map, bag, firstLine);
         }
+		
+		// If you lose; return to main
+		if(winStatus == false) {
+			Main.main(null);
+		}
     }
 		
 	//Prints the map for the player
@@ -449,7 +459,6 @@ public class PlayingField {
 		    }
 		}
 		return map;
-
 	}
 	
 	//Scans the map for units

@@ -101,7 +101,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				attacker.currentHp = 0;
 				System.out.print("You won the fight!\n");
 				player.levelup(attacker);
-				winStatus =  false;
+				winStatus =  true;
 				player.reward(winStatus, attacker);
 				System.out.println("Returning to overworld\n");
 				Main.bagUpdater(player,bag);
@@ -115,7 +115,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				//Reset player
 				player.currentHp = 0;
 				System.out.print("You lost the fight \n\n");
-				winStatus = true;
+				winStatus = false;
 				player.reward(winStatus, attacker);
 				player.currentHp = player.maxHp;
 				System.out.println("Returning to mainmenu\n");

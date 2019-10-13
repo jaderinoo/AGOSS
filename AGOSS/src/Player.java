@@ -285,18 +285,17 @@ public class Player {
 		
 		public void reward(boolean winStatus, Mob1 attacker) {
 			//If the player wins
-			if(winStatus == false) {
+			if(winStatus == true) {
 				//Gold reward = attackers level *110
 				this.gold = this.gold + 110*attacker.level;
 				System.out.println("You gained "+ 110*attacker.level +" Gold!");
 				
 			//Else if the player loses
-			}else if(winStatus == true) {
+			}else if(winStatus == false) {
 				//Lose half players gold
 				System.out.println("You lost " + this.gold / 2 + " Gold!");
 				this.gold = this.gold / 2;
 			}
-			
 		}
 }
 
