@@ -116,7 +116,7 @@ public class PlayingField {
 				int temp = input.nextInt();
 				switch(temp) {
 				case 1:		
-					//Player move first, then allow all enemys move
+					//Player move first, then allow all enemies move
 					check = true;
 					System.out.println(divider);
 					playerMove(map, player, bag);
@@ -431,7 +431,15 @@ public class PlayingField {
 		
 	//Prints the map for the player
 	public static void printMap(char[][] map) {
-		System.out.println("Playing Field:\n_______________________________________________");
+		System.out.println("Playing Field:\n");
+		
+		//Top border
+		for(int i = 0; i != cols*2+cols+2; i++) {
+			System.out.print("_");
+		}
+		System.out.println();
+		
+		//Print map
 		for (int y=0; y < rows; y++) {
 			System.out.print("|");
 		    for (int x=0; x < cols; x++) {
@@ -439,7 +447,12 @@ public class PlayingField {
 		    }
 		    System.out.println("|");
 		}
-		System.out.println(divider);
+		
+		//Bottom border
+		for(int i = 0; i != cols*2+cols+2; i++) {
+			System.out.print("-");
+		}
+		System.out.println();
 	}
 	
 	//Saves map as a local variable
