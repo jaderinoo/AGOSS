@@ -18,8 +18,10 @@ public class Adventure {
 	    	String guideName = scanner.next();
 	    	Guides guide = new Guides(guideName);
 	    	
-	    	while(Guides.getGuide() != Guides.listOfLines) {
+	    	for(int i = 0;i != Guides.listOfLines.size(); i++ ) {
 		    	
+	    		System.out.println(Guides.listOfLines.get(i));
+	    		
 		    	//Send the user to the map and read dialogue
 		    	Dialogues.readDialogue(guideName);
 		    	
@@ -36,7 +38,7 @@ public class Adventure {
 	    	String mapName = scanner.next();
 	    	
 	    	//Get guide
-	    	Guides.readGuide(mapName);
+	    	//Guides.readGuide(mapName);
 	    	
 	    	while(Guides.getGuide() != Guides.getGuide()) {
 	    	

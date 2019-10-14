@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
+//This class stores the guides input for level usage
+
 public class Guides {
     static ArrayList<String> listOfLines = new ArrayList<>();
 
@@ -15,7 +17,7 @@ public class Guides {
 	}
 
 	public static ArrayList<String> saveGuide(String mapName) throws Exception {
-		//Checks if dialogue exists
+		//Checks if Guide exists
 		if (new File("src\\dialogues\\" + mapName + ".txt").exists()){
 			//Continue if it does
 			listOfLines = inputToString("src\\dialogues\\" + mapName + "_guide.txt");
