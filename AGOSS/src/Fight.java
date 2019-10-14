@@ -143,6 +143,10 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 		//Calculate the damage that the player will take
 		attackerDamage = attacker.strength*ThreadLocalRandom.current().nextInt(3, 5);
 		damageTaken = attackerDamage - player.armor;
+		//Doesn't allow below 0 attack
+		if(damageTaken < 0) {
+			damageTaken = 0;
+		}
 		System.out.println("You took:  " + damageTaken + "DMG");
 		player.currentHp = player.currentHp - damageTaken;
 		
@@ -169,6 +173,10 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 		//Calculate the damage that the attacker will take
 		attackDamage = player.strength*ThreadLocalRandom.current().nextInt(3, 5);
 		damageDealt = attackDamage - attacker.armor;
+		//Doesn't allow below 0 attack
+		if(damageDealt < 0) {
+			damageDealt = 0;
+		}
 		System.out.println("You dealt: " + damageDealt + "DMG");
 		attacker.currentHp = attacker.currentHp - damageDealt;
 		
