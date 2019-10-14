@@ -62,14 +62,7 @@ public class PlayingField {
 		enemyCount = scanMap(player,map);
 		enemyMoveCount = enemyCount;
 		
-		//Print out location of players and enemy locations
-		/*
-		System.out.println("playerLoc:" + player.getMapY() +"," + player.getMapX());
-		System.out.println("EnemyCount:" + enemyCount);
-		System.out.println("Enemy1:" + mobList.get(0).getMapX() + "," + mobList.get(0).getMapY());
-		System.out.println("Enemy2:" + mobList.get(1).getMapX() + "," + mobList.get(1).getMapY());
-		*/
-		
+		//Start the movements
 		playerMenu(player, map, bag, firstLine);
 
 	}
