@@ -394,22 +394,25 @@ public class PlayingField {
 		        if(player.getMapX() == mobList.get(i).getMapX() && player.getMapY()-1 == mobList.get(i).getMapY()){
 		        	enemyFound(player, map, mobList.get(i), bag, i);
 		        	i = 0;
+		        	break;
 		        }
 		        //check if below
 		        if(player.getMapX() == mobList.get(i).getMapX() && player.getMapY()+1 == mobList.get(i).getMapY()){
 		        	enemyFound(player, map, mobList.get(i), bag, i);
 		        	i = 0;
+		        	break;
 		        }
 		        //check if left
 		        if(player.getMapX()-1 == mobList.get(i).getMapX() && player.getMapY() == mobList.get(i).getMapY()){
 		        	enemyFound(player, map, mobList.get(i), bag, i);
 		        	i = 0;
+		        	break;
 		        }
 		        //check if right
 		        if(player.getMapX()+1 == mobList.get(i).getMapX() && player.getMapY() == mobList.get(i).getMapY()){
 		        	enemyFound(player, map, mobList.get(i), bag, i);
 		        	i = 0;
-		        
+		        	break;
 				}
 			}
 		}
@@ -444,10 +447,6 @@ public class PlayingField {
 			playerMenu(player, map, bag, firstLine);
         }
 		
-		// If you lose; return to main
-		if(winStatus == false) {
-			Main.main(null);
-		}
     }
 		
 	//Prints the map for the player
@@ -669,15 +668,15 @@ public class PlayingField {
 	private static void enemyCreate(int y, int x, char mobType) {
 
 		if(mobType == 'F') {
-			mobList.add(new Mob1("FootSoldier", 5, 5, 5, 50, 10, 2, 50, x, y, mobType));
+			mobList.add(new Mob1("FootSoldier", 5, 5, 5, 500, 10, 2, 500, x, y, mobType));
 		}
 		
 		if(mobType == 'K') {
-			mobList.add(new Mob1("Knight", 5, 5, 5, 50, 10, 2, 75, x, y, mobType));
+			mobList.add(new Mob1("Knight", 5, 5, 5, 500, 10, 2, 500, x, y, mobType));
 		}
 		
 		if(mobType == 'G') {
-			mobList.add(new Mob1("General", 5, 5, 5, 50, 10, 2, 100, x, y, mobType));
+			mobList.add(new Mob1("General", 5, 5, 5, 500, 10, 2, 500, x, y, mobType));
 		}
 	}
 
