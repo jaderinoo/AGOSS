@@ -17,8 +17,15 @@ public class Adventure {
 			break;
 			
 		case "test":
-			
-			PlayingField.map(player, bag);
+			//Allow map name input
+			System.out.println("Please input a level name");
+			@SuppressWarnings("resource")
+			Scanner scanner = new Scanner(System.in);
+	    	String mapName = scanner.next();
+	    	
+	    	//Send the user to the map and read dialogue
+	    	Dialogues.readDialogue(mapName);
+			PlayingField.map(player, bag, mapName);
 
 			break;
 			

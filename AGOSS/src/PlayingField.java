@@ -23,6 +23,7 @@ public class PlayingField {
 	static int enemyCount = 0;
 	static int enemyMoveCount = 0;
 	static int enemyKillCount = 0;
+	static int enemyNumber = 0;
 	static String firstLine = "";
 	static int turn = 0;
 	static boolean movementCheck = false;
@@ -31,9 +32,9 @@ public class PlayingField {
 	static String divider = "----------------------------------------------|";
 	static boolean enemyFound = false;
 	
-	public static void map(Player player, Bag bag) throws Exception {
-
-		String[] batch = inputToString("src\\maps\\test.txt");
+	public static void map(Player player, Bag bag, String mapName) throws Exception {
+		
+		String[] batch = inputToString("src\\maps\\" + mapName + ".txt");
 	    
 		//Initialize vars
 		firstLine = batch[0];
@@ -62,14 +63,6 @@ public class PlayingField {
 		enemyCount = scanMap(player,map);
 		enemyMoveCount = enemyCount;
 		
-		//Print out location of players and enemy locations
-		/*
-		System.out.println("playerLoc:" + player.getMapY() +"," + player.getMapX());
-		System.out.println("EnemyCount:" + enemyCount);
-		System.out.println("Enemy1:" + mobList.get(0).getMapX() + "," + mobList.get(0).getMapY());
-		System.out.println("Enemy2:" + mobList.get(1).getMapX() + "," + mobList.get(1).getMapY());
-		*/
-		
 		playerMenu(player, map, bag, firstLine);
 
 	}
@@ -92,6 +85,9 @@ public class PlayingField {
 			for(i = 0; i != enemyMoveCount; i++) {
 				if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
 					enemyFound = findAttack(map, mobList.get(i), player);
+					
+					//Saves the array list position for later
+					enemyNumber = i;
 				}
 			}
 			
@@ -102,7 +98,7 @@ public class PlayingField {
 			//Print enemy locations
 			printEnemyLocations();
 			
-			//Print out current user stats
+			//Print out current user statistics
 			System.out.println(divider);
 			System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp() +"\t|Bonuses:");
 			System.out.println("|LVL: " + player.getLevel() + "\t\t\t|Weapon: " + bag.getWeaponName() + "(+" + bag.getWeapon() + ")");
@@ -164,8 +160,8 @@ public class PlayingField {
 					if(enemyFound == true) {
 						check = true;
 						System.out.println(divider);
-						//Use merchant menu
-						enemyFound(player, map, mobList.get(i-1), bag, i-1);
+						//Use attack menu
+						enemyFound(player, map, mobList.get(enemyNumber), bag, enemyNumber);
 					}else {
 						System.out.println(divider + "\nPlease choose a valid option.");
 					}
