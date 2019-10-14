@@ -6,30 +6,47 @@ public class Adventure {
 	
 	public static void Resume(Player player, Bag bag) throws Exception {
 		System.out.println("\n--------------\n") ;
+		Scanner scanner = new Scanner(System.in);
 		String tempLocation = (String) player.getPlayerLoc();
 		switch(tempLocation) {
 		case "start":
 			start(player, bag);
 			break;
 			
-		case "village":
-
+		case "main":
+			System.out.println("Please input a level name");
+	    	String guideName = scanner.next();
+	    	Guides guide = new Guides(guideName);
+	    	
+	    	while(Guides.getGuide() != Guides.listOfLines) {
+		    	
+		    	//Send the user to the map and read dialogue
+		    	Dialogues.readDialogue(guideName);
+		    	
+		    	//ADD CHECK FOR MAP EXIST
+		    	System.out.println("\n--------------\n") ;
+				PlayingField.map(player, bag, guideName);
+	    	}
 			break;
 			
 		case "test":
 			//Allow map name input
 			System.out.println("Please input a level name");
-			@SuppressWarnings("resource")
-			Scanner scanner = new Scanner(System.in);
+
 	    	String mapName = scanner.next();
 	    	
-	    	//Send the user to the map and read dialogue
-	    	Dialogues.readDialogue(mapName);
+	    	//Get guide
+	    	Guides.readGuide(mapName);
 	    	
-	    	//ADD CHECK FOR MAP EXIST
-	    	System.out.println("\n--------------\n") ;
-			PlayingField.map(player, bag, mapName);
-
+	    	while(Guides.getGuide() != Guides.getGuide()) {
+	    	
+		    	//Send the user to the map and read dialogue
+		    	Dialogues.readDialogue(mapName);
+		    	
+		    	//ADD CHECK FOR MAP EXIST
+		    	System.out.println("\n--------------\n") ;
+				PlayingField.map(player, bag, mapName);
+	    	}
 			break;
 			
 		default:
