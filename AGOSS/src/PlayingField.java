@@ -29,6 +29,7 @@ public class PlayingField {
 	//Collision based items
 	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G','M'};
 	static String divider = "----------------------------------------------|";
+	static boolean enemyFound = false;
 	
 	public static void map(Player player, Bag bag) throws Exception {
 
@@ -84,11 +85,22 @@ public class PlayingField {
 			printMap(map);
 			
 			//Decides what menu will be presented to the user
-			boolean found = findMerchant(map, merchant, player);
+			boolean merchantFound = findMerchant(map, merchant, player);
 			
-			//Prints out enemyCount
-			System.out.println("Enemies remaining: " + enemyCount);
+			//Decides what menu will be presented to the user
+			int i = 0;
+			for(i = 0; i != enemyMoveCount; i++) {
+				if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
+					enemyFound = findAttack(map, mobList.get(i), player);
+				}
+			}
+			
+			//Prints out enemyCount and turn #
 			System.out.println("Turn #" + turn);
+			System.out.println("Enemies remaining: " + enemyCount);
+			
+			//Print enemy locations
+			printEnemyLocations();
 			
 			//Print out current user stats
 			System.out.println(divider);
@@ -102,15 +114,19 @@ public class PlayingField {
 			//If found == true, give the user the option to use the merchant
 			boolean check = false;
 			do {
-				if(found == false) {
+				//Print out initial menu
 				System.out.println("Please make a selection: \n"
 						+ "1: Player move\n"
 						+ "2: Bag Menu");
-				}else if(found == true) {
-					System.out.println("Please make a selection: \n"
-							+ "1: Player move\n"
-							+ "2: Bag Menu\n"
-							+ "3: Merchant Menu");
+				
+				//Print out merchant menu
+				if(merchantFound == true) {
+					System.out.println("3: Merchant Menu");
+				}
+				
+				//Print out attack menu
+				if(enemyFound == true) {
+					System.out.println("4: Attack");
 				}
 				
 				int temp = input.nextInt();
@@ -132,13 +148,24 @@ public class PlayingField {
 						printMap(map);
 					}
 					break;
-					
+				
 				case 3:
-					if(found == true) {
+					if(merchantFound == true) {
 						check = true;
 						System.out.println(divider);
 						//Use merchant menu
 						useMerchant(player,merchant,bag);
+					}else {
+						System.out.println(divider + "\nPlease choose a valid option.");
+					}
+					break;	
+					
+				case 4:
+					if(enemyFound == true) {
+						check = true;
+						System.out.println(divider);
+						//Use merchant menu
+						enemyFound(player, map, mobList.get(i-1), bag, i-1);
 					}else {
 						System.out.println(divider + "\nPlease choose a valid option.");
 					}
@@ -152,10 +179,10 @@ public class PlayingField {
 			
 			
 			//Enemy moves
-			for(int i = 0; i != enemyMoveCount; i++) {
-				if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
+			for(int z = 0; z != enemyMoveCount; z++) {
+				if(mobList.get(z).getMapX() != 0 && mobList.get(z).getMapY() != 0) {
 				//Move towards player
-				enemyMove(player, bag, map, mobList.get(i),i);
+				enemyMove(player, bag, map, mobList.get(z),z);
 				}
 			}
 
@@ -164,7 +191,8 @@ public class PlayingField {
 			Main.playerUpdater(player);
 		}
 	}
-	
+
+
 	public static void enemyMove(Player player, Bag bag, char[][] map, Mob1 enemy,int i) throws InterruptedException, IOException {
 		int x = 0;
 		//Checks to see if the player moved
@@ -455,6 +483,16 @@ public class PlayingField {
 		System.out.println();
 	}
 	
+	
+	public static void printEnemyLocations() {
+		for(int i = 0; i != enemyMoveCount; i++) {
+			if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
+			//Print enemy locations
+			System.out.println(mobList.get(i).getName() + ": (" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY + ")");
+			}
+		}
+	}
+	
 	//Saves map as a local variable
 	public static char[][] saveMap(String data){
 		char [][] map = new char[rows][cols];
@@ -525,6 +563,30 @@ public class PlayingField {
         }
         //check if right
         if(map[player.getMapX()+1][player.getMapY()] == map[merchant.getMapX()][merchant.getMapY()]){
+        	found = true;
+		}
+        
+        //return found
+		return found;
+	}
+	
+	public static boolean findAttack(char[][] map, Mob1 enemy, Player player) {
+		boolean found = false;
+		
+		//check if above
+        if(map[player.getMapX()][player.getMapY()-1] == map[enemy.getMapX()][enemy.getMapY()]){
+        	found = true;
+        }
+        //check if below
+        if(map[player.getMapX()][player.getMapY()+1] == map[enemy.getMapX()][enemy.getMapY()]){
+        	found = true;
+        }
+        //check if left
+        if(map[player.getMapX()-1][player.getMapY()] == map[enemy.getMapX()][enemy.getMapY()]){
+        	found = true;
+        }
+        //check if right
+        if(map[player.getMapX()+1][player.getMapY()] == map[enemy.getMapX()][enemy.getMapY()]){
         	found = true;
 		}
         
