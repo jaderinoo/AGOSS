@@ -53,11 +53,15 @@ public class PlayingField {
 			}
 			rows = stats[0];
 			cols = stats[1];
+			int debug = stats[2];
 			
-			//Test additional map information
-			System.out.println(firstLine);
-			System.out.println(batch[1]);
-			System.out.println(thirdLine);
+			//Present dbug information
+			if(debug == 1) {
+				//Test additional map information
+				System.out.println(firstLine);
+				System.out.println(batch[1]);
+				System.out.println(thirdLine);
+			}
 			
 			//Saves the initial map
 			char[][] map = saveMap(data);
@@ -473,6 +477,9 @@ public class PlayingField {
 		for (int y=0; y < rows; y++) {
 			System.out.print("|");
 		    for (int x=0; x < cols; x++) {
+		        if(x % 2 == 0 && y % 2 == 0 && map[x][y] == ' ') {
+		        	map[x][y] = '.';
+		        }
 		        System.out.print(" " + map[x][y] + " ");
 		    }
 		    System.out.println("|");

@@ -27,7 +27,7 @@ public class Adventure {
 	    	Dialogues.readDialogue(mapName);
 	    	
 	    	//ADD CHECK FOR MAP EXIST
-	    	
+	    	System.out.println("\n--------------\n") ;
 			PlayingField.map(player, bag, mapName);
 
 			break;
