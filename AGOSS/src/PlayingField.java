@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,37 +35,42 @@ public class PlayingField {
 	
 	public static void map(Player player, Bag bag, String mapName) throws Exception {
 		
-		String[] batch = inputToString("src\\maps\\" + mapName + ".txt");
-	    
-		//Initialize vars
-		firstLine = batch[0];
-		String [] secondLine = batch[1].split(" ");
-		String thirdLine = batch[2];
-		String data = batch[3];
-		
-		//parses the size of the grid and places it into rows and cols
-		int[] stats = new int[secondLine.length];
-		for (int i = 0; i < secondLine.length; i++) {
-			String numberAsString = secondLine[i];
-			stats[i] = Integer.parseInt(numberAsString);
+		if (new File("src\\maps\\" + mapName + ".txt").exists()){
+				//Continue if it does
+			String[] batch = inputToString("src\\maps\\" + mapName + ".txt");
+		    
+			//Initialize vars
+			firstLine = batch[0];
+			String [] secondLine = batch[1].split(" ");
+			String thirdLine = batch[2];
+			String data = batch[3];
+			
+			//parses the size of the grid and places it into rows and cols
+			int[] stats = new int[secondLine.length];
+			for (int i = 0; i < secondLine.length; i++) {
+				String numberAsString = secondLine[i];
+				stats[i] = Integer.parseInt(numberAsString);
+			}
+			rows = stats[0];
+			cols = stats[1];
+			
+			//Test additional map information
+			System.out.println(firstLine);
+			System.out.println(batch[1]);
+			System.out.println(thirdLine);
+			
+			//Saves the initial map
+			char[][] map = saveMap(data);
+	
+			//Initial scan
+			enemyCount = scanMap(player,map);
+			enemyMoveCount = enemyCount;
+			
+			playerMenu(player, map, bag, firstLine);
+		}else {
+			System.out.println("Missing map .txt");
+			return;
 		}
-		rows = stats[0];
-		cols = stats[1];
-		
-		//Test additional map information
-		System.out.println(firstLine);
-		System.out.println(batch[1]);
-		System.out.println(thirdLine);
-		
-		//Saves the initial map
-		char[][] map = saveMap(data);
-
-		//Initial scan
-		enemyCount = scanMap(player,map);
-		enemyMoveCount = enemyCount;
-		
-		playerMenu(player, map, bag, firstLine);
-
 	}
 	
 	public static void playerMenu(Player player, char[][] map, Bag bag, String firstLine) throws Exception {
