@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 public class Dialogues {
 	//Reads dialogue from a txt
@@ -11,32 +12,32 @@ public class Dialogues {
 		}
 		
 		//Continue if it does
-		String data = inputToString("src\\dialogues\\" + mapName + ".txt");
+		ArrayList<String> listOfLines = inputToString("src\\dialogues\\" + mapName + ".txt");
 		
-		//Reads in text line by line
-		System.out.println(data);
+		//Loop through the list
+		for(int i = 0; i != listOfLines.size(); i++) {
+			//If the item - shows up, skip it and add a delay
+			if(listOfLines.get(i).equals("-")) {
+				Thread.sleep(200);
+			}else {
+				System.out.println(listOfLines.get(i));
+			}
+		}
 	}
 	
-	public static String inputToString(String fileName)throws Exception 
+	public static ArrayList<String> inputToString(String fileName)throws Exception 
 	{ 
 		//Initializes the buffered reader
 		BufferedReader reader = new BufferedReader(new FileReader(fileName));
-		
-		//Initialize the variables needed to read in the file
-		String line = null;
-		String data = null;
-		StringBuffer stbuffer = new StringBuffer();
-		//Reads in text line by line
-		while((line = reader.readLine())!=null){
-			stbuffer.append(line).append("\n");
-		}
-		
-		//Sets the appended string to a string variable
-		data = stbuffer.toString();
-		//Remove all commas from string
-		data = data.replace(",", "");
-		
-		reader.close();
-		return data;
+	    ArrayList<String> listOfLines = new ArrayList<>();
+
+	    String line = reader.readLine();
+	    while (line != null) {
+	      listOfLines.add(line);
+	      line = reader.readLine();
+	    }
+	    
+		return listOfLines;
+
 	} 
 }

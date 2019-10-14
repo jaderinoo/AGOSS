@@ -36,9 +36,6 @@ public class Adventure {
 	}
 	
 	public static void start(Player player, Bag bag) {
-		System.out.println("Welcome to AGOSS!\n"
-				+ "This game plays very similarly to other textbased RPGs but with a slight twist\n"
-				+ "Think of it as a pokemon game where you only use one pokemon.");
 		System.out.println(bag.getPotions());
 		System.out.println(bag.getBoosters());
 	}
