@@ -25,6 +25,9 @@ public class Adventure {
 	    	
 	    	//Send the user to the map and read dialogue
 	    	Dialogues.readDialogue(mapName);
+	    	
+	    	//ADD CHECK FOR MAP EXIST
+	    	
 			PlayingField.map(player, bag, mapName);
 
 			break;
