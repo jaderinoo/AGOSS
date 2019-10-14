@@ -14,8 +14,9 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 	
 	player.setWpnBonus(bag.getWeapon());
 	player.setShieldBonus(bag.getWeapon());
+	int turn = 0;
 	
-	while(player.getCurrentHp() != 0 || attacker.getCurrentHp() != 0) {
+	while(turn != 2) {
 		System.out.println(divider);
 		System.out.println("\t\t\t|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp());
 		System.out.println(attacker.getName() + "'s Hp: " + attacker.getCurrentHp() + "/" + attacker.getMaxHp() + "\t|"
@@ -26,70 +27,29 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 		attackDamage = 0;
 		damageTaken = 0;
 		damageDealt = 0;
-		System.out.println("What would you like to do?: \n1:Attack   2:Defend "
-													 + "\n3:Bag      4:Run");
-		
-		System.out.print("Selection: ");
-		int selection = scanner.nextInt();
-		System.out.println(divider);
-			switch(selection) {
-				case 1:
-					System.out.println("BattleLog:\n-");
-					//If the player is faster
-					if(player.getAgility() >= attacker.getAgility()) {
-						System.out.println("You moved first");
-						playerMove(player,attacker);
-						System.out.println("-");
-						attackerMove(player,attacker);
-						//
-						if(attacker2 != null) {
-							attackerMove(player,attacker2);
-						}
-					}
-					
-					//If the Attacker is faster
-					if(player.getAgility() <= attacker.getAgility()) {
-						System.out.println(attacker.getName() + " moved first");
-						attackerMove(player,attacker);
-						if(attacker2 != null) {
-							attackerMove(player,attacker2);
-						}
-						System.out.println("-");
-						playerMove(player,attacker);
-					}
-					break;
-					
-				case 2:
-					System.out.println("BattleLog:\n-");
-					int tempArmor = player.armor;
-					player.armor = player.armor/2 + player.armor;;
-					attackerMove(player,attacker);
-					if(attacker2 != null) {
-						attackerMove(player,attacker2);
-					}
-					player.armor = tempArmor;
-					break;
-					
-				case 3:
-					System.out.println("Bag Menu:");
-					useBag(player,bag,attacker);
-
-					break;
-					
-				case 4:
-					if(player.getAgility() >= attacker.getAgility()) {
-					System.out.println("Currently not implemented");
-					break;
-					}else {
-						System.out.println("You can't run away");
-						winStatus = false;
-						return winStatus;
-					}
-					
-				default:
-					System.out.println("Invalid option. Please try again.\n"); 
-					break;
+		System.out.println("BattleLog:\n-");
+		//If the player is faster
+		if(player.getAgility() >= attacker.getAgility()) {
+			System.out.println("You moved first");
+			playerMove(player,attacker);
+			System.out.println("-");
+			attackerMove(player,attacker);
+			//
+			if(attacker2 != null) {
+				attackerMove(player,attacker2);
 			}
+		}
+		
+		//If the Attacker is faster
+		if(player.getAgility() <= attacker.getAgility()) {
+			System.out.println(attacker.getName() + " moved first");
+			attackerMove(player,attacker);
+			if(attacker2 != null) {
+				attackerMove(player,attacker2);
+			}
+			System.out.println("-");
+			playerMove(player,attacker);
+			}	
 			
 			//Match win decider
 			if(attacker.getCurrentHp() <= 0) {
@@ -123,17 +83,14 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				Main.playerUpdater(player);
 				return winStatus;
 			}
+			turn++;
 		}
-		return winStatus;
+	player.resetShieldBonus(bag.getWeapon());
+	player.resetWpnBonus(bag.getWeapon());
+	return false;
 	}
 
 	public static void attackerMove(Player player, Mob1 attacker) {
-		//Kill check
-		if(attacker.getCurrentHp() <= 0) {
-			return;
-		}else if(player.getCurrentHp() <= 0) {
-			return;
-		}
 		
 		//Miss
 		if(ThreadLocalRandom.current().nextInt(5, 10) == 5){
@@ -143,6 +100,9 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 		//Calculate the damage that the player will take
 		attackerDamage = attacker.strength*ThreadLocalRandom.current().nextInt(3, 5);
 		damageTaken = attackerDamage - player.armor;
+		if(damageTaken < 0) {
+			damageTaken = 0;
+		}
 		System.out.println("You took:  " + damageTaken + "DMG");
 		player.currentHp = player.currentHp - damageTaken;
 		
@@ -154,12 +114,6 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 	}
 	
 	public static void playerMove(Player player, Mob1 attacker) {
-		//Kill check
-		if(attacker.getCurrentHp() <= 0) {
-			return;
-		}else if(player.getCurrentHp() <= 0) {
-			return;
-		}
 		
 		//Miss
 		if(ThreadLocalRandom.current().nextInt(0, 6) == 0){
@@ -169,6 +123,9 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 		//Calculate the damage that the attacker will take
 		attackDamage = player.strength*ThreadLocalRandom.current().nextInt(3, 5);
 		damageDealt = attackDamage - attacker.armor;
+		if(damageDealt < 0) {
+			damageDealt = 0;
+		}
 		System.out.println("You dealt: " + damageDealt + "DMG");
 		attacker.currentHp = attacker.currentHp - damageDealt;
 		
