@@ -147,12 +147,10 @@ public class PlayingField {
 				case 2:
 					//Uses the bag menu and update player information
 					System.out.println(divider);
-					check = Fight.useBag(player,bag,null);
+					Fight.useBag(player,bag,null);
 					Main.bagUpdater(player,bag);
 					Main.playerUpdater(player);
-					if (check == false) {
-						printMap(map);
-					}
+					check = true;
 					break;
 				
 				case 3:
