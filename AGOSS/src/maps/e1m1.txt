@@ -1,4 +1,4 @@
-test
+e1m1
 17 17 0
 A basic test map used for testing :)
 /---------------\
