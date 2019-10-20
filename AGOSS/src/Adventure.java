@@ -47,7 +47,7 @@ public class Adventure {
 		    		winStatus = false;
 		    		
 		    		//Map completion check
-		    		if(i == listOfLines.size()-1) {
+		    		if(i == listOfLines.size()) {
 		    			System.out.println("Map list completed");
 		    			return;
 		    		}
