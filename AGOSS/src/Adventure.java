@@ -55,7 +55,7 @@ public class Adventure {
 		//Checks if Map List exists
 		if (new File("src\\dialogues\\" + mapName + ".txt").exists()){
 			//Continue if it does
-			listOfLines = inputToString("src\\dialogues\\" + mapName + "_mapList.txt");
+			listOfLines = inputToString("src\\maplists\\" + mapName + "_mapList.txt");
 			
 			
 			//Loop through the list
