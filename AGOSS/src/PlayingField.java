@@ -36,7 +36,11 @@ public class PlayingField {
 	static boolean enemyFound = false;
 	
 	public static boolean map(Player player, Bag bag, String mapName) throws Exception {
+		
+		//Clear mobList for reuse
 		mobList.clear();
+		turn = 0;
+		
 		if (new File("src\\maps\\" + mapName + ".txt").exists()){
 			//Continue if it does
 			String[] batch = inputToString("src\\maps\\" + mapName + ".txt");

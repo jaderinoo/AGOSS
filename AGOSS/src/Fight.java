@@ -97,7 +97,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				player.resetShieldBonus(bag.getWeapon());
 				player.resetWpnBonus(bag.getWeapon());
 				
-				//Return player
+				//Return player // Player wins
 				attacker.currentHp = 0;
 				System.out.print("You won the fight!\n");
 				player.levelup(attacker);
@@ -112,7 +112,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				player.resetWpnBonus(bag.getWeapon());
 				player.resetShieldBonus(bag.getWeapon());
 				
-				//Reset player
+				//Reset player // Player loses
 				player.currentHp = 0;
 				System.out.print("You lost the fight \n\n");
 				winStatus = false;
