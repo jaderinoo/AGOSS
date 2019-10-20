@@ -1,4 +1,4 @@
-test
+test2
 17 17 0
 A basic test map used for testing :)
 /---------------\
@@ -7,9 +7,9 @@ A basic test map used for testing :)
 |               |
 |        |__    |
 |               |
+|        |      |
 |               |
-|               |
-|               |
+|        2      |
 |  /-\     /-\  |
 |  |_|     |M|  |
 |               |

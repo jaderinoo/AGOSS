@@ -27,14 +27,15 @@ public class PlayingField {
 	static int enemyNumber = 0;
 	static String firstLine = "";
 	static int turn = 0;
+	static char[][] map = null;
 	static boolean movementCheck = false;
 	//Collision based items
 	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G','M'};
 	static String divider = "----------------------------------------------|";
 	static boolean enemyFound = false;
 	
-	public static void map(Player player, Bag bag, String mapName) throws Exception {
-		
+	public static boolean map(Player player, Bag bag, String mapName) throws Exception {
+		mobList.clear();
 		if (new File("src\\maps\\" + mapName + ".txt").exists()){
 				//Continue if it does
 			String[] batch = inputToString("src\\maps\\" + mapName + ".txt");
@@ -44,37 +45,45 @@ public class PlayingField {
 			String [] secondLine = batch[1].split(" ");
 			String thirdLine = batch[2];
 			String data = batch[3];
-			
-			//parses the size of the grid and places it into rows and cols
-			int[] stats = new int[secondLine.length];
-			for (int i = 0; i < secondLine.length; i++) {
-				String numberAsString = secondLine[i];
-				stats[i] = Integer.parseInt(numberAsString);
+			String mapDescription = mapName;
+
+			//Check the character location in file
+			if(mapDescription == mapName) {
+				//parses the size of the grid and places it into rows and cols
+				int[] stats = new int[secondLine.length];
+				for (int i = 0; i < secondLine.length; i++) {
+					String numberAsString = secondLine[i];
+					stats[i] = Integer.parseInt(numberAsString);
+				}
+				rows = stats[0];
+				cols = stats[1];
+				int debug = stats[2];
+				
+				//Present dbug information
+				if(debug == 1) {
+					//Test additional map information
+					System.out.println(firstLine);
+					System.out.println(batch[1]);
+					System.out.println(thirdLine);
+				}
+				
+				//Saves the initial map
+				map = saveMap(data);
+		
+				//Initial scan
+				enemyCount = scanMap(player,map);
+				enemyMoveCount = enemyCount;
+				
+				playerMenu(player, map, bag, firstLine);
+			}else {
+				System.out.println("Location incorrect");
+				return false;
 			}
-			rows = stats[0];
-			cols = stats[1];
-			int debug = stats[2];
-			
-			//Present dbug information
-			if(debug == 1) {
-				//Test additional map information
-				System.out.println(firstLine);
-				System.out.println(batch[1]);
-				System.out.println(thirdLine);
-			}
-			
-			//Saves the initial map
-			char[][] map = saveMap(data);
-	
-			//Initial scan
-			enemyCount = scanMap(player,map);
-			enemyMoveCount = enemyCount;
-			
-			playerMenu(player, map, bag, firstLine);
 		}else {
 			System.out.println("Missing map .txt");
-			return;
+			return true;
 		}
+		return true;
 	}
 	
 	public static void playerMenu(Player player, char[][] map, Bag bag, String firstLine) throws Exception {

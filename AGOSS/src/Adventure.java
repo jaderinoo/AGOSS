@@ -13,7 +13,7 @@ public class Adventure {
 	public static void Resume(Player player, Bag bag, int choice) throws Exception {
 		System.out.println("\n--------------\n") ;
 		Scanner scanner = new Scanner(System.in);
-		String tempLocation = (String) player.getPlayerLoc();
+		String playerMap = (String) player.getPlayerLoc();
 		switch(choice) {
 			
 		case 0:
@@ -35,19 +35,23 @@ public class Adventure {
 			System.out.println("Please input a Map List");
 	    	String mapList = scanner.next();
 	    	listOfLines = saveMapList(mapList);
+	    	boolean check = false;
 	    	
-	    	for(int i = 0;i != listOfLines.size(); i++ ) {
-		    	
-	    		System.out.println(listOfLines.get(i));
-	    		
-		    	//Send the user to the map and read dialogue
-		    	Dialogues.readDialogue(listOfLines.get(i));
-		    	
-		    	//ADD CHECK FOR MAP EXIST
-		    	System.out.println("\n--------------\n") ;
-				PlayingField.map(player, bag, listOfLines.get(i));
+	    	//Checks if mapname and list are the same
+	    	while(check == false) {
+		    	for(int i = 0;i != listOfLines.size(); i++ ) {
+			    	
+		    		System.out.println(listOfLines.get(i));
+		    		
+			    	//Send the user to the map and read dialogue
+			    	Dialogues.readDialogue(listOfLines.get(i));
+			    	
+			    	//ADD CHECK FOR MAP EXIST
+			    	System.out.println("\n--------------\n") ;
+					PlayingField.map(player, bag, listOfLines.get(i));
+		    	}
+				break;
 	    	}
-			break;
 		}
 	}
 	
