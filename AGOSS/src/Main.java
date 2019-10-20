@@ -19,7 +19,7 @@ public class Main {
 				" / \\  |    |  | |    |\r\n" + 
 				"|___| |	 _ |  | |__  |__\r\n" + 
 				"|   | |__| |__| ___| ___|\n------------------------");
-		System.out.println("Please Select an Option:\n  1 - New Game\n  2 - Load Game");
+		System.out.println("Please Select an Option:\n  1 - New Game\n  2 - Load Map\n  3 - Load Map List");
 
 		int selection = scanner.nextInt();
 		switch(selection) {
@@ -27,7 +27,10 @@ public class Main {
 				newGame();
 				break;
 			case 2:
-				loadGame();
+				loadGame(0);	//Load specific map
+				break;
+			case 3:
+				loadGame(1);	//Load Map list
 				break;
 			default:
 				System.out.println("Invalid option. Please try again.\n"); 
@@ -63,7 +66,7 @@ public class Main {
    ///////////////
 	
 	@SuppressWarnings("null")
-	public static void loadGame() throws Exception {
+	public static void loadGame(int choice) throws Exception {
 		System.out.print("\nPlease Enter the characters name: ");
 		String tempName = scanner.next();
 		BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + ".txt"));
@@ -135,7 +138,7 @@ public class Main {
 		switch(reply.toLowerCase()) {
 			case "y":
 				System.out.println("And so it begins!");
-				Adventure.Resume(player,bag);
+				Adventure.Resume(player,bag,choice);
 				break;
 				
 			case "n":
@@ -255,7 +258,6 @@ public class Main {
 				System.out.println("And so it begins!");
 				Bag bag = new Bag(player, 0, 0, 0, 0);
 				WriteBag(tempName, player, bag);
-				Adventure.Resume(player, bag);
 				break;
 				
 			case "n":

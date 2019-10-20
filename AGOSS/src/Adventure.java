@@ -10,17 +10,29 @@ public class Adventure {
 	static ArrayList<String> listOfLines = new ArrayList<>();
 
 	
-	public static void Resume(Player player, Bag bag) throws Exception {
+	public static void Resume(Player player, Bag bag, int choice) throws Exception {
 		System.out.println("\n--------------\n") ;
 		Scanner scanner = new Scanner(System.in);
 		String tempLocation = (String) player.getPlayerLoc();
-		switch(tempLocation) {
-		case "start":
-			//start(player, bag);
+		switch(choice) {
+			
+		case 0:
+			//Allow map name input
+			System.out.println("Please input a level name");
+
+	    	String mapName = scanner.next();
+	    	
+	    	//Send the user to the map and read dialogue
+	    	Dialogues.readDialogue(mapName);
+	    	
+	    	//ADD CHECK FOR MAP EXIST
+	    	System.out.println("\n--------------\n") ;
+			PlayingField.map(player, bag, mapName);
 			break;
 			
-		case "main":
-			System.out.println("Please input a level name");
+			
+		case 1:
+			System.out.println("Please input a Map List");
 	    	String guideName = scanner.next();
 	    	listOfLines = saveGuide(guideName);
 	    	
@@ -35,24 +47,6 @@ public class Adventure {
 		    	System.out.println("\n--------------\n") ;
 				PlayingField.map(player, bag, listOfLines.get(i));
 	    	}
-			break;
-			
-		case "test":
-			//Allow map name input
-			System.out.println("Please input a level name");
-
-	    	String mapName = scanner.next();
-	    	
-	    	//Send the user to the map and read dialogue
-	    	Dialogues.readDialogue(mapName);
-	    	
-	    	//ADD CHECK FOR MAP EXIST
-	    	System.out.println("\n--------------\n") ;
-			PlayingField.map(player, bag, mapName);
-			break;
-			
-		default:
-			System.out.println("Invalid option. Please try again.\n"); 
 			break;
 		}
 	}
