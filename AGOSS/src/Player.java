@@ -13,7 +13,7 @@ public class Player {
 		int currentHp;
 		int mapX;
 		int mapY;
-		private Object playerLoc;
+		String playerLoc;
 		Object name;
 
 		public Player(String name, int strength,int agility,int armor,int maxHp,int special, int level, int exp, int gold, int currentHp, String playerLoc) {
@@ -82,10 +82,15 @@ public class Player {
 	    	return currentHp;
 	    }
 	    
-	    public Object getPlayerLoc() {
+	    public String getPlayerLoc() {
 	        return playerLoc;
 	    }
 
+	    public String setPlayerLoc(String mapName) {
+	    	this.playerLoc = mapName;
+	        return playerLoc;
+	    }
+	    
 		public int addStrength(int i) {
 			for(int x = 0; x != i; x++) {
 				this.strength++;

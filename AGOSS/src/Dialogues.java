@@ -22,7 +22,7 @@ public class Dialogues {
 				}
 			}
 		}else {
-			System.out.println("Missing dialogue .txt");
+			System.out.println("\n--------------\n\nMissing dialogue .txt");
 		}
 	}
 	

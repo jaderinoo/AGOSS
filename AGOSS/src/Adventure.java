@@ -12,8 +12,6 @@ public class Adventure {
 	
 	public static void Resume(Player player, Bag bag, int choice) throws Exception {
 		System.out.println("\n--------------\n") ;
-		Scanner scanner = new Scanner(System.in);
-		String playerMap = (String) player.getPlayerLoc();
 		switch(choice) {
 			
 		case 0:
@@ -22,11 +20,8 @@ public class Adventure {
 
 	    	String mapName = scanner.next();
 	    	
-	    	//Send the user to the map and read dialogue
-	    	Dialogues.readDialogue(mapName);
-	    	
-	    	//ADD CHECK FOR MAP EXIST
-	    	System.out.println("\n--------------\n") ;
+	    	//CHECK IF MAP EXIST
+	    	System.out.println("\n--------------\n");
 			PlayingField.map(player, bag, mapName);
 			break;
 			
@@ -37,18 +32,19 @@ public class Adventure {
 	    	listOfLines = saveMapList(mapList);
 	    	boolean check = false;
 	    	
-	    	//Checks if mapname and list are the same
+	    	//Checks if mapName and list are the same
 	    	while(check == false) {
-		    	for(int i = 0;i != listOfLines.size(); i++ ) {
+		    	for(int i = 0;i != listOfLines.size(); i++ ) {    	
+			    	//CHECK IF MAP EXIST	
+			    	if(listOfLines.get(i).equals(player.getPlayerLoc())) {
+			    		winStatus = PlayingField.map(player, bag, listOfLines.get(i));
+			    	}
 			    	
-		    		System.out.println(listOfLines.get(i));
-		    		
-			    	//Send the user to the map and read dialogue
-			    	Dialogues.readDialogue(listOfLines.get(i));
-			    	
-			    	//ADD CHECK FOR MAP EXIST
-			    	System.out.println("\n--------------\n") ;
-					PlayingField.map(player, bag, listOfLines.get(i));
+			    	//If player wins a map, save progress
+			    	if(winStatus == true) {
+			    		player.setPlayerLoc(listOfLines.get(i+1));
+						Main.playerUpdater(player);
+			    	}
 		    	}
 				break;
 	    	}
@@ -60,7 +56,6 @@ public class Adventure {
 		if (new File("src\\dialogues\\" + mapName + ".txt").exists()){
 			//Continue if it does
 			listOfLines = inputToString("src\\maplists\\" + mapName + "_mapList.txt");
-			
 			
 			//Loop through the list
 			for(int i = 0; i != listOfLines.size(); i++) {
