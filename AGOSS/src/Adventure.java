@@ -33,8 +33,8 @@ public class Adventure {
 			
 		case 1:
 			System.out.println("Please input a Map List");
-	    	String guideName = scanner.next();
-	    	listOfLines = saveGuide(guideName);
+	    	String mapList = scanner.next();
+	    	listOfLines = saveMapList(mapList);
 	    	
 	    	for(int i = 0;i != listOfLines.size(); i++ ) {
 		    	
@@ -51,11 +51,11 @@ public class Adventure {
 		}
 	}
 	
-	public static ArrayList<String> saveGuide(String mapName) throws Exception {
-		//Checks if Guide exists
+	public static ArrayList<String> saveMapList(String mapName) throws Exception {
+		//Checks if Map List exists
 		if (new File("src\\dialogues\\" + mapName + ".txt").exists()){
 			//Continue if it does
-			listOfLines = inputToString("src\\dialogues\\" + mapName + "_guide.txt");
+			listOfLines = inputToString("src\\dialogues\\" + mapName + "_mapList.txt");
 			
 			
 			//Loop through the list
@@ -63,7 +63,7 @@ public class Adventure {
 				return listOfLines;
 			}
 		}else {
-			System.out.println("Missing guide .txt");
+			System.out.println("Missing MapList .txt");
 		}
 		return listOfLines;
 	}
