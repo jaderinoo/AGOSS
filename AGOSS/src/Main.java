@@ -19,7 +19,7 @@ public class Main {
 				" / \\  |    |  | |    |\r\n" + 
 				"|___| |	 _ |  | |__  |__\r\n" + 
 				"|   | |__| |__| ___| ___|\n------------------------");
-		System.out.println("Please Select an Option:\n  1 - New Game\n  2 - Load Map\n  3 - Load Map List");
+		System.out.println("Please Select an Option:\n 1 - New Game\n 2 - Load Base Game\n 3 - Load Map\n 4 - Load Map List");
 
 		int selection = scanner.nextInt();
 		switch(selection) {
@@ -27,9 +27,12 @@ public class Main {
 				newGame();
 				break;
 			case 2:
-				loadGame(0);	//Load specific map
+				loadGame(2);
 				break;
 			case 3:
+				loadGame(0);	//Load specific map
+				break;
+			case 4:
 				loadGame(1);	//Load Map list
 				break;
 			default:

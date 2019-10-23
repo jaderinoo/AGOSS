@@ -9,7 +9,6 @@ public class Adventure {
 	static Boolean winStatus;
 	static ArrayList<String> listOfLines = new ArrayList<>();
 
-	
 	public static void Resume(Player player, Bag bag, int choice) throws Exception {
 		System.out.println("\n--------------\n") ;
 		switch(choice) {
@@ -25,11 +24,16 @@ public class Adventure {
 	    	PlayingField.map(player, bag, mapName);
 			break;
 			
-			
+		case 2:	
 		case 1:
+			String mapList = "";
 			//Allow user to input mapList
-			System.out.println("Please input a Map List");
-	    	String mapList = scanner.next();
+			if(choice == 1) {
+				System.out.println("Please input a Map List");
+				mapList = scanner.next();
+			}else if(choice == 2) {
+				mapList = "test";
+			}
 	    	listOfLines = saveMapList(mapList);
 	    	boolean check = false;
 	    	
