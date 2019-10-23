@@ -85,7 +85,7 @@ public class Adventure {
 			listOfLines = inputToString("src\\maplists\\" + mapList + "_mapList.txt");
 			
 			//Loop through the list
-			for(int i = 0; i != listOfLines.size(); i++) {
+			for(int i = 0; i != listOfLines.size();) {
 				return listOfLines;
 			}
 		}else {

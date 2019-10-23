@@ -510,7 +510,7 @@ public class PlayingField {
 		for(int i = 0; i != enemyMoveCount; i++) {
 			if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
 			//Print enemy locations
-			System.out.println(mobList.get(i).getName() + ": (" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY + ")");
+			System.out.println(mobList.get(i).getName() + ": \t (" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY + ") \t HP:(" + mobList.get(i).getCurrentHp() + "/" + mobList.get(i).getMaxHp()+")");
 			}
 		}
 	}

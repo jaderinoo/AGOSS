@@ -27,8 +27,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 		damageTaken = 0;
 		damageDealt = 0;
 		System.out.println("What would you like to do?: \n1:Attack   2:Defend "
-													 + "\n3:Bag      4:Run");
-		
+													 + "\n3:Bag");
 		System.out.print("Selection: ");
 		int selection = scanner.nextInt();
 		System.out.println(divider);
@@ -75,16 +74,6 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 					useBag(player,bag,attacker);
 
 					break;
-					
-				case 4:
-					if(player.getAgility() >= attacker.getAgility()) {
-					System.out.println("Currently not implemented");
-					break;
-					}else {
-						System.out.println("You can't run away");
-						winStatus = false;
-						return winStatus;
-					}
 					
 				default:
 					System.out.println("Invalid option. Please try again.\n"); 
