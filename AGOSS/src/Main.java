@@ -27,7 +27,7 @@ public class Main {
 				newGame();
 				break;
 			case 2:
-				loadGame(2);
+				loadGame(2);	//Load base game
 				break;
 			case 3:
 				loadGame(0);	//Load specific map
@@ -140,7 +140,7 @@ public class Main {
 
 		switch(reply.toLowerCase()) {
 			case "y":
-				System.out.println("And so it begins!");
+				System.out.println("Resuming game. . .");
 				Adventure.Resume(player,bag,choice);
 				break;
 				
@@ -261,6 +261,7 @@ public class Main {
 				System.out.println("And so it begins!");
 				Bag bag = new Bag(player, 0, 0, 0, 0);
 				WriteBag(tempName, player, bag);
+				Adventure.Resume(player,bag,2);	//Start the base game
 				break;
 				
 			case "n":
