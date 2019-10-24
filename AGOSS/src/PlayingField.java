@@ -212,6 +212,12 @@ public class PlayingField {
 	}
 
 
+	/*
+	 * I think its finally time to flesh out the enemy / player movement. Next steps to take:
+	 * Allow players/enemies to move multiple spaces depending on agility
+	 * Have smarter pathing for enemy ai
+	 * have something like agility /3 = move amount
+	 */
 	public static void enemyMove(Player player, Bag bag, char[][] map, Mob1 enemy,int i) throws InterruptedException, IOException {
 		int x = 0;
 		//Checks to see if the player moved
