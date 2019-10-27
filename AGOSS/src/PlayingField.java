@@ -360,7 +360,16 @@ public class PlayingField {
 					//Enemies get stuck after bumping into each other
 					
 					//Code should go here
-					
+					if(check == false) {
+						//Reset x while dropping moveCounter and printing the map for the player
+						moveCounter--;
+						x = 0;
+						check = true;
+						System.out.println(enemy.getName() + "'s Move\nMovecount: " + (moveCounter+1) + "\n" + divider);
+						printMap(map);
+						//Adds a small delay between movements to better visualize the moves
+						Thread.sleep(1250);
+					}
 					
 				}
 			}
