@@ -227,62 +227,86 @@ public class PlayingField {
 	 */
 	public static void enemyMove(Player player, Bag bag, char[][] map, Mob1 enemy,int i) throws InterruptedException, IOException {
 		int x = 0;
+		int moveCounter = enemy.getAgility() / 4;
 		//Checks to see if the player moved
 		if(movementCheck == true) {
-			//Checks if the mob is in 0,0
-			if(map[enemy.getMapX()][enemy.getMapY()] != map[0][0]) {
-				// Left
-				if(enemy.getMapX() > player.getMapX()) {
-					for(int z = 0; z != collisionSet.length; z++) {
-						if(map[enemy.getMapX()-1][enemy.getMapY()] != (collisionSet[z])) {
-							x++;
-							//If X has enough clears, it'll pass this check
-							if(x == collisionSet.length) {
-								map[enemy.getMapX()][enemy.getMapY()] = ' ';
-								map[enemy.getMapX()-1][enemy.getMapY()] = enemy.getType();
-								enemy.setMapX(enemy.getMapX()-1);
+			//While the enemy still has moves
+			while(moveCounter != 0) {
+				//Checks if the mob is in 0,0
+				if(map[enemy.getMapX()][enemy.getMapY()] != map[0][0]) {
+					// Left
+					if(enemy.getMapX() > player.getMapX()) {
+						for(int z = 0; z != collisionSet.length; z++) {
+							if(map[enemy.getMapX()-1][enemy.getMapY()] != (collisionSet[z])) {
+								x++;
+								//If X has enough clears, it'll pass this check
+								if(x == collisionSet.length) {
+									map[enemy.getMapX()][enemy.getMapY()] = ' ';
+									map[enemy.getMapX()-1][enemy.getMapY()] = enemy.getType();
+									enemy.setMapX(enemy.getMapX()-1);
+									moveCounter--;
+									x = 0;
+									if(moveCounter != 0) {
+										printMap(map);
+									}
+								}
 							}
 						}
+					// Up
+					}else if(enemy.getMapY() > player.getMapY()){
+						for(int z = 0; z != collisionSet.length; z++) {
+							if(map[enemy.getMapX()][enemy.getMapY()-1] != (collisionSet[z])) {
+								x++;
+								//If X has enough clears, it'll pass this check
+								if(x == collisionSet.length) {
+									map[enemy.getMapX()][enemy.getMapY()] = ' ';
+									map[enemy.getMapX()][enemy.getMapY()-1] = enemy.getType();
+									enemy.setMapY(enemy.getMapY()-1);
+									moveCounter--;
+									x = 0;
+									if(moveCounter != 0) {
+										printMap(map);
+									}
+								}
+							}
+						}	
+					// Down
+					}else if(enemy.getMapY() < player.getMapY()){
+						for(int z = 0; z != collisionSet.length; z++) {
+							if(map[enemy.getMapX()][enemy.getMapY()+1] != (collisionSet[z])) {
+								x++;
+								//If X has enough clears, it'll pass this check
+								if(x == collisionSet.length) {
+									map[enemy.getMapX()][enemy.getMapY()] = ' ';
+									map[enemy.getMapX()][enemy.getMapY()+1] = enemy.getType();
+									enemy.setMapY(enemy.getMapY()+1);
+									moveCounter--;
+									x = 0;
+									if(moveCounter != 0) {
+										printMap(map);
+									}
+								}
+							}
+						}
+					// Right
+					}else if(enemy.getMapX() < player.getMapX()) {
+						for(int z = 0; z != collisionSet.length; z++) {
+							if(map[enemy.getMapX()+1][enemy.getMapY()] != (collisionSet[z])) {
+								x++;
+								//If X has enough clears, it'll pass this check
+								if(x == collisionSet.length) {
+									map[enemy.getMapX()][enemy.getMapY()] = ' ';
+									map[enemy.getMapX()+1][enemy.getMapY()] = enemy.getType();
+									enemy.setMapX(enemy.getMapX()+1);
+									moveCounter--;
+									x = 0;
+									if(moveCounter != 0) {
+										printMap(map);
+									}
+								}
+							}
+				        }
 					}
-				// Up
-				}else if(enemy.getMapY() > player.getMapY()){
-					for(int z = 0; z != collisionSet.length; z++) {
-						if(map[enemy.getMapX()][enemy.getMapY()-1] != (collisionSet[z])) {
-							x++;
-							//If X has enough clears, it'll pass this check
-							if(x == collisionSet.length) {
-								map[enemy.getMapX()][enemy.getMapY()] = ' ';
-								map[enemy.getMapX()][enemy.getMapY()-1] = enemy.getType();
-								enemy.setMapY(enemy.getMapY()-1);
-							}
-						}
-					}	
-				// Down
-				}else if(enemy.getMapY() < player.getMapY()){
-					for(int z = 0; z != collisionSet.length; z++) {
-						if(map[enemy.getMapX()][enemy.getMapY()+1] != (collisionSet[z])) {
-							x++;
-							//If X has enough clears, it'll pass this check
-							if(x == collisionSet.length) {
-								map[enemy.getMapX()][enemy.getMapY()] = ' ';
-								map[enemy.getMapX()][enemy.getMapY()+1] = enemy.getType();
-								enemy.setMapY(enemy.getMapY()+1);
-							}
-						}
-					}
-				// Right
-				}else if(enemy.getMapX() < player.getMapX()) {
-					for(int z = 0; z != collisionSet.length; z++) {
-						if(map[enemy.getMapX()+1][enemy.getMapY()] != (collisionSet[z])) {
-							x++;
-							//If X has enough clears, it'll pass this check
-							if(x == collisionSet.length) {
-								map[enemy.getMapX()][enemy.getMapY()] = ' ';
-								map[enemy.getMapX()+1][enemy.getMapY()] = enemy.getType();
-								enemy.setMapX(enemy.getMapX()+1);
-							}
-						}
-			        }
 				}
 			}
 		}
@@ -491,8 +515,6 @@ public class PlayingField {
 		
 	//Prints the map for the player
 	public static void printMap(char[][] map) {
-		System.out.println("Playing Field: " + mapName + "\n");
-		
 		//Top border
 		for(int i = 0; i != cols*2+cols+2; i++) {
 			System.out.print("_");
@@ -711,7 +733,7 @@ public class PlayingField {
 	private static void enemyCreate(int y, int x, char mobType) {
 
 		if(mobType == 'F') {
-			mobList.add(new Mob1("FootSoldier", 5, 5, 5, 50, 10, 2, 50, x, y, mobType));
+			mobList.add(new Mob1("FootSoldier", 5, 8, 5, 50, 10, 2, 50, x, y, mobType));
 		}
 		
 		if(mobType == 'K') {
