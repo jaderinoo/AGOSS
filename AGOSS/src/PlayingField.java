@@ -244,11 +244,6 @@ public class PlayingField {
 									map[enemy.getMapX()][enemy.getMapY()] = ' ';
 									map[enemy.getMapX()-1][enemy.getMapY()] = enemy.getType();
 									enemy.setMapX(enemy.getMapX()-1);
-									moveCounter--;
-									x = 0;
-									if(moveCounter != 0) {
-										printMap(map);
-									}
 								}
 							}
 						}
@@ -262,11 +257,6 @@ public class PlayingField {
 									map[enemy.getMapX()][enemy.getMapY()] = ' ';
 									map[enemy.getMapX()][enemy.getMapY()-1] = enemy.getType();
 									enemy.setMapY(enemy.getMapY()-1);
-									moveCounter--;
-									x = 0;
-									if(moveCounter != 0) {
-										printMap(map);
-									}
 								}
 							}
 						}	
@@ -280,11 +270,6 @@ public class PlayingField {
 									map[enemy.getMapX()][enemy.getMapY()] = ' ';
 									map[enemy.getMapX()][enemy.getMapY()+1] = enemy.getType();
 									enemy.setMapY(enemy.getMapY()+1);
-									moveCounter--;
-									x = 0;
-									if(moveCounter != 0) {
-										printMap(map);
-									}
 								}
 							}
 						}
@@ -298,15 +283,15 @@ public class PlayingField {
 									map[enemy.getMapX()][enemy.getMapY()] = ' ';
 									map[enemy.getMapX()+1][enemy.getMapY()] = enemy.getType();
 									enemy.setMapX(enemy.getMapX()+1);
-									moveCounter--;
-									x = 0;
-									if(moveCounter != 0) {
-										printMap(map);
-									}
 								}
 							}
 				        }
 					}
+				}
+				moveCounter--;
+				x = 0;
+				if(moveCounter != 0) {
+					printMap(map);
 				}
 			}
 		}
