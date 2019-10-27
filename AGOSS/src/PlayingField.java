@@ -115,8 +115,13 @@ public class PlayingField {
 				}
 			}
 			
+			//Calculate the amount of moves the player has
+			int moveCounter = player.getAgility() / 4;
+			int moveCounterTemp = moveCounter;
+			
 			//Prints out enemyCount and turn #
 			System.out.println("Turn #" + turn);
+			System.out.println("User move count: " + moveCounter);
 			System.out.println("Enemies remaining: " + enemyCount);
 			
 			//Print enemy locations
@@ -132,8 +137,10 @@ public class PlayingField {
 			
 			//Allow the player to move in any direction, use the bag
 			//If found == true, give the user the option to use the merchant
-			boolean check = false;
 			do {
+				if(moveCounter != moveCounterTemp) {
+					printMap(map);
+				}
 				//Print out initial menu
 				System.out.println("Please make a selection: \n"
 						+ "1: Player move\n"
@@ -153,7 +160,7 @@ public class PlayingField {
 				switch(temp) {
 				case 1:		
 					//Player move first, then allow all enemies move
-					check = true;
+					moveCounter--;
 					System.out.println(divider);
 					playerMove(map, player, bag);
 					break;
@@ -164,12 +171,12 @@ public class PlayingField {
 					Fight.useBag(player,bag,null);
 					Main.bagUpdater(player,bag);
 					Main.playerUpdater(player);
-					check = true;
+					moveCounter--;
 					break;
 				
 				case 3:
 					if(merchantFound == true) {
-						check = true;
+						moveCounter--;
 						System.out.println(divider);
 						//Use merchant menu
 						useMerchant(player,merchant,bag);
@@ -180,7 +187,7 @@ public class PlayingField {
 					
 				case 4:
 					if(enemyFound == true) {
-						check = true;
+						moveCounter = 0;
 						System.out.println(divider);
 						//Use attack menu
 						enemyFound(player, map, mobList.get(enemyNumber), bag, enemyNumber);
@@ -193,7 +200,7 @@ public class PlayingField {
 					System.out.println(divider + "\nPlease choose a valid option.");
 					break;
 				}
-			}while(check == false);
+			}while(moveCounter != 0);
 			
 			
 			//Enemy moves
