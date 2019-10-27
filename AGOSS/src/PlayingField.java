@@ -119,9 +119,9 @@ public class PlayingField {
 			int moveCounter = player.getAgility() / 4;
 			int moveCounterTemp = moveCounter;
 			
-			//Prints out enemyCount and turn #
+			//Prints out enemyCount, user turn amount, and turn #
 			System.out.println("Turn #" + turn);
-			System.out.println("User move count: " + moveCounter);
+			System.out.println("User movecount: " + moveCounter);
 			System.out.println("Enemies remaining: " + enemyCount);
 			
 			//Print enemy locations
@@ -227,7 +227,10 @@ public class PlayingField {
 	 */
 	public static void enemyMove(Player player, Bag bag, char[][] map, Mob1 enemy,int i) throws InterruptedException, IOException {
 		int x = 0;
+		System.out.println(enemy.getName() + "'s Move\n" + divider);
+		//Calculate the total moves that the enemy gets
 		int moveCounter = enemy.getAgility() / 4;
+		
 		//Checks to see if the player moved
 		if(movementCheck == true) {
 			//While the enemy still has moves
@@ -288,11 +291,15 @@ public class PlayingField {
 				        }
 					}
 				}
+				//Reset x while dropping moveCounter and printing the map for the player
 				moveCounter--;
 				x = 0;
+				System.out.println("Enemy movecount: " + (moveCounter+1));
 				if(moveCounter != 0) {
 					printMap(map);
 				}
+				//Adds a small delay between movements to better visualize the moves
+				Thread.sleep(300);
 			}
 		}
 	}
