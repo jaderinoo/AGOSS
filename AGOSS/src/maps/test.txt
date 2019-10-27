@@ -7,7 +7,7 @@ A basic test map used for testing :)
 |   | F    |    |
 |   |__    |    |
 |      |        |
-|               |
+|    F          |
 |        ___    |
 |               |
 |               |

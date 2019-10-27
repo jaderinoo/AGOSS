@@ -122,28 +122,28 @@ public class PlayingField {
 			int moveCounter = player.getAgility() / 4;
 			int moveCounterTemp = moveCounter;
 			
-			//Prints out enemyCount, user turn amount, and turn #
-			System.out.println("Turn #" + turn);
-			System.out.println(player.getName() + "'s movecount: " + moveCounter);
-			System.out.println("Enemies remaining: " + enemyCount);
-			
-			//Print enemy locations
-			printEnemyLocations();
-			
-			//Print out current user statistics
-			System.out.println(divider);
-			System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp() +"\t|Bonuses:");
-			System.out.println("|LVL: " + player.getLevel() + "\t\t\t|Weapon: " + bag.getWeaponName() + "(+" + bag.getWeapon() + ")");
-			System.out.println("|EXP: "+ player.exp + "/" + player.level*50 +"\t\t|Shield: " + bag.getShieldName() + "(+" + bag.getShield() + ")\n"
-					+ divider);
-			
-			
 			//Allow the player to move in any direction, use the bag
 			//If found == true, give the user the option to use the merchant
 			do {
 				if(moveCounter != moveCounterTemp) {
 					printMap(map);
 				}
+				
+				//Prints out enemyCount, user turn amount, and turn #
+				System.out.println("Turn #" + turn);
+				System.out.println(player.getName() + "'s movecount: " + moveCounter);
+				System.out.println("Enemies remaining: " + enemyCount);
+				
+				//Print enemy locations
+				printEnemyLocations();
+				
+				//Print out current user statistics
+				System.out.println(divider);
+				System.out.println("|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp() +"\t|Bonuses:");
+				System.out.println("|LVL: " + player.getLevel() + "\t\t\t|Weapon: " + bag.getWeaponName() + "(+" + bag.getWeapon() + ")");
+				System.out.println("|EXP: "+ player.exp + "/" + player.level*50 +"\t\t|Shield: " + bag.getShieldName() + "(+" + bag.getShield() + ")\n"
+						+ divider);
+
 				//Print out initial menu
 				System.out.println("Please make a selection: \n"
 						+ "1: Player move\n"
@@ -232,74 +232,137 @@ public class PlayingField {
 		int x = 0;
 		//Calculate the total moves that the enemy gets
 		int moveCounter = enemy.getAgility() / 4;
-		
 		//Checks to see if the player moved
 		if(movementCheck == true) {
 			//While the enemy still has moves
 			while(moveCounter != 0) {
+				
+				//Initialize easy to use variables
+				char left = map[enemy.getMapX()-1][enemy.getMapY()];
+				char right = map[enemy.getMapX()+1][enemy.getMapY()];
+				char up = map[enemy.getMapX()][enemy.getMapY()-1];
+				char down = map[enemy.getMapX()][enemy.getMapY()+1];
+				char current = map[enemy.getMapX()][enemy.getMapY()+1];
+				boolean check = false;
+				
 				//Checks if the mob is in 0,0
-				if(map[enemy.getMapX()][enemy.getMapY()] != map[0][0]) {
+				if(current != map[0][0]) {
+					
 					// Left
-					if(enemy.getMapX() > player.getMapX()) {
+					if(enemy.getMapX() > player.getMapX() && check == false) {
 						for(int z = 0; z != collisionSet.length; z++) {
-							if(map[enemy.getMapX()-1][enemy.getMapY()] != (collisionSet[z])) {
+							//Checks collisionSet
+							if(left != (collisionSet[z])) {
 								x++;
-								//If X has enough clears, it'll pass this check
+								//If x has passed through all collisionSet, it'll pass this check
 								if(x == collisionSet.length) {
+									//Executes movement
 									map[enemy.getMapX()][enemy.getMapY()] = ' ';
 									map[enemy.getMapX()-1][enemy.getMapY()] = enemy.getType();
 									enemy.setMapX(enemy.getMapX()-1);
+									
+									//Reset x while dropping moveCounter and printing the map for the player
+									moveCounter--;
+									x = 0;
+									check = true;
+									System.out.println(enemy.getName() + "'s Move\nMovecount: " + (moveCounter+1) + "\n" + divider);
+									printMap(map);
+									//Adds a small delay between movements to better visualize the moves
+									Thread.sleep(1250);
 								}
 							}
 						}
-					// Up
-					}else if(enemy.getMapY() > player.getMapY()){
-						for(int z = 0; z != collisionSet.length; z++) {
-							if(map[enemy.getMapX()][enemy.getMapY()-1] != (collisionSet[z])) {
-								x++;
-								//If X has enough clears, it'll pass this check
-								if(x == collisionSet.length) {
-									map[enemy.getMapX()][enemy.getMapY()] = ' ';
-									map[enemy.getMapX()][enemy.getMapY()-1] = enemy.getType();
-									enemy.setMapY(enemy.getMapY()-1);
-								}
-							}
-						}	
-					// Down
-					}else if(enemy.getMapY() < player.getMapY()){
-						for(int z = 0; z != collisionSet.length; z++) {
-							if(map[enemy.getMapX()][enemy.getMapY()+1] != (collisionSet[z])) {
-								x++;
-								//If X has enough clears, it'll pass this check
-								if(x == collisionSet.length) {
-									map[enemy.getMapX()][enemy.getMapY()] = ' ';
-									map[enemy.getMapX()][enemy.getMapY()+1] = enemy.getType();
-									enemy.setMapY(enemy.getMapY()+1);
-								}
-							}
-						}
+					}
+
+					//Reset x
+					x = 0;
 					// Right
-					}else if(enemy.getMapX() < player.getMapX()) {
+					if(enemy.getMapX() < player.getMapX() && check == false) {
 						for(int z = 0; z != collisionSet.length; z++) {
-							if(map[enemy.getMapX()+1][enemy.getMapY()] != (collisionSet[z])) {
+							//Checks collisionSet
+							if(right != (collisionSet[z])) {
 								x++;
-								//If X has enough clears, it'll pass this check
+								//If x has passed through all collisionSet, it'll pass this check
 								if(x == collisionSet.length) {
+									//Executes movement
 									map[enemy.getMapX()][enemy.getMapY()] = ' ';
 									map[enemy.getMapX()+1][enemy.getMapY()] = enemy.getType();
 									enemy.setMapX(enemy.getMapX()+1);
+									
+									//Reset x while dropping moveCounter and printing the map for the player
+									moveCounter--;
+									x = 0;
+									check = true;
+									System.out.println(enemy.getName() + "'s Move\nMovecount: " + (moveCounter+1) + "\n" + divider);
+									printMap(map);
+									//Adds a small delay between movements to better visualize the moves
+									Thread.sleep(1250);
 								}
 							}
 				        }
 					}
+					
+					//Reset x
+					x = 0;
+					// Up
+					if(enemy.getMapY() > player.getMapY() && check == false){
+						for(int z = 0; z != collisionSet.length; z++) {
+							//Checks collisionSet
+							if(up != (collisionSet[z])) {
+								x++;
+								//If x has passed through all collisionSet, it'll pass this check
+								if(x == collisionSet.length) {
+									//Executes movement
+									map[enemy.getMapX()][enemy.getMapY()] = ' ';
+									map[enemy.getMapX()][enemy.getMapY()-1] = enemy.getType();
+									enemy.setMapY(enemy.getMapY()-1);
+									
+									//Reset x while dropping moveCounter and printing the map for the player
+									moveCounter--;
+									x = 0;
+									check = true;
+									System.out.println(enemy.getName() + "'s Move\nMovecount: " + (moveCounter+1) + "\n" + divider);
+									printMap(map);
+									//Adds a small delay between movements to better visualize the moves
+									Thread.sleep(1250);
+								}
+							}
+						}	
+					}
+					
+					//Reset x
+					x = 0;
+					// Down
+					if(enemy.getMapY() < player.getMapY() && check == false){
+						for(int z = 0; z != collisionSet.length; z++) {
+							//Checks collisionSet
+							if(down != (collisionSet[z])) {
+								x++;
+								//If x has passed through all collisionSet, it'll pass this check
+								if(x == collisionSet.length) {
+									//Executes movement
+									map[enemy.getMapX()][enemy.getMapY()] = ' ';
+									map[enemy.getMapX()][enemy.getMapY()+1] = enemy.getType();
+									enemy.setMapY(enemy.getMapY()+1);
+									
+									//Reset x while dropping moveCounter and printing the map for the player
+									moveCounter--;
+									x = 0;
+									check = true;
+									System.out.println(enemy.getName() + "'s Move\nMovecount: " + (moveCounter+1) + "\n" + divider);
+									printMap(map);
+									//Adds a small delay between movements to better visualize the moves
+									Thread.sleep(1250);
+								}
+							}
+						}
+					}
+					//Enemies get stuck after bumping into each other
+					
+					//Code should go here
+					
+					
 				}
-				//Reset x while dropping moveCounter and printing the map for the player
-				moveCounter--;
-				x = 0;
-				System.out.println(enemy.getName() + "'s Move\nMovecount: " + (moveCounter+1) + "\n" + divider);
-				printMap(map);
-				//Adds a small delay between movements to better visualize the moves
-				Thread.sleep(1250);
 			}
 		}
 	}
