@@ -78,6 +78,10 @@ public class PlayingField {
 			
 			//Saves the initial map
 			map = saveMap(data);
+			
+			//Prints initial map
+			System.out.println("Map: " + mapName + "\n" + divider);
+			printMap(map);
 	
 			//Initial scan
 			enemyCount = scanMap(player,map);
@@ -99,7 +103,6 @@ public class PlayingField {
 		
 		while(enemyCount != 0){
 			turn++;
-			printMap(map);
 			
 			//Decides what menu will be presented to the user
 			boolean merchantFound = findMerchant(map, merchant, player);
@@ -121,7 +124,7 @@ public class PlayingField {
 			
 			//Prints out enemyCount, user turn amount, and turn #
 			System.out.println("Turn #" + turn);
-			System.out.println("User movecount: " + moveCounter);
+			System.out.println(player.getName() + "'s movecount: " + moveCounter);
 			System.out.println("Enemies remaining: " + enemyCount);
 			
 			//Print enemy locations
@@ -227,7 +230,6 @@ public class PlayingField {
 	 */
 	public static void enemyMove(Player player, Bag bag, char[][] map, Mob1 enemy,int i) throws InterruptedException, IOException {
 		int x = 0;
-		System.out.println(enemy.getName() + "'s Move\n" + divider);
 		//Calculate the total moves that the enemy gets
 		int moveCounter = enemy.getAgility() / 4;
 		
@@ -294,12 +296,10 @@ public class PlayingField {
 				//Reset x while dropping moveCounter and printing the map for the player
 				moveCounter--;
 				x = 0;
-				System.out.println("Enemy movecount: " + (moveCounter+1));
-				if(moveCounter != 0) {
-					printMap(map);
-				}
+				System.out.println(enemy.getName() + "'s Move\nMovecount: " + (moveCounter+1) + "\n" + divider);
+				printMap(map);
 				//Adds a small delay between movements to better visualize the moves
-				Thread.sleep(300);
+				Thread.sleep(1250);
 			}
 		}
 	}
@@ -559,24 +559,28 @@ public class PlayingField {
 	//Scans the map for units
 	public static int scanMap(Player player, char[][] map) {
 		int enemyCount = 0;
+		int F = 0,K = 0,G = 0;
 		
 		for (int y=0; y < rows; y++) {
 		    for (int x=0; x < cols; x++) {
 		    	
 		    	//If an F is found, create the object and add it to the arraylist: mobList
 		        if(map[x][y] == 'F') {
+		        	F++;
 		        	enemyCount++;
-		        	enemyCreate(y,x,'F');
+		        	enemyCreate(y,x,'F',F);
 		        }
 		        //If an K is found, create the object and add it to the arraylist: mobList
 		        if(map[x][y] == 'K') {
+		        	K++;
 		        	enemyCount++;
-		        	enemyCreate(y,x,'K');
+		        	enemyCreate(y,x,'K',K);
 		        }
 		        //If an G is found, create the object and add it to the arraylist: mobList
 		        if(map[x][y] == 'G') {
+		        	G++;
 		        	enemyCount++;
-		        	enemyCreate(y,x,'G');
+		        	enemyCreate(y,x,'G',G);
 		        }
 		        
 		        //If P is found, save the location 
@@ -585,6 +589,7 @@ public class PlayingField {
 		        	player.setMapX(x);
 		        }
 		        
+		        //If M is found, save merchant location
 		        if(map[x][y] == 'M') {
 		        	merchant.setMapX(x);
 		        	merchant.setMapY(y);
@@ -722,18 +727,30 @@ public class PlayingField {
 		Main.playerUpdater(player);
 	}
 	
-	private static void enemyCreate(int y, int x, char mobType) {
+	private static void enemyCreate(int y, int x, char mobType, int enemyNum) {
 
 		if(mobType == 'F') {
-			mobList.add(new Mob1("FootSoldier", 5, 8, 5, 50, 10, 2, 50, x, y, mobType));
+			if(enemyNum > 1) {
+				mobList.add(new Mob1("FootSoldier " + enemyNum, 5, 8, 5, 50, 10, 2, 50, x, y, mobType));
+			}else {
+				mobList.add(new Mob1("FootSoldier", 5, 8, 5, 50, 10, 2, 50, x, y, mobType));
+			}
 		}
 		
 		if(mobType == 'K') {
-			mobList.add(new Mob1("Knight", 5, 5, 5, 50, 10, 2, 75, x, y, mobType));
+			if(enemyNum > 1) {
+				mobList.add(new Mob1("Knight " + enemyNum, 5, 5, 5, 50, 10, 2, 75, x, y, mobType));
+			}else {
+				mobList.add(new Mob1("Knight", 5, 5, 5, 50, 10, 2, 75, x, y, mobType));
+			}
 		}
 		
 		if(mobType == 'G') {
-			mobList.add(new Mob1("General", 5, 5, 5, 50, 10, 2, 100, x, y, mobType));
+			if(enemyNum > 1) {
+				mobList.add(new Mob1("General " + enemyNum, 5, 5, 5, 50, 10, 2, 100, x, y, mobType));
+			}else {
+				mobList.add(new Mob1("General", 5, 5, 5, 50, 10, 2, 100, x, y, mobType));
+			}
 		}
 	}
 

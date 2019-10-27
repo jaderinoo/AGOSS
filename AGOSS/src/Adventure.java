@@ -16,11 +16,9 @@ public class Adventure {
 		case 0:
 			//Allow map name input
 			System.out.println("Please input a level name");
-
 	    	String mapName = scanner.next();
 	    	
 	    	//CHECK IF MAP EXIST
-	    	System.out.println("\n--------------\n");
 	    	PlayingField.map(player, bag, mapName);
 			break;
 			
