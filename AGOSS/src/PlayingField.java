@@ -34,6 +34,8 @@ public class PlayingField {
 	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G','M'};
 	static String divider = "----------------------------------------------|";
 	static boolean enemyFound = false;
+	static String leaderName = null;
+	static String[] splitStats = null;
 	
 	public static boolean map(Player player, Bag bag, String mapName) throws Exception {
 		
@@ -56,7 +58,12 @@ public class PlayingField {
 			firstLine = batch[0];
 			String [] secondLine = batch[1].split(" ");
 			String thirdLine = batch[2];
-			String data = batch[3];
+			String leaderStats = batch[3];
+			String data = batch[4];
+
+			//Breakdown the Leader information
+			splitStats = leaderStats.split(" ");
+			leaderName = splitStats[0];
 
 			//parses the size of the grid and places it into rows and cols
 			int[] stats = new int[secondLine.length];
@@ -609,7 +616,11 @@ public class PlayingField {
 		for(int i = 0; i != enemyMoveCount; i++) {
 			if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
 			//Print enemy locations
-			System.out.println(mobList.get(i).getName() + ": \t (" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY + ") \t HP:(" + mobList.get(i).getCurrentHp() + "/" + mobList.get(i).getMaxHp()+")");
+			System.out.print(mobList.get(i).getName() + ": \t (" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY + ") ");
+			if((mobList.get(i).getMapX() < 10 && mobList.get(i).getMapY() < 10)) {
+				System.out.print("\t");
+			}
+			System.out.print("\tHP:(" + mobList.get(i).getCurrentHp() + "/" + mobList.get(i).getMaxHp()+")\n");
 			}
 		}
 	}
@@ -631,7 +642,7 @@ public class PlayingField {
 	//Scans the map for units
 	public static int scanMap(Player player, char[][] map) {
 		int enemyCount = 0;
-		int F = 0,K = 0,G = 0;
+		int F = 0,K = 0,G = 0,L = 0;
 		
 		for (int y=0; y < rows; y++) {
 		    for (int x=0; x < cols; x++) {
@@ -653,6 +664,13 @@ public class PlayingField {
 		        	G++;
 		        	enemyCount++;
 		        	enemyCreate(y,x,'G',G);
+		        }
+		        
+		        //If an G is found, create the object and add it to the arraylist: mobList
+		        if(map[x][y] == 'L') {
+		        	L++;
+		        	enemyCount++;
+		        	enemyCreate(y,x,'L',L);
 		        }
 		        
 		        //If P is found, save the location 
@@ -824,6 +842,22 @@ public class PlayingField {
 				mobList.add(new Mob1("General", 5, 5, 5, 50, 10, 2, 100, x, y, mobType));
 			}
 		}
+		
+		if(mobType == 'L') {
+			if(enemyNum > 1) {
+				mobList.add(new Mob1(leaderName + " " + enemyNum, Integer.parseInt(splitStats[1]), 
+						Integer.parseInt(splitStats[2]), Integer.parseInt(splitStats[3]), 
+						Integer.parseInt(splitStats[4]), Integer.parseInt(splitStats[5]), 
+						Integer.parseInt(splitStats[6]), Integer.parseInt(splitStats[7]), 
+						x, y, mobType));
+			}else {
+				mobList.add(new Mob1(leaderName, Integer.parseInt(splitStats[1]), 
+						Integer.parseInt(splitStats[2]), Integer.parseInt(splitStats[3]), 
+						Integer.parseInt(splitStats[4]), Integer.parseInt(splitStats[5]), 
+						Integer.parseInt(splitStats[6]), Integer.parseInt(splitStats[7]), 
+						x, y, mobType));
+			}
+		}
 	}
 
 	public static String[] inputToString(String fileName)throws Exception 
@@ -835,6 +869,7 @@ public class PlayingField {
 		String firstLine = reader.readLine(); 
 		String secondLine = reader.readLine();
 		String thirdLine = reader.readLine();
+		String leaderStats = reader.readLine();
 		
 		//Initialize the variables needed to read in the file
 		String line = null;
@@ -852,13 +887,14 @@ public class PlayingField {
 		//Remove all line breaks from string
 		data = data.replace("\n", "").replace("\r", "");
 		//Return all grabbed vars
-		String batch[] = new String[4];
+		String batch[] = new String[5];
 		
 		//saves all items to batch[]
 		batch[0] = firstLine;
 		batch[1] = secondLine;
 		batch[2] = thirdLine;
-		batch[3] = data;
+		batch[3] = leaderStats;
+		batch[4] = data;
 		
 		reader.close();
 		return batch;
