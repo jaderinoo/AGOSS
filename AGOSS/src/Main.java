@@ -37,7 +37,6 @@ public class Main {
 				break;
 			default:
 				System.out.println("Invalid option. Please try again.\n"); 
-				break;
 		}
 		main(null);
 	}
@@ -150,7 +149,6 @@ public class Main {
 				
 			default:
 				System.out.println("Invalid option. Please try again.\n"); 
-				break;
 		}
 		
 		reader.close();
@@ -220,7 +218,6 @@ public class Main {
 						
 					default:
 						System.out.println("Invalid option. Please try again.\n"); 
-						break;
 				}
 				
 		    }
@@ -288,7 +285,6 @@ public class Main {
 				
 			default:
 				System.out.println("Invalid option. Please try again.\n"); 
-				break;
 		}
 
 	    }

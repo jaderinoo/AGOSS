@@ -514,6 +514,9 @@ public class PlayingField {
 				playerCheckAttack(player,map,bag);
 				movementCheck = true;
 				break;
+				
+			default:
+				System.out.println("invalid selection\n" + divider);
 			}
 		}
 	}
