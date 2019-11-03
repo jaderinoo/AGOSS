@@ -26,8 +26,8 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) thr
 		attackDamage = 0;
 		damageTaken = 0;
 		damageDealt = 0;
-		System.out.println("What would you like to do?: \n1:Attack   2:Defend "
-													 + "\n3:Bag   4:Run");
+		System.out.println("What would you like to do?: \n1:Attack\t2:Defend "
+													 + "\n3:Bag\t4:Run");
 		System.out.print("Selection: ");
 		int selection = scanner.nextInt();
 		System.out.println(divider);
