@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Adventure {
 	static Scanner scanner = new Scanner(System.in);
-	static Boolean winStatus;
+	static int winStatus = 0;
 	static ArrayList<String> listOfLines = new ArrayList<>();
 
 	public static void Resume(Player player, Bag bag, int choice) throws Exception {
@@ -42,11 +42,18 @@ public class Adventure {
 	    		player.setPlayerLoc(listOfLines.get(0));
 	    	}
 	    	
+	    	/*
+	    	 * Winstatus table
+	    	 * Lose = 0
+	    	 * Win = 1
+	    	 * Run = 2
+	    	 */
+	    	
 	    	//Checks if mapName and list are the same
 	    	while(check == false) {
 		    	for(int i = 0;i != listOfLines.size(); i++ ) {    
 		    		//Reset win status
-		    		winStatus = false;
+		    		winStatus = 0;
 		    		
 		    		//Map completion check
 		    		if(i == listOfLines.size()) {
@@ -59,7 +66,7 @@ public class Adventure {
 			    		winStatus = PlayingField.map(player, bag, listOfLines.get(i));
 			    		
 				    	//If player wins a map, save progress
-				    	if(winStatus == true && i != listOfLines.size()-1) {
+				    	if(winStatus == 1 && i != listOfLines.size()-1) {
 				    		//Flavor
 				    		System.out.print("Saveing progress");
 				    		Thread.sleep(200);
