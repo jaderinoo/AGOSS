@@ -4,13 +4,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Fight {
 static Scanner scanner = new Scanner(System.in);
-static Boolean winStatus;
+static int winStatus;
 static int attackerDamage;
 static int attackDamage;
 static int damageTaken;
 static int damageDealt;
 static String divider = "----------------------------------------------|";
-public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) throws IOException {
+public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) throws IOException {
 	
 	player.setWpnBonus(bag.getWeapon());
 	player.setShieldBonus(bag.getWeapon());
@@ -27,7 +27,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 		damageTaken = 0;
 		damageDealt = 0;
 		System.out.println("What would you like to do?: \n1:Attack   2:Defend "
-													 + "\n3:Bag");
+													 + "\n3:Bag   4:Run");
 		System.out.print("Selection: ");
 		int selection = scanner.nextInt();
 		System.out.println(divider);
@@ -75,9 +75,17 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 
 					break;
 					
+				case 4:
+					//If the player is faster than the enemy, run from the fight
+					if(player.getAgility() > attacker.getAgility()) {
+						System.out.println("Bag Menu:");
+						return 2;
+					}
+					break;
+					
+					
 				default:
 					System.out.println("Invalid option. Please try again.\n"); 
-					break;
 			}
 			
 			//Match win decider
@@ -90,7 +98,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				attacker.currentHp = 0;
 				System.out.print("You won the fight!\n");
 				player.levelup(attacker);
-				winStatus =  true;
+				winStatus =  1;
 				player.reward(winStatus, attacker);
 				System.out.println("Returning to overworld\n");
 				Main.bagUpdater(player,bag);
@@ -104,7 +112,7 @@ public static Boolean Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag)
 				//Reset player // Player loses
 				player.currentHp = 0;
 				System.out.print("You lost the fight \n\n");
-				winStatus = false;
+				winStatus = 0;
 				player.reward(winStatus, attacker);
 				player.currentHp = player.maxHp;
 				System.out.println("Returning to mainmenu\n");

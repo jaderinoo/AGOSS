@@ -37,7 +37,7 @@ public class PlayingField {
 	static String leaderName = null;
 	static String[] splitStats = null;
 	
-	public static boolean map(Player player, Bag bag, String mapName) throws Exception {
+	public static int map(Player player, Bag bag, String mapName) throws Exception {
 		
 		//Clear mobList for reuse
 		mobList.clear();
@@ -97,9 +97,9 @@ public class PlayingField {
 			playerMenu(player, map, bag, firstLine);
 			}else {
 			System.out.println("Missing map .txt");
-			return true;
+			return 1;
 		}
-		return true;
+		return 1;
 	}
 	
 	public static boolean playerMenu(Player player, char[][] map, Bag bag, String firstLine) throws Exception {
@@ -109,21 +109,8 @@ public class PlayingField {
 		}
 		
 		while(enemyCount != 0){
+			//Increment turn
 			turn++;
-			
-			//Decides what menu will be presented to the user
-			boolean merchantFound = findMerchant(map, merchant, player);
-			
-			//Decides what menu will be presented to the user
-			int i = 0;
-			for(i = 0; i != enemyMoveCount; i++) {
-				if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
-					enemyFound = findAttack(map, mobList.get(i), player);
-					
-					//Saves the array list position for later
-					enemyNumber = i;
-				}
-			}
 			
 			//Calculate the amount of moves the player has
 			int moveCounter = player.getAgility() / 4;
@@ -132,6 +119,20 @@ public class PlayingField {
 			//Allow the player to move in any direction, use the bag
 			//If found == true, give the user the option to use the merchant
 			do {
+				//Decides what menu will be presented to the user
+				boolean merchantFound = findMerchant(map, merchant, player);
+				
+				//Decides what menu will be presented to the user
+				int i = 0;
+				for(i = 0; i != enemyMoveCount; i++) {
+					if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
+						enemyFound = findAttack(map, mobList.get(i), player);
+						
+						//Saves the array list position for later
+						enemyNumber = i;
+					}
+				}
+				
 				if(moveCounter != moveCounterTemp) {
 					printMap(map);
 				}
@@ -556,14 +557,14 @@ public class PlayingField {
 
         //Initiate the fight
         System.out.println("Battle Start!");
-        boolean winStatus = Fight.Move(player, enemy, null, bag);
+        int winStatus = Fight.Move(player, enemy, null, bag);
         
         //Update the stats and bags
 		Main.bagUpdater(player,bag);
 		Main.playerUpdater(player);
 
 		//If the player wins
-		if(winStatus == true) {
+		if(winStatus == 1) {
 			//Reduce the enemyCount
 			enemyCount--;
 			
@@ -582,8 +583,14 @@ public class PlayingField {
         }
 		
 		// If you lose; return to main
-		if(winStatus == false) {
+		if(winStatus == 0) {
 			Main.main(null);
+		}
+		
+		//If player runs from a fight, escape and allow the player to move
+		if(winStatus == 2) {
+			printMap(map);
+			playerMenu(player, map, bag, firstLine);
 		}
     }
 		
