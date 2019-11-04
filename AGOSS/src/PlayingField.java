@@ -31,7 +31,7 @@ public class PlayingField {
 	static char[][] map = null;
 	static boolean movementCheck = false;
 	//Collision based items
-	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G','M'};
+	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G','M','L'};
 	static String divider = "----------------------------------------------|";
 	static boolean enemyFound = false;
 	static String leaderName = null;
