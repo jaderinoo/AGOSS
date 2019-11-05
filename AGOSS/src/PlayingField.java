@@ -281,7 +281,6 @@ public class PlayingField {
 									
 									//Check if enemy can attack
 									if(moveCounter != 0) {
-										System.out.println(enemy.getName() + " is attacking you!");
 										playerCheckAttack(player,map,bag);
 									}
 								}
@@ -316,7 +315,6 @@ public class PlayingField {
 									
 									//Check if enemy can attack
 									if(moveCounter != 0) {
-										System.out.println(enemy.getName() + " is attacking you!");
 										playerCheckAttack(player,map,bag);
 									}
 								}
@@ -351,7 +349,6 @@ public class PlayingField {
 									
 									//Check if enemy can attack
 									if(moveCounter != 0) {
-										System.out.println(enemy.getName() + " is attacking you!");
 										playerCheckAttack(player,map,bag);
 									}
 								}
@@ -386,7 +383,6 @@ public class PlayingField {
 									
 									//Check if enemy can attack
 									if(moveCounter != 0) {
-										System.out.println(enemy.getName() + " is attacking you!");
 										playerCheckAttack(player,map,bag);
 									}
 								}
@@ -405,16 +401,7 @@ public class PlayingField {
 						printMap(map);
 						//Adds a small delay between movements to better visualize the moves
 						Thread.sleep(1250);
-						
-						/* Attack if the enemy is standing next to user
-						  	//Check if enemy can attack
-							if(moveCounter != 0) {
-							System.out.println(enemy.getName() + " is attacking you!");
-							playerCheckAttack(player,map,bag);
-							}
-						 */
 					}
-					
 				}
 			}
 		}
@@ -561,21 +548,25 @@ public class PlayingField {
 				
 				//check if above
 		        if(player.getMapX() == mobList.get(i).getMapX() && player.getMapY()-1 == mobList.get(i).getMapY()){
+		        	System.out.println(mobList.get(i).getName() + " is attacking you!");
 		        	enemyFound(player, map, mobList.get(i), bag, i);
 		        	i = 0;
 		        }
 		        //check if below
 		        if(player.getMapX() == mobList.get(i).getMapX() && player.getMapY()+1 == mobList.get(i).getMapY()){
+		        	System.out.println(mobList.get(i).getName() + " is attacking you!");
 		        	enemyFound(player, map, mobList.get(i), bag, i);
 		        	i = 0;
 		        }
 		        //check if left
 		        if(player.getMapX()-1 == mobList.get(i).getMapX() && player.getMapY() == mobList.get(i).getMapY()){
+		        	System.out.println(mobList.get(i).getName() + " is attacking you!");
 		        	enemyFound(player, map, mobList.get(i), bag, i);
 		        	i = 0;
 		        }
 		        //check if right
 		        if(player.getMapX()+1 == mobList.get(i).getMapX() && player.getMapY() == mobList.get(i).getMapY()){
+		        	System.out.println(mobList.get(i).getName() + " is attacking you!");
 		        	enemyFound(player, map, mobList.get(i), bag, i);
 		        	i = 0;
 		        
