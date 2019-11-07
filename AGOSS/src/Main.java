@@ -14,13 +14,22 @@ public class Main {
 	static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) throws Exception {
+		//Print game art
 		System.out.println("Welcome to:\n" +
 			    "  _    __   __  ___  ___\r\n" + 
 				" / \\  |    |  | |    |\r\n" + 
 				"|___| |	 _ |  | |__  |__\r\n" + 
-				"|   | |__| |__| ___| ___|\n------------------------");
-		System.out.println("Please Select an Option:\n 1 - New Game\n 2 - Load Base Game\n 3 - Load Map\n 4 - Load Map List");
+				"|   | |__| |__| ___| ___|\n"
+				+ "------------------------");
+		
+		//Print menu
+		System.out.println("Please Select an Option:\n"
+				+ " 1 - New Game\n"
+				+ " 2 - Load Base Game\n"
+				+ " 3 - Load Map\n"
+				+ " 4 - Load Map List");
 
+		//Take user selection
 		int selection = scanner.nextInt();
 		switch(selection) {
 			case 1:

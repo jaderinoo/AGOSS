@@ -31,7 +31,7 @@ public class PlayingField {
 	static char[][] map = null;
 	static boolean movementCheck = false;
 	//Collision based items
-	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G','M'};
+	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G','M','L'};
 	static String divider = "----------------------------------------------|";
 	static boolean enemyFound = false;
 	static String leaderName = null;
@@ -229,14 +229,14 @@ public class PlayingField {
 		return false;
 	}
 
-
 	/*
 	 * I think its finally time to flesh out the enemy / player movement. Next steps to take:
 	 * Allow players/enemies to move multiple spaces depending on agility
 	 * Have smarter pathing for enemy ai
 	 * have something like agility /3 = move amount
 	 */
-	public static void enemyMove(Player player, Bag bag, char[][] map, Mob1 enemy,int i) throws InterruptedException, IOException {
+	
+	public static void enemyMove(Player player, Bag bag, char[][] map, Mob1 enemy,int i) throws Exception {
 		int x = 0;
 		//Calculate the total moves that the enemy gets
 		int moveCounter = enemy.getAgility() / 4;
@@ -275,8 +275,14 @@ public class PlayingField {
 									check = true;
 									System.out.println(enemy.getName() + "'s Move\nMovecount: " + (moveCounter+1) + "\n" + divider);
 									printMap(map);
+									
 									//Adds a small delay between movements to better visualize the moves
 									Thread.sleep(1250);
+									
+									//Check if enemy can attack
+									if(moveCounter != 0) {
+										playerCheckAttack(player,map,bag);
+									}
 								}
 							}
 						}
@@ -303,8 +309,14 @@ public class PlayingField {
 									check = true;
 									System.out.println(enemy.getName() + "'s Move\nMovecount: " + (moveCounter+1) + "\n" + divider);
 									printMap(map);
+									
 									//Adds a small delay between movements to better visualize the moves
 									Thread.sleep(1250);
+									
+									//Check if enemy can attack
+									if(moveCounter != 0) {
+										playerCheckAttack(player,map,bag);
+									}
 								}
 							}
 				        }
@@ -331,8 +343,14 @@ public class PlayingField {
 									check = true;
 									System.out.println(enemy.getName() + "'s Move\nMovecount: " + (moveCounter+1) + "\n" + divider);
 									printMap(map);
+									
 									//Adds a small delay between movements to better visualize the moves
 									Thread.sleep(1250);
+									
+									//Check if enemy can attack
+									if(moveCounter != 0) {
+										playerCheckAttack(player,map,bag);
+									}
 								}
 							}
 						}	
@@ -359,8 +377,14 @@ public class PlayingField {
 									check = true;
 									System.out.println(enemy.getName() + "'s Move\nMovecount: " + (moveCounter+1) + "\n" + divider);
 									printMap(map);
+
 									//Adds a small delay between movements to better visualize the moves
 									Thread.sleep(1250);
+									
+									//Check if enemy can attack
+									if(moveCounter != 0) {
+										playerCheckAttack(player,map,bag);
+									}
 								}
 							}
 						}
@@ -378,7 +402,6 @@ public class PlayingField {
 						//Adds a small delay between movements to better visualize the moves
 						Thread.sleep(1250);
 					}
-					
 				}
 			}
 		}
@@ -423,7 +446,6 @@ public class PlayingField {
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()][player.getMapY()-1] = 'P';
 					player.setMapY(player.getMapY()-1);
-					playerCheckAttack(player,map,bag);
 					break;
 				} else {
 					//Print map and tell the player to move elsewhere
@@ -449,7 +471,6 @@ public class PlayingField {
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()][player.getMapY()+1] = 'P';
 					player.setMapY(player.getMapY()+1);
-					playerCheckAttack(player,map,bag);
 					break;
 				} else {
 					//Print map and tell the player to move elsewhere
@@ -475,7 +496,6 @@ public class PlayingField {
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()-1][player.getMapY()] = 'P';
 					player.setMapX(player.getMapX()-1);
-					playerCheckAttack(player,map,bag);
 					break;
 				} else {
 					//Print map and tell the player to move elsewhere
@@ -501,7 +521,6 @@ public class PlayingField {
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()+1][player.getMapY()] = 'P';
 					player.setMapX(player.getMapX()+1);
-					playerCheckAttack(player,map,bag);
 					break;
 				} else {
 					//Print map and tell the player to move elsewhere
@@ -512,7 +531,6 @@ public class PlayingField {
 				
 			case 5:
 				//Stand Ground
-				playerCheckAttack(player,map,bag);
 				movementCheck = true;
 				break;
 				
@@ -530,21 +548,25 @@ public class PlayingField {
 				
 				//check if above
 		        if(player.getMapX() == mobList.get(i).getMapX() && player.getMapY()-1 == mobList.get(i).getMapY()){
+		        	System.out.println(mobList.get(i).getName() + " is attacking you!");
 		        	enemyFound(player, map, mobList.get(i), bag, i);
 		        	i = 0;
 		        }
 		        //check if below
 		        if(player.getMapX() == mobList.get(i).getMapX() && player.getMapY()+1 == mobList.get(i).getMapY()){
+		        	System.out.println(mobList.get(i).getName() + " is attacking you!");
 		        	enemyFound(player, map, mobList.get(i), bag, i);
 		        	i = 0;
 		        }
 		        //check if left
 		        if(player.getMapX()-1 == mobList.get(i).getMapX() && player.getMapY() == mobList.get(i).getMapY()){
+		        	System.out.println(mobList.get(i).getName() + " is attacking you!");
 		        	enemyFound(player, map, mobList.get(i), bag, i);
 		        	i = 0;
 		        }
 		        //check if right
 		        if(player.getMapX()+1 == mobList.get(i).getMapX() && player.getMapY() == mobList.get(i).getMapY()){
+		        	System.out.println(mobList.get(i).getName() + " is attacking you!");
 		        	enemyFound(player, map, mobList.get(i), bag, i);
 		        	i = 0;
 		        
