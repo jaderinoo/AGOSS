@@ -9,6 +9,7 @@ static int attackerDamage;
 static int attackDamage;
 static int damageTaken;
 static int damageDealt;
+static boolean boosterCheck = false;
 static String divider = "----------------------------------------------|";
 public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) throws IOException {
 	
@@ -82,6 +83,11 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) thr
 						player.resetWpnBonus(bag.getWeapon());
 						player.resetShieldBonus(bag.getWeapon());
 						
+						//Reset booster if used
+						if(boosterCheck == true) {
+							player.resetBooster();
+						}
+						
 						//Save stats
 						Main.bagUpdater(player,bag);
 						Main.playerUpdater(player);
@@ -103,6 +109,11 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) thr
 				player.resetShieldBonus(bag.getWeapon());
 				player.resetWpnBonus(bag.getWeapon());
 				
+				//Reset booster if used
+				if(boosterCheck == true) {
+					player.resetBooster();
+				}
+				
 				//Return player // Player wins
 				attacker.currentHp = 0;
 				System.out.print("You won the fight!\n");
@@ -117,6 +128,11 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) thr
 				//Reset player wpnbonus and shieldbonus
 				player.resetWpnBonus(bag.getWeapon());
 				player.resetShieldBonus(bag.getWeapon());
+				
+				//Reset booster if used
+				if(boosterCheck == true) {
+					player.resetBooster();
+				}
 				
 				//Reset player // Player loses
 				player.currentHp = 0;
@@ -224,6 +240,7 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) thr
 		    		if(player.currentHp > player.maxHp) {
 		    			player.currentHp = player.maxHp;
 		    		}
+		    		
 		    		//Attacker still gets a move
 		    		if(attacker!=null) {
 		    			System.out.println(divider);
@@ -235,7 +252,14 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) thr
 				break;
 			//Output booster menu
 			case 2:
-				System.out.println("No Booster can be used.\n" + divider);
+				//If the user hasn't used a booster yet, add the statistics
+				if(boosterCheck == false) {
+					boosterCheck = true;
+					System.out.println("Booster has been used\n*Player attack +2*");
+					bag.boosters--;
+					player.useBooster();
+				}
+				System.out.println(player.getName() + " doesn't have any boosters.\n" + divider);
 	    		break;
 	    		
 	    	//Exit button
