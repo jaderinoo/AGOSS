@@ -813,7 +813,7 @@ public class PlayingField {
 				System.out.println(divider);
 				player.purchase(amount*250);
 				for(int i = 0; i != amount;i++) {
-					bag.potions++;
+					bag.boosters++;
 				}
 				System.out.println("You spent " + amount*250 + "g and recieved " + amount + " Boosters\n" + divider);
 				break;
