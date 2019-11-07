@@ -161,8 +161,12 @@ public class Player {
 			return this.currentHp;
 		}
 		
-		public int useBooster() {
-			return this.strength;
+		public void useBooster() {
+			addStrength(2);
+		}
+		
+		public void resetBooster() {
+			removeStrength(2);
 		}
 		
 	    public void setWpnBonus(int weapon) {
