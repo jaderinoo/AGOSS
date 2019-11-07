@@ -78,6 +78,15 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) thr
 				case 4:
 					//If the player is faster than the enemy, run from the fight
 					if(player.getAgility() > attacker.getAgility()) {
+						//Reset player wpnbonus and shieldbonus
+						player.resetWpnBonus(bag.getWeapon());
+						player.resetShieldBonus(bag.getWeapon());
+						
+						//Save stats
+						Main.bagUpdater(player,bag);
+						Main.playerUpdater(player);
+						
+						//Return to menu
 						System.out.println("Bag Menu:");
 						return 2;
 					}
