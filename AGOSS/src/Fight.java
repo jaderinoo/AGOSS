@@ -252,15 +252,22 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) thr
 				break;
 			//Output booster menu
 			case 2:
-				//If the user hasn't used a booster yet, add the statistics
-				if(boosterCheck == false) {
-					boosterCheck = true;
-					System.out.println("Booster has been used\n*Player attack +2*");
-					bag.boosters--;
-					player.useBooster();
-				}
+				//Make sure user has boosters in bag
+				if(bag.boosters == 0) {
+		    		System.out.println("No Potions can be used.");
+		    		break;
+		    	}else if(bag.boosters >= 0) {
+		    		//If the user hasn't used a booster yet, add the statistics
+					if(boosterCheck == false) {
+						boosterCheck = true;
+						System.out.println("Booster has been used\n*Player attack +2*");
+						bag.boosters--;
+						player.useBooster();
+						break;
+					}
 				System.out.println(player.getName() + " doesn't have any boosters.\n" + divider);
 	    		break;
+		    	}
 	    		
 	    	//Exit button
 			case 3:
