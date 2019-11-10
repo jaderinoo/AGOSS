@@ -1,6 +1,7 @@
 e1m4
 17 17 0
-A basic test map used for testing :)
+Map4
+null 0 0 0 0 0 0 0
 /---------------\
 |               |
 |               |

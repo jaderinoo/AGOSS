@@ -1,6 +1,7 @@
 Mapname
 Mapstats / Set map size, cols and rows NEED to be =
 Description
+*Required* General 0 0 0 0 0 0 0
 /-------------\
 |  F       F  |
 |             |

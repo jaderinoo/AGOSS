@@ -1,12 +1,13 @@
 e1m1
 17 17 0
-A basic test map used for testing :)
+Map1
+null 0 0 0 0 0 0 0
 /---------------\
 |               |
+|       K       |
+| F  __   __  F |
 |               |
-|               |
-|        |__    |
-|               |
+|       F       |
 |               |
 |               |
 |               |
@@ -14,7 +15,7 @@ A basic test map used for testing :)
 |  |_|     |M|  |
 |               |
 |               |
-| F     P     K |
+|       P       |
 |               |
 |               |
 \_______________/
