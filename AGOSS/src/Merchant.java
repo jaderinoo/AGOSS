@@ -1,9 +1,5 @@
 
 public class Merchant {
-	int potions;
-	int boosters;
-	int weapon;
-	int shield;
 	int mapX;
 	int mapY;
 	
