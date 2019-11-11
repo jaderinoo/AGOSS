@@ -250,7 +250,7 @@ public class PlayingField {
 				char right = map[enemy.getMapX()+1][enemy.getMapY()];
 				char up = map[enemy.getMapX()][enemy.getMapY()-1];
 				char down = map[enemy.getMapX()][enemy.getMapY()+1];
-				char current = map[enemy.getMapX()][enemy.getMapY()+1];
+				char current = map[enemy.getMapX()][enemy.getMapY()];
 				boolean check = false;
 				
 				//Checks if the mob is in 0,0
@@ -423,8 +423,12 @@ public class PlayingField {
 					+ "4: Right\n"
 					+ "5: Stand Ground");
 			
+			char left = map[player.getMapX()-1][player.getMapY()];
+			char right = map[player.getMapX()+1][player.getMapY()];
+			char up = map[player.getMapX()][player.getMapY()-1];
+			char down = map[player.getMapX()][player.getMapY()+1];
+			
 			//Ask user for movement input
-			int x = 0;
 			int temp2 = input.nextInt();
 			System.out.println(divider);
 			switch(temp2) {
@@ -432,15 +436,7 @@ public class PlayingField {
 			case 1:
 				//Up
 				//Cycle through array to see if item is in the way of player
-				for(int i = 0; i != collisionSet.length; i++) {
-					if(map[player.getMapX()][player.getMapY()-1] != (collisionSet[i])) {
-						x++;
-						//If X has enough clears, it'll pass this check
-						if(x == collisionSet.length) {
-							movementCheck = true;
-						}
-					}
-		        }
+				movementCheck = collisionCheck(up);
 				if(movementCheck == true){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
@@ -457,15 +453,7 @@ public class PlayingField {
 			case 2:
 				//Down
 				//Cycle through array to see if item is in the way of player
-				for(int i = 0; i != collisionSet.length; i++) {
-					if(map[player.getMapX()][player.getMapY()+1] != (collisionSet[i])) {
-						x++;
-						//If X has enough clears, it'll pass this check
-						if(x == collisionSet.length) {
-							movementCheck = true;
-						}
-					}
-		        }
+				movementCheck = collisionCheck(down);
 				if(movementCheck == true){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
@@ -482,15 +470,7 @@ public class PlayingField {
 			case 3:
 				//Left
 				//Cycle through array to see if item is in the way of player
-				for(int i = 0; i != collisionSet.length; i++) {
-					if(map[player.getMapX()-1][player.getMapY()] != (collisionSet[i])) {
-						x++;
-						//If X has enough clears, it'll pass this check
-						if(x == collisionSet.length) {
-							movementCheck = true;
-						}
-					}
-		        }
+				movementCheck = collisionCheck(left);
 				if(movementCheck == true){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
@@ -507,15 +487,7 @@ public class PlayingField {
 			case 4:
 				//Right
 				//Cycle through array to see if item is in the way of player
-				for(int i = 0; i != collisionSet.length; i++) {
-					if(map[player.getMapX()+1][player.getMapY()] != (collisionSet[i])) {
-						x++;
-						//If X has enough clears, it'll pass this check
-						if(x == collisionSet.length) {
-							movementCheck = true;
-						}
-					}
-		        }
+				movementCheck = collisionCheck(right);
 				if(movementCheck == true){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
@@ -539,6 +511,23 @@ public class PlayingField {
 			}
 		}
 	}
+	
+	//Checks the collision in the sent direction
+	public static boolean collisionCheck(char direction) {
+		int x = 0;
+		for(int i = 0; i != collisionSet.length; i++) {
+			if(direction != (collisionSet[i])) {
+				x++;
+				//If X has enough clears, it'll pass this check
+				if(x == collisionSet.length) {
+					movementCheck = true;
+				}
+			}
+        }
+		
+		return movementCheck;
+	}
+	
 	
 	public static void playerCheckAttack(Player player, char[][] map, Bag bag) throws Exception {
 
