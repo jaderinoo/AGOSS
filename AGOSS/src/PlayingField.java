@@ -33,7 +33,7 @@ public class PlayingField {
 	//Collision based items
 	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G','M','L'};
 	static String divider = "----------------------------------------------|";
-	static boolean enemyFound = false;
+	static boolean initiateFight = false;
 	static String leaderName = null;
 	static String[] splitStats = null;
 	
@@ -126,7 +126,7 @@ public class PlayingField {
 				int i = 0;
 				for(i = 0; i != enemyMoveCount; i++) {
 					if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
-						enemyFound = findAttack(map, mobList.get(i), player);
+						initiateFight = findAttack(map, mobList.get(i), player);
 						
 						//Saves the array list position for later
 						enemyNumber = i;
@@ -163,7 +163,7 @@ public class PlayingField {
 				}
 				
 				//Print out attack menu
-				if(enemyFound == true) {
+				if(initiateFight == true) {
 					System.out.println("4: Attack");
 				}
 				
@@ -197,11 +197,11 @@ public class PlayingField {
 					break;	
 					
 				case 4:
-					if(enemyFound == true) {
+					if(initiateFight == true) {
 						moveCounter = 0;
 						System.out.println(divider);
 						//Use attack menu
-						enemyFound(player, map, mobList.get(enemyNumber), bag, enemyNumber);
+						initiateFight(player, map, mobList.get(enemyNumber), bag, enemyNumber);
 					}else {
 						System.out.println(divider + "\nPlease choose a valid option.");
 					}
@@ -538,25 +538,25 @@ public class PlayingField {
 				//check if above
 		        if(player.getMapX() == mobList.get(i).getMapX() && player.getMapY()-1 == mobList.get(i).getMapY()){
 		        	System.out.println(mobList.get(i).getName() + " is attacking you!");
-		        	enemyFound(player, map, mobList.get(i), bag, i);
+		        	initiateFight(player, map, mobList.get(i), bag, i);
 		        	i = 0;
 		        }
 		        //check if below
 		        if(player.getMapX() == mobList.get(i).getMapX() && player.getMapY()+1 == mobList.get(i).getMapY()){
 		        	System.out.println(mobList.get(i).getName() + " is attacking you!");
-		        	enemyFound(player, map, mobList.get(i), bag, i);
+		        	initiateFight(player, map, mobList.get(i), bag, i);
 		        	i = 0;
 		        }
 		        //check if left
 		        if(player.getMapX()-1 == mobList.get(i).getMapX() && player.getMapY() == mobList.get(i).getMapY()){
 		        	System.out.println(mobList.get(i).getName() + " is attacking you!");
-		        	enemyFound(player, map, mobList.get(i), bag, i);
+		        	initiateFight(player, map, mobList.get(i), bag, i);
 		        	i = 0;
 		        }
 		        //check if right
 		        if(player.getMapX()+1 == mobList.get(i).getMapX() && player.getMapY() == mobList.get(i).getMapY()){
 		        	System.out.println(mobList.get(i).getName() + " is attacking you!");
-		        	enemyFound(player, map, mobList.get(i), bag, i);
+		        	initiateFight(player, map, mobList.get(i), bag, i);
 		        	i = 0;
 		        
 				}
@@ -564,7 +564,7 @@ public class PlayingField {
 		}
 	}
 	
-	public static void enemyFound(Player player,char[][] map, Mob1 enemy, Bag bag, int i) throws Exception {
+	public static void initiateFight(Player player,char[][] map, Mob1 enemy, Bag bag, int i) throws Exception {
 
         //Initiate the fight
         System.out.println("Battle Start!");
