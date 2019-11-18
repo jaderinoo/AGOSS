@@ -10,10 +10,15 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class Main {
+import javax.swing.JFrame;
+
+public class Main extends JFrame {
 	static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) throws Exception {
+		Frame frame = new Frame();
+	    frame.init();
+		
 		//Print game art
 		System.out.println("Welcome to:\n" +
 			    "  _    __   __  ___  ___\r\n" + 
@@ -29,20 +34,27 @@ public class Main {
 				+ " 3 - Load Map\n"
 				+ " 4 - Load Map List");
 
+		System.out.print("Selection: ");
+		
 		//Take user selection
-		int selection = scanner.nextInt();
+		Frame.grabInput(frame,0);
+		int selection = frame.getUserIntInput();
 		switch(selection) {
 			case 1:
+				frame.clearMapArea();
 				newGame();
 				break;
 			case 2:
-				loadGame(2);	//Load base game
+				frame.clearMapArea();
+				loadGame(2, frame);	//Load base game
 				break;
 			case 3:
-				loadGame(0);	//Load specific map
+				frame.clearMapArea();
+				loadGame(0, frame);	//Load specific map
 				break;
 			case 4:
-				loadGame(1);	//Load Map list
+				frame.clearMapArea();
+				loadGame(1, frame);	//Load Map list
 				break;
 			default:
 				System.out.println("Invalid option. Please try again.\n"); 
@@ -77,9 +89,10 @@ public class Main {
    ///////////////
 	
 	@SuppressWarnings("null")
-	public static void loadGame(int choice) throws Exception {
-		System.out.print("\nPlease Enter the characters name: ");
-		String tempName = scanner.next();
+	public static void loadGame(int choice, Frame frame) throws Exception {
+		System.out.print("Please Enter the characters name: ");
+		Frame.grabInput(frame,1);
+		String tempName = frame.getUserStringInput();
 		BufferedReader reader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + ".txt"));
 		BufferedReader bagReader = new BufferedReader(new FileReader("src\\saves\\" + tempName + "\\" + tempName + "_Bag.txt"));
 		String strCurrentLine = null;
@@ -130,7 +143,7 @@ public class Main {
 		Bag bag = new Bag(player, tempBag[0], tempBag[1], tempBag[2], tempBag[3]);
 		
 		//Print player stats
-		System.out.println("Player Stats: \n");
+		System.out.print("\nPlayer Stats: \n");
 		System.out.println("Player Name: " + player.getName() +
   				 "\nStrength:    " + player.getStrength() +
   				 "\nAgility:     " + player.getAgility() +
