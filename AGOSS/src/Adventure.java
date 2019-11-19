@@ -4,22 +4,25 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Adventure {
+import javax.swing.JFrame;
+
+public class Adventure extends JFrame {
 	static Scanner scanner = new Scanner(System.in);
 	static int winStatus = 0;
 	static ArrayList<String> listOfLines = new ArrayList<>();
 
-	public static void Resume(Player player, Bag bag, int choice) throws Exception {
+	public static void Resume(Player player, Bag bag, int choice, Frame frame) throws Exception {
 		System.out.println("\n--------------\n") ;
 		switch(choice) {
 			
 		case 0:
 			//Allow map name input
-			System.out.println("Please input a level name");
-	    	String mapName = scanner.next();
+			System.out.print("Please input a level name: ");
+			Frame.grabInput(frame,1);
+	    	String mapName = frame.getUserStringInput();
 	    	
 	    	//CHECK IF MAP EXIST
-	    	PlayingField.map(player, bag, mapName);
+	    	PlayingField.map(player, bag, mapName, frame);
 			break;
 			
 		case 2:	
@@ -27,8 +30,9 @@ public class Adventure {
 			String mapList = "";
 			//Allow user to input mapList
 			if(choice == 1) {
-				System.out.println("Please input a Map List");
-				mapList = scanner.next();
+				System.out.println("Please input a Map List: ");
+				Frame.grabInput(frame,1);
+				mapList = frame.getUserStringInput();
 			}else if(choice == 2) {
 				mapList = "test";
 			}
@@ -63,7 +67,7 @@ public class Adventure {
 		    		
 			    	//CHECK IF MAP EXIST	
 			    	if(listOfLines.get(i).equals(player.getPlayerLoc())) {
-			    		winStatus = PlayingField.map(player, bag, listOfLines.get(i));
+			    		winStatus = PlayingField.map(player, bag, listOfLines.get(i), frame);
 			    		
 				    	//If player wins a map, save progress
 				    	if(winStatus == 1 && i != listOfLines.size()-1) {

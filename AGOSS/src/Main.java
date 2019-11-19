@@ -42,7 +42,7 @@ public class Main extends JFrame {
 		switch(selection) {
 			case 1:
 				frame.clearMapArea();
-				newGame();
+				newGame(frame);
 				break;
 			case 2:
 				frame.clearMapArea();
@@ -65,21 +65,23 @@ public class Main extends JFrame {
      ////////////////////////////
     //CREATE A NEW GAME PART 1//
    ////////////////////////////
-	public static void newGame() throws Exception {
+	public static void newGame(Frame frame) throws Exception {
 		//Asks user for name
 		System.out.println("Welcome to AGOSS\nWhat would you like to name yourself?");
-		String name = scanner.next();
+		System.out.print("Please Enter the characters name: ");
+		Frame.grabInput(frame,1);
+		String name = frame.getUserStringInput();
 		
 		//Checks to see if the file already exists
 		File exist = new File(name + ".txt");
 		if(exist.exists() && !exist.isDirectory()) { 
 			//If it does exist, restart
 			System.out.println("A save with this name already exists, please select another name.");
-			newGame();
+			newGame(frame);
 		} else {
 			//If it doesn't, move on
 			System.out.println("\nNew Player Stat Setup:\n");
-			characterCreator(name, 1);
+			characterCreator(name, 1, frame);
 		}
 		
 	}
@@ -139,7 +141,7 @@ public class Main extends JFrame {
 				    x++;
 				}
 				
-		//set bag from txt
+		//Set bag from txt
 		Bag bag = new Bag(player, tempBag[0], tempBag[1], tempBag[2], tempBag[3]);
 		
 		//Print player stats
@@ -156,13 +158,17 @@ public class Main extends JFrame {
 				 "\nLocation:    " + player.getPlayerLoc());
 		
 		//Asks user if they'd like to continue their game
-		System.out.println("Resume Game?: Y/N");
-		String reply = scanner.next();
+		System.out.print("Resume Game? Y/N: ");
+		Frame.grabInput(frame,1);
+		String reply = frame.getUserStringInput();
 
+		//Clear map screen
+		frame.clearMapArea();
+		
 		switch(reply.toLowerCase()) {
 			case "y":
 				System.out.println("Resuming game. . .");
-				Adventure.Resume(player,bag,choice);
+				Adventure.Resume(player,bag,choice,frame);
 				break;
 				
 			case "n":
@@ -177,7 +183,7 @@ public class Main extends JFrame {
 		bagReader.close();
 	}
 	
-	public static void characterCreator(String tempName, int newGame) throws Exception {
+	public static void characterCreator(String tempName, int newGame, Frame frame) throws Exception {
 		
 		new File("src\\saves\\" + tempName).mkdir();
 		FileWriter fileWriter = new FileWriter("src\\saves\\" + tempName + "\\" + tempName + ".txt", true);
@@ -280,7 +286,7 @@ public class Main extends JFrame {
 				System.out.println("And so it begins!");
 				Bag bag = new Bag(player, 0, 0, 0, 0);
 				WriteBag(tempName, player, bag);
-				Adventure.Resume(player,bag,2);	//Start the base game
+				Adventure.Resume(player,bag,2,frame);	//Start the base game
 				break;
 				
 			case "n":

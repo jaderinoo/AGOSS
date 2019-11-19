@@ -32,8 +32,8 @@ class Frame extends JFrame {
     int userIntInput = 0;
     String userStringInput = "";
     private JTable table;
-    private JTextField textField;
     public JTextArea mapArea;
+    public JLabel mapName;
     private JTextField turnNumber;
     private JTextField enemyCount;
     private JTextField textField_3;
@@ -47,11 +47,11 @@ class Frame extends JFrame {
 
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(650, 588);
+        frame.setSize(901, 700);
 
         //Creating the panel at bottom and adding components
         JPanel panel = new JPanel(); // the panel is not visible in output
-        panel.setBounds(0, 458, 634, 33);
+        panel.setBounds(26, 561, 634, 33);
         JLabel lblCommandLine = new JLabel("Command Line:");
         lblCommandLine.setBounds(10, 9, 83, 14);
         JTextField tf = new JTextField(10); // accepts upto 10 characters
@@ -62,7 +62,7 @@ class Frame extends JFrame {
         panel.add(tf);
 
 		mapArea = new JTextArea(24, 80);
-		mapArea.setBounds(10, 36, 432, 283);
+		mapArea.setBounds(26, 36, 614, 397);
 		mapArea.setBackground(Color.LIGHT_GRAY);
 		mapArea.setForeground(Color.black);
 		mapArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
@@ -84,16 +84,16 @@ class Frame extends JFrame {
         reset.setBounds(557, 5, 67, 23);
         panel.add(reset);
         
-        JLabel lblNewLabel = new JLabel("Map view:");
-        lblNewLabel.setBounds(10, 11, 71, 14);
-        frame.getContentPane().add(lblNewLabel);
+        mapName = new JLabel("Map view:");
+        mapName.setBounds(26, 11, 71, 14);
+        frame.getContentPane().add(mapName);
         
         JLabel lblNewLabel_1 = new JLabel("EnemyCount: ");
         lblNewLabel_1.setBounds(452, 11, 71, 14);
         frame.getContentPane().add(lblNewLabel_1);
         
         JLabel lblNewLabel_2 = new JLabel("Hp:");
-        lblNewLabel_2.setBounds(245, 385, 30, 14);
+        lblNewLabel_2.setBounds(168, 485, 30, 14);
         frame.getContentPane().add(lblNewLabel_2);
         
         JLabel lblNewLabel_3 = new JLabel("Turn #");
@@ -102,15 +102,8 @@ class Frame extends JFrame {
         
         table = new JTable();
         table.setToolTipText("");
-        table.setBounds(452, 36, 172, 283);
+        table.setBounds(671, 36, 172, 283);
         frame.getContentPane().add(table);
-        
-        textField = new JTextField();
-        textField.setText("0");
-        textField.setEditable(false);
-        textField.setBounds(69, 8, 21, 20);
-        frame.getContentPane().add(textField);
-        textField.setColumns(10);
         
         turnNumber = new JTextField();
         turnNumber.setText("0");
@@ -127,76 +120,76 @@ class Frame extends JFrame {
         frame.getContentPane().add(enemyCount);
         
         JLabel lblExp = new JLabel("EXP:");
-        lblExp.setBounds(245, 435, 39, 14);
+        lblExp.setBounds(168, 535, 39, 14);
         frame.getContentPane().add(lblExp);
         
         JLabel lblLvl = new JLabel("LVL:");
-        lblLvl.setBounds(245, 410, 39, 14);
+        lblLvl.setBounds(168, 510, 39, 14);
         frame.getContentPane().add(lblLvl);
         
         JLabel lblShield = new JLabel("Shield:");
-        lblShield.setBounds(357, 435, 71, 14);
+        lblShield.setBounds(280, 535, 71, 14);
         frame.getContentPane().add(lblShield);
         
         JLabel lblWeapon = new JLabel("Weapon:");
-        lblWeapon.setBounds(357, 410, 71, 14);
+        lblWeapon.setBounds(280, 510, 71, 14);
         frame.getContentPane().add(lblWeapon);
         
         JLabel lblBonuses = new JLabel("Bonuses:");
-        lblBonuses.setBounds(357, 385, 71, 14);
+        lblBonuses.setBounds(280, 485, 71, 14);
         frame.getContentPane().add(lblBonuses);
         
         JTextArea textArea_1 = new JTextArea(24, 80);
         textArea_1.setForeground(Color.BLACK);
         textArea_1.setFont(new Font("Monospaced", Font.PLAIN, 15));
         textArea_1.setBackground(Color.LIGHT_GRAY);
-        textArea_1.setBounds(10, 330, 614, 46);
+        textArea_1.setBounds(26, 436, 614, 46);
         frame.getContentPane().add(textArea_1);
         
         JLabel lblUsersMovecount = new JLabel("User's Movecount:");
-        lblUsersMovecount.setBounds(103, 387, 92, 14);
+        lblUsersMovecount.setBounds(26, 487, 92, 14);
         frame.getContentPane().add(lblUsersMovecount);
         
         textField_3 = new JTextField();
         textField_3.setText("0");
         textField_3.setEditable(false);
         textField_3.setColumns(10);
-        textField_3.setBounds(205, 384, 21, 20);
+        textField_3.setBounds(128, 484, 21, 20);
         frame.getContentPane().add(textField_3);
         
         textField_4 = new JTextField();
         textField_4.setText("0");
         textField_4.setEditable(false);
         textField_4.setColumns(10);
-        textField_4.setBounds(295, 385, 21, 20);
+        textField_4.setBounds(218, 485, 21, 20);
         frame.getContentPane().add(textField_4);
         
         textField_5 = new JTextField();
         textField_5.setText("0");
         textField_5.setEditable(false);
         textField_5.setColumns(10);
-        textField_5.setBounds(295, 410, 21, 20);
+        textField_5.setBounds(218, 510, 21, 20);
         frame.getContentPane().add(textField_5);
         
         textField_6 = new JTextField();
         textField_6.setText("0");
         textField_6.setEditable(false);
         textField_6.setColumns(10);
-        textField_6.setBounds(295, 435, 21, 20);
+        textField_6.setBounds(218, 535, 21, 20);
         frame.getContentPane().add(textField_6);
         
         textField_7 = new JTextField();
         textField_7.setText("0");
         textField_7.setEditable(false);
         textField_7.setColumns(10);
-        textField_7.setBounds(421, 435, 21, 20);
+        textField_7.setBounds(344, 535, 21, 20);
         frame.getContentPane().add(textField_7);
         
         textField_8 = new JTextField();
         textField_8.setText("0");
         textField_8.setEditable(false);
         textField_8.setColumns(10);
-        textField_8.setBounds(421, 410, 21, 20);
+        textField_8.setBounds(344, 510, 21, 20);
         frame.getContentPane().add(textField_8);
         frame.setVisible(true);
         
@@ -268,6 +261,15 @@ class Frame extends JFrame {
     
     public int getTurnNumber() {
         return number;
+    }
+    
+    public JLabel getMapName() {
+        return mapName;
+    }
+    
+    public JLabel setMapName(String map) {
+    	mapName.setText("Map: " + map);
+        return mapName;
     }
     
 	public void init() {

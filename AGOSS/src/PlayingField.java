@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+
 //NOTES
 /*		
 			//All in all, if the player is killed, end the game else 
@@ -15,12 +17,13 @@ import java.util.Scanner;
 			//-> complete the world and return to Adventure/ allow a save option in "Adventure"
  */
 
-public class PlayingField {
+public class PlayingField extends JFrame {
 	static int rows = 15;
 	static int cols = 15;
 	static ArrayList<Mob1> mobList = new ArrayList<Mob1>();
 	static Merchant merchant = new Merchant(0,0);
 	static Scanner input = new Scanner(System.in);
+	public static JFrame frame;
 	static int enemyCount = 0;
 	static int enemyMoveCount = 0;
 	static int enemyKillCount = 0;
@@ -37,8 +40,8 @@ public class PlayingField {
 	static String leaderName = null;
 	static String[] splitStats = null;
 	
-	public static int map(Player player, Bag bag, String mapName) throws Exception {
-		
+	public static int map(Player player, Bag bag, String mapName, Frame frame2) throws Exception {
+		frame = frame2;
 		//Clear mobList for reuse
 		mobList.clear();
 		turn = 0;
@@ -87,7 +90,7 @@ public class PlayingField {
 			map = saveMap(data);
 			
 			//Prints initial map
-			System.out.println("Map: " + mapName + "\n" + divider);
+			((Frame) frame).setMapName(mapName);
 			printMap(map);
 	
 			//Initial scan
@@ -606,7 +609,11 @@ public class PlayingField {
     }
 		
 	//Prints the map for the player
-	public static void printMap(char[][] map) {
+	public static void printMap(char[][] map) throws InterruptedException {
+    	
+    	//Clear map screen
+    	((Frame) frame).clearMapArea();
+		
 		//Top border
 		for(int i = 0; i != cols*2+cols+2; i++) {
 			System.out.print("_");
