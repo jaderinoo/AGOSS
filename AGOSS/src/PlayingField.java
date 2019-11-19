@@ -141,9 +141,9 @@ public class PlayingField extends JFrame {
 				}
 				
 				//Prints out enemyCount, user turn amount, and turn #
-				System.out.println("Turn #" + turn);
-				System.out.println(player.getName() + "'s movecount: " + moveCounter);
-				System.out.println("Enemies remaining: " + enemyCount);
+				((Frame) frame).setTurnNumber(turn);
+				((Frame) frame).setmoveCounter(moveCounter);
+				((Frame) frame).setEnemies(enemyCount);
 				
 				//Print enemy locations
 				printEnemyLocations();
@@ -644,11 +644,7 @@ public class PlayingField extends JFrame {
 		for(int i = 0; i != enemyMoveCount; i++) {
 			if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
 			//Print enemy locations
-			System.out.print(mobList.get(i).getName() + ": \t (" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY + ") ");
-			if((mobList.get(i).getMapX() < 10 && mobList.get(i).getMapY() < 10)) {
-				System.out.print("\t");
-			}
-			System.out.print("\tHP:(" + mobList.get(i).getCurrentHp() + "/" + mobList.get(i).getMaxHp()+")\n");
+			((Frame) frame).model.addRow(new Object[]{mobList.get(i).getName(), "(" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY + ")", "(" + mobList.get(i).getCurrentHp() + "/" + mobList.get(i).getMaxHp()+")"});
 			}
 		}
 	}
