@@ -217,7 +217,9 @@ public class Main extends JFrame {
 	    				 "\nLevel:       " + player.getLevel() + "\n");
 		    	
 		    	//Analyzes user input and adjusts the stats
-			    String statSelect = scanner.next();
+				Frame.grabInput(frame,1);
+				String statSelect = frame.getUserStringInput();
+
 				switch(statSelect.toLowerCase()) {
 					case "strength":
 						player.addStrength(1);
@@ -250,6 +252,9 @@ public class Main extends JFrame {
 				
 		    }
 		    
+			//Clear map screen
+			frame.clearMapArea();
+		    
 		    //Print stats to new file
 		    printWriter.println(player.getName() +
 		    		"\n" + player.getStrength() +
@@ -279,7 +284,10 @@ public class Main extends JFrame {
 					+ "\nIf you lose a battle, you will be returned to the menu with half your"
 					+ "\ngold removed and your Healthpoints replenished."
 					+ "\nAre you ready to start your adventure? Y/N");
-			String reply = scanner.next();
+
+			//Grab user input
+			Frame.grabInput(frame,1);
+			String reply = frame.getUserStringInput();
 			
 			switch(reply.toLowerCase()) {
 			case "y":
