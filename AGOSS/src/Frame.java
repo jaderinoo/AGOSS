@@ -25,6 +25,8 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JList;
+import java.awt.SystemColor;
+import javax.swing.JProgressBar;
 
 class Frame extends JFrame {
 	final JFrame frame = new JFrame();
@@ -37,20 +39,22 @@ class Frame extends JFrame {
     public JTable enemyTable;
     public JTextArea mapArea;
     public JTextArea console;
+    public JProgressBar expBar;
     public JLabel mapName;
     public DefaultTableModel model;
-    private JTextField turnNumberLable;
-    private JTextField enemyCount;
-    private JTextField moveCounterLabel;
-    private JTextField textField_4;
-    private JTextField textField_5;
-    private JTextField textField_6;
-    private JTextField textField_7;
-    private JTextField textField_8;
+    public JTextField turnNumberLable;
+    public JTextField enemyCount;
+    public JTextField moveCounterLabel;
+    public JTextField hpField;
+    public JTextField lvlField;
+    public JTextField expField;
+    private JTextField SHDField;
+    private JTextField WPNField;
     
     public Frame() {
         frame.getContentPane().setForeground(Color.DARK_GRAY);
-        frame.getContentPane().setBackground(Color.DARK_GRAY);
+        frame.getContentPane().setBackground(SystemColor.activeCaption);
+        frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 12));
 
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,8 +74,9 @@ class Frame extends JFrame {
         panel.add(tf);
 
 		mapArea = new JTextArea(24, 80);
+		mapArea.setEditable(false);
 		mapArea.setBounds(26, 36, 500, 397);
-		mapArea.setBackground(Color.black);
+		mapArea.setBackground(new Color(112, 128, 144));
 		mapArea.setForeground(Color.white);
 		mapArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
 		System.setOut(new PrintStream(new OutputStream() {
@@ -92,26 +97,28 @@ class Frame extends JFrame {
         reset.setBounds(557, 5, 67, 23);
         panel.add(reset);
         
-        mapName = new JLabel("Map view:");
+        mapName = new JLabel("Main Menu:");
         mapName.setBounds(26, 11, 71, 14);
         frame.getContentPane().add(mapName);
         
         JLabel lblNewLabel_1 = new JLabel("EnemyCount: ");
-        lblNewLabel_1.setBounds(452, 11, 71, 14);
+        lblNewLabel_1.setBounds(437, 11, 86, 14);
         frame.getContentPane().add(lblNewLabel_1);
         
-        JLabel lblNewLabel_2 = new JLabel("Hp:");
+        JLabel lblNewLabel_2 = new JLabel("HP:");
         lblNewLabel_2.setBounds(536, 363, 30, 14);
         frame.getContentPane().add(lblNewLabel_2);
         
         JLabel lblNewLabel_3 = new JLabel("Turn #");
-        lblNewLabel_3.setBounds(382, 11, 46, 14);
+        lblNewLabel_3.setBounds(107, 11, 46, 14);
         frame.getContentPane().add(lblNewLabel_3);
         
         model = new DefaultTableModel(); 
         enemyTable = new JTable(model);
+        enemyTable.setRowSelectionAllowed(false);
+        enemyTable.setBackground(new Color(112, 128, 144));
         enemyTable.setToolTipText("");
-        enemyTable.setBounds(536, 43, 172, 283);
+        enemyTable.setBounds(536, 36, 172, 316);
         model.addColumn("Type");
         model.addColumn("Coords");
         model.addColumn("HP");
@@ -122,7 +129,7 @@ class Frame extends JFrame {
         turnNumberLable.setText("0");
         turnNumberLable.setEditable(false);
         turnNumberLable.setColumns(10);
-        turnNumberLable.setBounds(421, 8, 21, 20);
+        turnNumberLable.setBounds(152, 8, 21, 20);
         frame.getContentPane().add(turnNumberLable);
         
         enemyCount = new JTextField();
@@ -141,73 +148,88 @@ class Frame extends JFrame {
         frame.getContentPane().add(lblLvl);
         
         JLabel lblShield = new JLabel("Shield:");
-        lblShield.setBounds(617, 413, 71, 14);
+        lblShield.setBounds(536, 520, 71, 14);
         frame.getContentPane().add(lblShield);
         
         JLabel lblWeapon = new JLabel("Weapon:");
-        lblWeapon.setBounds(617, 388, 71, 14);
+        lblWeapon.setBounds(536, 495, 71, 14);
         frame.getContentPane().add(lblWeapon);
         
         JLabel lblBonuses = new JLabel("Bonuses:");
-        lblBonuses.setBounds(617, 363, 71, 14);
+        lblBonuses.setBounds(536, 470, 71, 14);
         frame.getContentPane().add(lblBonuses);
         
         console = new JTextArea(24, 80);
+        console.setEditable(false);
         console.setForeground(Color.WHITE);
         console.setFont(new Font("Monospaced", Font.PLAIN, 15));
-        console.setBackground(Color.BLACK);
+        console.setBackground(new Color(112, 128, 144));
         console.setBounds(26, 436, 500, 181);
         frame.getContentPane().add(console);
         
         JLabel lblUsersMovecount = new JLabel("User's Movecount:");
-        lblUsersMovecount.setBounds(554, 11, 92, 14);
+        lblUsersMovecount.setBounds(566, 11, 111, 14);
         frame.getContentPane().add(lblUsersMovecount);
         
         moveCounterLabel = new JTextField();
         moveCounterLabel.setText("0");
         moveCounterLabel.setEditable(false);
         moveCounterLabel.setColumns(10);
-        moveCounterLabel.setBounds(656, 8, 21, 20);
+        moveCounterLabel.setBounds(687, 8, 21, 20);
         frame.getContentPane().add(moveCounterLabel);
         
-        textField_4 = new JTextField();
-        textField_4.setText("0");
-        textField_4.setEditable(false);
-        textField_4.setColumns(10);
-        textField_4.setBounds(586, 363, 21, 20);
-        frame.getContentPane().add(textField_4);
+        hpField = new JTextField();
+        hpField.setHorizontalAlignment(SwingConstants.RIGHT);
+        hpField.setText("0");
+        hpField.setEditable(false);
+        hpField.setColumns(10);
+        hpField.setBounds(600, 363, 108, 20);
+        frame.getContentPane().add(hpField);
         
-        textField_5 = new JTextField();
-        textField_5.setText("0");
-        textField_5.setEditable(false);
-        textField_5.setColumns(10);
-        textField_5.setBounds(586, 388, 21, 20);
-        frame.getContentPane().add(textField_5);
+        lvlField = new JTextField();
+        lvlField.setHorizontalAlignment(SwingConstants.RIGHT);
+        lvlField.setText("0");
+        lvlField.setEditable(false);
+        lvlField.setColumns(10);
+        lvlField.setBounds(600, 388, 108, 20);
+        frame.getContentPane().add(lvlField);
         
-        textField_6 = new JTextField();
-        textField_6.setText("0");
-        textField_6.setEditable(false);
-        textField_6.setColumns(10);
-        textField_6.setBounds(586, 413, 21, 20);
-        frame.getContentPane().add(textField_6);
+        expField = new JTextField();
+        expField.setHorizontalAlignment(SwingConstants.RIGHT);
+        expField.setText("0");
+        expField.setEditable(false);
+        expField.setColumns(10);
+        expField.setBounds(600, 413, 108, 20);
+        frame.getContentPane().add(expField);
         
-        textField_7 = new JTextField();
-        textField_7.setText("0");
-        textField_7.setEditable(false);
-        textField_7.setColumns(10);
-        textField_7.setBounds(681, 413, 21, 20);
-        frame.getContentPane().add(textField_7);
+        SHDField = new JTextField();
+        SHDField.setHorizontalAlignment(SwingConstants.RIGHT);
+        SHDField.setText("0");
+        SHDField.setEditable(false);
+        SHDField.setColumns(10);
+        SHDField.setBounds(600, 520, 108, 20);
+        frame.getContentPane().add(SHDField);
         
-        textField_8 = new JTextField();
-        textField_8.setText("0");
-        textField_8.setEditable(false);
-        textField_8.setColumns(10);
-        textField_8.setBounds(681, 388, 21, 20);
-        frame.getContentPane().add(textField_8);
+        WPNField = new JTextField();
+        WPNField.setHorizontalAlignment(SwingConstants.RIGHT);
+        WPNField.setText("0");
+        WPNField.setEditable(false);
+        WPNField.setColumns(10);
+        WPNField.setBounds(600, 495, 108, 20);
+        frame.getContentPane().add(WPNField);
         frame.setVisible(true);
         
         //Sets send as the default key
         frame.getRootPane().setDefaultButton(send);
+        
+        expBar = new JProgressBar();
+        expBar.setBounds(536, 438, 172, 14);
+        frame.getContentPane().add(expBar);
+        
+        JLabel divider = new JLabel("________________________");
+        divider.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        divider.setBounds(536, 453, 172, 14);
+        frame.getContentPane().add(divider);
         
         //Reset button listener
         reset.addActionListener(new ActionListener(){
@@ -258,6 +280,14 @@ class Frame extends JFrame {
         this.mapArea.replaceSelection("");
     }
     
+    //CONSOLE--------------------------------------------------------------
+    
+    public void clearConsole() throws InterruptedException {
+    	Thread.sleep(500);
+        this.console.selectAll();
+        this.console.replaceSelection("");
+    }
+    
     //ENEMY TABLE----------------------------------------------------------
     public void setEnemyTable() {
         //Created for later
@@ -287,6 +317,34 @@ class Frame extends JFrame {
     
     public int getEnemies() {
         return enemies;
+    }
+    
+    //HP COUNT----------------------------------------------------------
+    public void setHP(int current, int total) {
+    	hpField.setText(Integer.toString(current) + "/" + Integer.toString(total));
+    }
+    
+    //LVL COUNT----------------------------------------------------------
+    public void setLVL(int lvl) {
+    	lvlField.setText(Integer.toString(lvl));
+    }
+    
+    //EXP COUNT----------------------------------------------------------
+    public void setEXP(int current, int lvl) {
+    	expField.setText(Integer.toString(current) + "/" + Integer.toString(lvl*50));
+    	expBar.setMaximum(lvl*50);
+    	expBar.setMinimum(0);
+    	expBar.setValue(current);
+    }
+    
+    //WPN COUNT----------------------------------------------------------
+    public void setWPN(int WPN, String WPNName) {
+    	WPNField.setText(WPNName + "(+" + Integer.toString(WPN) + ")\n");
+    }
+    
+    //SHD COUNT----------------------------------------------------------
+    public void setSHD(int SHD, String SHDName) {
+    	SHDField.setText(SHDName + "(+" + Integer.toString(SHD) + ")\n");
     }
     
     //MOVE COUNT----------------------------------------------------------
@@ -328,7 +386,7 @@ class Frame extends JFrame {
 		//If type == 1, Grab String		
 		//Wait for user input
 		do{
-		    Thread.sleep(750);
+		    Thread.sleep(650);
 		}while(frame.text == null);
 		
 		//After grabbing the selection, send it to user and reset text to null for later
