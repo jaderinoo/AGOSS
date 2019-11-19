@@ -263,8 +263,8 @@ class Frame extends JFrame {
         //Created for later
     }
     
-    public void removeEnemyTable() throws InterruptedException {
-    	//Created for later
+    public void clearEnemyTable() throws InterruptedException {
+    	model.setRowCount(0);
     }
     
     //TURN NUMBER----------------------------------------------------------

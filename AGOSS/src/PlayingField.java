@@ -146,6 +146,7 @@ public class PlayingField extends JFrame {
 				((Frame) frame).setEnemies(enemyCount);
 				
 				//Print enemy locations
+				((Frame) frame).clearEnemyTable();
 				printEnemyLocations();
 				
 				//Print out current user statistics
