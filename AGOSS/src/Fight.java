@@ -2,7 +2,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Fight {
+import javax.swing.JFrame;
+
+public class Fight extends JFrame {
 static Scanner scanner = new Scanner(System.in);
 static int winStatus;
 static int attackerDamage;
@@ -11,27 +13,36 @@ static int damageTaken;
 static int damageDealt;
 static boolean boosterCheck = false;
 static String divider = "----------------------------------------------|";
-public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag) throws IOException {
+public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Frame frame) throws IOException, InterruptedException {
 	
+	//Clear the console 
+	frame.clearConsole();
+	
+	//Set the weapon and shield bonuses
 	player.setWpnBonus(bag.getWeapon());
 	player.setShieldBonus(bag.getWeapon());
 	
+	//Continue fighting until either player has 0 health
 	while(player.getCurrentHp() != 0 || attacker.getCurrentHp() != 0) {
-		System.out.println(divider);
-		System.out.println("\t\t\t|" + player.getName() + "'s Hp: " + player.getCurrentHp() + "/" + player.getMaxHp());
-		System.out.println(attacker.getName() + "'s Hp: " + attacker.getCurrentHp() + "/" + attacker.getMaxHp() + "\t|"
-				+ "LVL: " + player.getLevel());
-		System.out.println("LVL: " + attacker.getLevel() + "\t\t\t|EXP: "+ player.exp + "/" + player.level*50 +"\n"
-				+ divider);
+		frame.console.append(attacker.getName() + "'s Hp: " + attacker.getCurrentHp() + "/" + attacker.getMaxHp());
+		frame.console.append("\nLVL: " + attacker.getLevel() + "\n" + divider);
+		
+		//Initialize vars
 		attackerDamage = 0;
 		attackDamage = 0;
 		damageTaken = 0;
 		damageDealt = 0;
-		System.out.println("What would you like to do?: \n1:Attack\t2:Defend "
-													 + "\n3:Bag\t4:Run");
-		System.out.print("Selection: ");
-		int selection = scanner.nextInt();
-		System.out.println(divider);
+		
+		//Print out player menu
+		frame.console.append("\nWhat would you like to do?: \n1:Attack\t2:Defend "
+													 + "\n3:Bag\t\t4:Run");
+		
+		//Grab user input and clear console
+		Frame.grabInput(frame,0);
+		int selection = frame.getUserIntInput();
+		frame.clearConsole();	
+		
+		//User selection
 			switch(selection) {
 				case 1:
 					System.out.println("BattleLog:\n-");

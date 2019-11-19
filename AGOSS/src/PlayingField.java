@@ -78,7 +78,7 @@ public class PlayingField extends JFrame {
 			cols = stats[1];
 			int debug = stats[2];
 			
-			//Present dbug information
+			//Present debug information
 			if(debug == 1) {
 				//Test additional map information
 				System.out.println(firstLine);
@@ -96,10 +96,11 @@ public class PlayingField extends JFrame {
 			//Initial scan
 			enemyCount = scanMap(player,map);
 			enemyMoveCount = enemyCount;
+			((Frame) frame).setUserStats((String) player.getName());
 			
 			playerMenu(player, map, bag, firstLine);
 			}else {
-			System.out.println("Missing map .txt");
+			System.out.println("Missing " + mapName + ".txt");
 			return 1;
 		}
 		return 1;
@@ -167,12 +168,12 @@ public class PlayingField extends JFrame {
 				
 				//Print out merchant menu
 				if(merchantFound == true) {
-					((Frame) frame).console.append("3: Merchant Menu");
+					((Frame) frame).console.append("\n3: Merchant Menu");
 				}
 				
 				//Print out attack menu
 				if(initiateFight == true) {
-					((Frame) frame).console.append("4: Attack");
+					((Frame) frame).console.append("\n4: Attack");
 				}
 				
 				Frame.grabInput(((Frame)frame),0);
@@ -581,7 +582,7 @@ public class PlayingField extends JFrame {
 
         //Initiate the fight
         System.out.println("Battle Start!");
-        int winStatus = Fight.Move(player, enemy, null, bag);
+        int winStatus = Fight.Move(player, enemy, null, bag, ((Frame)frame));
         
         //Update the stats and bags
 		Main.bagUpdater(player,bag);

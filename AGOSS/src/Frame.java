@@ -1,6 +1,5 @@
 //Usually you will require both swing and awt packages
 // even if you are working with just swings.
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -8,23 +7,16 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JList;
 import java.awt.SystemColor;
 import javax.swing.JProgressBar;
 
@@ -41,6 +33,7 @@ class Frame extends JFrame {
     public JTextArea console;
     public JProgressBar expBar;
     public JLabel mapName;
+    public JLabel userStats;
     public DefaultTableModel model;
     public JTextField turnNumberLable;
     public JTextField enemyCount;
@@ -54,7 +47,7 @@ class Frame extends JFrame {
     public Frame() {
         frame.getContentPane().setForeground(Color.DARK_GRAY);
         frame.getContentPane().setBackground(SystemColor.activeCaption);
-        frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 12));
+        frame.getContentPane().setFont(new Font("Roboto", Font.PLAIN, 12));
 
         //Creating the Frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,7 +71,7 @@ class Frame extends JFrame {
 		mapArea.setBounds(26, 36, 500, 397);
 		mapArea.setBackground(new Color(112, 128, 144));
 		mapArea.setForeground(Color.white);
-		mapArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 15));
+		mapArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
 		System.setOut(new PrintStream(new OutputStream() {
     	@Override
     	public void write(int b) throws IOException {
@@ -106,7 +99,7 @@ class Frame extends JFrame {
         frame.getContentPane().add(lblNewLabel_1);
         
         JLabel lblNewLabel_2 = new JLabel("HP:");
-        lblNewLabel_2.setBounds(536, 363, 30, 14);
+        lblNewLabel_2.setBounds(536, 407, 30, 14);
         frame.getContentPane().add(lblNewLabel_2);
         
         JLabel lblNewLabel_3 = new JLabel("Turn #");
@@ -140,23 +133,23 @@ class Frame extends JFrame {
         frame.getContentPane().add(enemyCount);
         
         JLabel lblExp = new JLabel("EXP:");
-        lblExp.setBounds(536, 413, 39, 14);
+        lblExp.setBounds(536, 457, 39, 14);
         frame.getContentPane().add(lblExp);
         
         JLabel lblLvl = new JLabel("LVL:");
-        lblLvl.setBounds(536, 388, 39, 14);
+        lblLvl.setBounds(536, 432, 39, 14);
         frame.getContentPane().add(lblLvl);
         
         JLabel lblShield = new JLabel("Shield:");
-        lblShield.setBounds(536, 520, 71, 14);
+        lblShield.setBounds(536, 564, 71, 14);
         frame.getContentPane().add(lblShield);
         
         JLabel lblWeapon = new JLabel("Weapon:");
-        lblWeapon.setBounds(536, 495, 71, 14);
+        lblWeapon.setBounds(536, 539, 71, 14);
         frame.getContentPane().add(lblWeapon);
         
         JLabel lblBonuses = new JLabel("Bonuses:");
-        lblBonuses.setBounds(536, 470, 71, 14);
+        lblBonuses.setBounds(536, 514, 71, 14);
         frame.getContentPane().add(lblBonuses);
         
         console = new JTextArea(24, 80);
@@ -183,7 +176,7 @@ class Frame extends JFrame {
         hpField.setText("0");
         hpField.setEditable(false);
         hpField.setColumns(10);
-        hpField.setBounds(600, 363, 108, 20);
+        hpField.setBounds(600, 407, 108, 20);
         frame.getContentPane().add(hpField);
         
         lvlField = new JTextField();
@@ -191,7 +184,7 @@ class Frame extends JFrame {
         lvlField.setText("0");
         lvlField.setEditable(false);
         lvlField.setColumns(10);
-        lvlField.setBounds(600, 388, 108, 20);
+        lvlField.setBounds(600, 432, 108, 20);
         frame.getContentPane().add(lvlField);
         
         expField = new JTextField();
@@ -199,7 +192,7 @@ class Frame extends JFrame {
         expField.setText("0");
         expField.setEditable(false);
         expField.setColumns(10);
-        expField.setBounds(600, 413, 108, 20);
+        expField.setBounds(600, 457, 108, 20);
         frame.getContentPane().add(expField);
         
         SHDField = new JTextField();
@@ -207,7 +200,7 @@ class Frame extends JFrame {
         SHDField.setText("0");
         SHDField.setEditable(false);
         SHDField.setColumns(10);
-        SHDField.setBounds(600, 520, 108, 20);
+        SHDField.setBounds(600, 564, 108, 20);
         frame.getContentPane().add(SHDField);
         
         WPNField = new JTextField();
@@ -215,7 +208,7 @@ class Frame extends JFrame {
         WPNField.setText("0");
         WPNField.setEditable(false);
         WPNField.setColumns(10);
-        WPNField.setBounds(600, 495, 108, 20);
+        WPNField.setBounds(600, 539, 108, 20);
         frame.getContentPane().add(WPNField);
         frame.setVisible(true);
         
@@ -223,13 +216,17 @@ class Frame extends JFrame {
         frame.getRootPane().setDefaultButton(send);
         
         expBar = new JProgressBar();
-        expBar.setBounds(536, 438, 172, 14);
+        expBar.setBounds(536, 482, 172, 14);
         frame.getContentPane().add(expBar);
         
         JLabel divider = new JLabel("________________________");
         divider.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        divider.setBounds(536, 453, 172, 14);
+        divider.setBounds(536, 497, 172, 14);
         frame.getContentPane().add(divider);
+        
+        userStats = new JLabel("Users Stats:");
+        userStats.setBounds(536, 380, 162, 14);
+        frame.getContentPane().add(userStats);
         
         //Reset button listener
         reset.addActionListener(new ActionListener(){
@@ -274,6 +271,12 @@ class Frame extends JFrame {
         this.mapArea.append("Hello");
     }
     
+    //MAP AREA----------------------------------------------------------
+    public void setUserStats(String name) {
+    	String formatName = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+        this.userStats.setText(formatName + "'s Stats:");
+    }
+    
     public void clearMapArea() throws InterruptedException {
     	Thread.sleep(500);
         this.mapArea.selectAll();
@@ -295,6 +298,7 @@ class Frame extends JFrame {
     
     public void clearEnemyTable() throws InterruptedException {
     	model.setRowCount(0);
+    	model.addRow(new Object[]{"Type", "Coords", "HP"});
     }
     
     //TURN NUMBER----------------------------------------------------------
@@ -365,7 +369,8 @@ class Frame extends JFrame {
     }
     
     public JLabel setMapName(String map) {
-    	mapName.setText("Map: " + map);
+    	String formatMap = map.substring(0,1).toUpperCase() + map.substring(1).toLowerCase();
+    	mapName.setText("Map: " + formatMap);
         return mapName;
     }
     
