@@ -151,7 +151,6 @@ public class PlayingField extends JFrame {
 				printEnemyLocations();
 				
 				//Print out current user statistics
-				System.out.println(divider);
 				((Frame) frame).setHP(player.getCurrentHp(), player.getMaxHp());
 				((Frame) frame).setLVL(player.getLevel());
 				((Frame) frame).setWPN(bag.getWeapon(), bag.getWeaponName());
@@ -187,7 +186,7 @@ public class PlayingField extends JFrame {
 					
 				case 2:
 					//Uses the bag menu and update player information
-					Fight.useBag(player,bag,null);
+					Fight.useBag(player,bag,null, ((Frame)frame));
 					Main.bagUpdater(player,bag);
 					Main.playerUpdater(player);
 					moveCounter--;
@@ -207,7 +206,7 @@ public class PlayingField extends JFrame {
 					if(initiateFight == true) {
 						moveCounter = 0;
 						//Use attack menu
-						initiateFight(player, map, mobList.get(enemyNumber), bag, enemyNumber);
+						initiateFight(player, map, mobList.get(enemyNumber), bag);
 					}else {
 						((Frame) frame).console.append(divider + "\nPlease choose a valid option.");
 					}
@@ -279,20 +278,21 @@ public class PlayingField extends JFrame {
 									map[enemy.getMapX()-1][enemy.getMapY()] = enemy.getType();
 									enemy.setMapX(enemy.getMapX()-1);
 									
-									//Reset x while dropping moveCounter and printing the map for the player
-									moveCounter--;
+									//Reset x and print the map for the player
 									x = 0;
 									check = true;
-									((Frame) frame).console.append(enemy.getName() + "'s Move: Left\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
+									((Frame) frame).console.append(enemy.getName() + "'s Move: Left\nMovecount: " + (moveCounter) + "\n" + divider + "\n");
 									printMap(map);
 									
 									//Adds a small delay between movements to better visualize the moves
-									Thread.sleep(1250);
+									Thread.sleep(750);
 									
 									//Check if enemy can attack
 									if(moveCounter != 0) {
-										playerCheckAttack(player,map,bag);
+										playerCheckAttack(player,map,bag,enemy);
 									}
+									//drop movecounter down
+									moveCounter--;
 								}
 							}
 						}
@@ -313,20 +313,22 @@ public class PlayingField extends JFrame {
 									map[enemy.getMapX()+1][enemy.getMapY()] = enemy.getType();
 									enemy.setMapX(enemy.getMapX()+1);
 									
-									//Reset x while dropping moveCounter and printing the map for the player
-									moveCounter--;
+									//Reset x and print the map for the player
 									x = 0;
 									check = true;
-									((Frame) frame).console.append(enemy.getName() + "'s Move: Right\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
+									((Frame) frame).console.append(enemy.getName() + "'s Move: Right\nMovecount: " + (moveCounter) + "\n" + divider + "\n");
 									printMap(map);
 									
 									//Adds a small delay between movements to better visualize the moves
-									Thread.sleep(1250);
+									Thread.sleep(750);
 									
 									//Check if enemy can attack
 									if(moveCounter != 0) {
-										playerCheckAttack(player,map,bag);
+										playerCheckAttack(player,map,bag,enemy);
 									}
+									
+									//drop movecounter down
+									moveCounter--;
 								}
 							}
 				        }
@@ -347,20 +349,22 @@ public class PlayingField extends JFrame {
 									map[enemy.getMapX()][enemy.getMapY()-1] = enemy.getType();
 									enemy.setMapY(enemy.getMapY()-1);
 									
-									//Reset x while dropping moveCounter and printing the map for the player
-									moveCounter--;
+									//Reset x and print the map for the player
 									x = 0;
 									check = true;
-									((Frame) frame).console.append(enemy.getName() + "'s Move: Up\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
+									((Frame) frame).console.append(enemy.getName() + "'s Move: Up\nMovecount: " + (moveCounter) + "\n" + divider + "\n");
 									printMap(map);
 									
 									//Adds a small delay between movements to better visualize the moves
-									Thread.sleep(1250);
+									Thread.sleep(750);
 									
 									//Check if enemy can attack
 									if(moveCounter != 0) {
-										playerCheckAttack(player,map,bag);
+										playerCheckAttack(player,map,bag,enemy);
 									}
+									
+									//drop movecounter down
+									moveCounter--;
 								}
 							}
 						}	
@@ -381,20 +385,22 @@ public class PlayingField extends JFrame {
 									map[enemy.getMapX()][enemy.getMapY()+1] = enemy.getType();
 									enemy.setMapY(enemy.getMapY()+1);
 									
-									//Reset x while dropping moveCounter and printing the map for the player
-									moveCounter--;
+									//Reset x and print the map for the player
 									x = 0;
 									check = true;
-									((Frame) frame).console.append(enemy.getName() + "'s Move: Down\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
+									((Frame) frame).console.append(enemy.getName() + "'s Move: Down\nMovecount: " + (moveCounter) + "\n" + divider + "\n");
 									printMap(map);
 
 									//Adds a small delay between movements to better visualize the moves
-									Thread.sleep(1250);
+									Thread.sleep(750);
 									
 									//Check if enemy can attack
 									if(moveCounter != 0) {
-										playerCheckAttack(player,map,bag);
+										playerCheckAttack(player,map,bag,enemy);
 									}
+									
+									//drop movecounter down
+									moveCounter--;
 								}
 							}
 						}
@@ -403,6 +409,11 @@ public class PlayingField extends JFrame {
 					
 					//Code should go here
 					if(check == false) {
+						//If standing still, check for attack
+						if(moveCounter != 0) {
+							playerCheckAttack(player,map,bag,enemy);
+						}
+						
 						//Reset x while dropping moveCounter and printing the map for the player
 						moveCounter--;
 						x = 0;
@@ -410,7 +421,7 @@ public class PlayingField extends JFrame {
 						((Frame) frame).console.append("\n" + enemy.getName() + "'s Move: None\nMovecount: " + (moveCounter+1) + "\n" + divider);
 						printMap(map);
 						//Adds a small delay between movements to better visualize the moves
-						Thread.sleep(1000);
+						Thread.sleep(750);
 					}
 				}
 			}
@@ -444,7 +455,6 @@ public class PlayingField extends JFrame {
 			//Ask user for movement input
 			Frame.grabInput(((Frame)frame),0);
 			int temp2 = ((Frame)frame).getUserIntInput();
-			System.out.println(divider);
 			switch(temp2) {
 			
 			case 1:
@@ -543,45 +553,42 @@ public class PlayingField extends JFrame {
 	}
 	
 	
-	public static void playerCheckAttack(Player player, char[][] map, Bag bag) throws Exception {
+	public static void playerCheckAttack(Player player, char[][] map, Bag bag, Mob1 enemy) throws Exception {
 
-		//Compares the players location to the moblist locations
-		for(int i = 0; i != enemyMoveCount; i++) {
-			if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
+			if(enemy.getMapX() != 0 && enemy.getMapY() != 0) {
 				
 				//check if above
-		        if(player.getMapX() == mobList.get(i).getMapX() && player.getMapY()-1 == mobList.get(i).getMapY()){
-		        	((Frame) frame).console.append(mobList.get(i).getName() + " is attacking you!");
-		        	initiateFight(player, map, mobList.get(i), bag, i);
-		        	i = 0;
+		        if(player.getMapX() == enemy.getMapX() && player.getMapY()-1 == enemy.getMapY()){
+		        	((Frame) frame).console.append(enemy.getName() + " is attacking you!");
+		        	initiateFight(player, map, enemy, bag);
+		        	
 		        }
 		        //check if below
-		        if(player.getMapX() == mobList.get(i).getMapX() && player.getMapY()+1 == mobList.get(i).getMapY()){
-		        	((Frame) frame).console.append(mobList.get(i).getName() + " is attacking you!");
-		        	initiateFight(player, map, mobList.get(i), bag, i);
-		        	i = 0;
+		        if(player.getMapX() == enemy.getMapX() && player.getMapY()+1 == enemy.getMapY()){
+		        	((Frame) frame).console.append(enemy.getName() + " is attacking you!");
+		        	initiateFight(player, map, enemy, bag);
+		        	
 		        }
 		        //check if left
-		        if(player.getMapX()-1 == mobList.get(i).getMapX() && player.getMapY() == mobList.get(i).getMapY()){
-		        	((Frame) frame).console.append(mobList.get(i).getName() + " is attacking you!");
-		        	initiateFight(player, map, mobList.get(i), bag, i);
-		        	i = 0;
+		        if(player.getMapX()-1 == enemy.getMapX() && player.getMapY() == enemy.getMapY()){
+		        	((Frame) frame).console.append(enemy.getName() + " is attacking you!");
+		        	initiateFight(player, map, enemy, bag);
+		        	
 		        }
 		        //check if right
-		        if(player.getMapX()+1 == mobList.get(i).getMapX() && player.getMapY() == mobList.get(i).getMapY()){
-		        	((Frame) frame).console.append(mobList.get(i).getName() + " is attacking you!");
-		        	initiateFight(player, map, mobList.get(i), bag, i);
-		        	i = 0;
+		        if(player.getMapX()+1 == enemy.getMapX() && player.getMapY() == enemy.getMapY()){
+		        	((Frame) frame).console.append(enemy.getName() + " is attacking you!");
+		        	initiateFight(player, map, enemy, bag);
+		        	
 		        
 				}
 			}
-		}
+		
 	}
 	
-	public static void initiateFight(Player player,char[][] map, Mob1 enemy, Bag bag, int i) throws Exception {
+	public static void initiateFight(Player player,char[][] map, Mob1 enemy, Bag bag) throws Exception {
 
         //Initiate the fight
-        System.out.println("Battle Start!");
         int winStatus = Fight.Move(player, enemy, null, bag, ((Frame)frame));
         
         //Update the stats and bags
@@ -597,13 +604,14 @@ public class PlayingField extends JFrame {
 			enemyKillCount++;
 
 			//Remove the space from the map
-			map[mobList.get(i).getMapX()][mobList.get(i).getMapY()] = ' ';
+			map[enemy.getMapX()][enemy.getMapY()] = ' ';
 			
 			//Move the enemy to 0,0
-			mobList.get(i).setMapX(0);
-			mobList.get(i).setMapY(0);
+			enemy.setMapX(0);
+			enemy.setMapY(0);
 
 			//Return to player menu
+			printMap(map);
 			playerMenu(player, map, bag, firstLine);
         }
 		
@@ -618,6 +626,7 @@ public class PlayingField extends JFrame {
 			playerMenu(player, map, bag, firstLine);
 		}
     }
+	
 		
 	//Prints the map for the player
 	public static void printMap(char[][] map) throws InterruptedException {
@@ -774,8 +783,6 @@ public class PlayingField extends JFrame {
 	}
 	
 	public static void useMerchant(Player player,Merchant merchant,Bag bag) throws IOException, InterruptedException {
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(System.in);
 		((Frame) frame).console.append("Merchant Menu\nCurrent Gold:" + player.getGold() + "\n" + divider + "\nWhat item would you like to buy?: \n"
 				+ "1: " + bag.getPotions() + " \t- Potions (250g)\n"
 				+ "2: " + bag.getBoosters() + " \t- Boosters (250g)\n"
@@ -800,7 +807,7 @@ public class PlayingField extends JFrame {
 					}
 				}
 				((Frame)frame).clearConsole();
-				player.purchase(amount*250);
+				player.purchase(amount*250, ((Frame)frame));
 				for(int i = 0; i != amount;i++) {
 					bag.potions++;
 				}
@@ -818,7 +825,7 @@ public class PlayingField extends JFrame {
 					}
 				}
 				((Frame)frame).clearConsole();
-				player.purchase(amount*250);
+				player.purchase(amount*250, ((Frame)frame));
 				for(int i = 0; i != amount;i++) {
 					bag.boosters++;
 				}
@@ -829,7 +836,7 @@ public class PlayingField extends JFrame {
 			case 3:
 				if(bag.weapon != 3) {
 					bag.weapon++;
-					player.purchase(1000);
+					player.purchase(1000, ((Frame)frame));
 					((Frame) frame).console.append("You spent 1000g and recieved a new weapon\n" + divider);
 
 				}else {
@@ -841,7 +848,7 @@ public class PlayingField extends JFrame {
 			case 4:
 				if(bag.shield != 3) {
 					bag.shield++;
-					player.purchase(1000);
+					player.purchase(1000, ((Frame)frame));
 					((Frame) frame).console.append("You spent 1000g and recieved a new shield\n" + divider);
 
 				}else {

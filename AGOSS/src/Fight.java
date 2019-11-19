@@ -17,6 +17,7 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 	
 	//Clear the console 
 	frame.clearConsole();
+    frame.console.append("Battle Start!");
 	
 	//Set the weapon and shield bonuses
 	player.setWpnBonus(bag.getWeapon());
@@ -24,10 +25,18 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 	
 	//Continue fighting until either player has 0 health
 	while(player.getCurrentHp() != 0 || attacker.getCurrentHp() != 0) {
+		
+		//Clear the console 
+		frame.clearConsole();
+		
+		//Update player stats
+		updateStatsFrame(player, bag, frame);
+		
+		//Print enemy statistics
 		frame.console.append(attacker.getName() + "'s Hp: " + attacker.getCurrentHp() + "/" + attacker.getMaxHp());
 		frame.console.append("\nLVL: " + attacker.getLevel() + "\n" + divider);
 		
-		//Initialize vars
+		//Initialize variables
 		attackerDamage = 0;
 		attackDamage = 0;
 		damageTaken = 0;
@@ -45,25 +54,28 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 		//User selection
 			switch(selection) {
 				case 1:
-					System.out.println("BattleLog:\n-");
+					//Clear the console 
+					frame.clearConsole();
+					
+					frame.console.append("BattleLog:\n-");
 					//If the player is faster
 					if(player.getAgility() >= attacker.getAgility()) {
-						System.out.println("You moved first");
+						frame.console.append("\nYou moved first");
 						playerMove(player,attacker);
-						System.out.println("-");
-						attackerMove(player,attacker);
+						frame.console.append("\n-");
+						attackerMove(player,attacker,frame);
 						//
 						if(attacker2 != null) {
-							attackerMove(player,attacker2);
+							attackerMove(player,attacker2,frame);
 						}
 					}
 					
 					//If the Attacker is faster
 					if(player.getAgility() <= attacker.getAgility()) {
-						System.out.println(attacker.getName() + " moved first");
-						attackerMove(player,attacker);
+						frame.console.append(attacker.getName() + " moved first");
+						attackerMove(player,attacker,frame);
 						if(attacker2 != null) {
-							attackerMove(player,attacker2);
+							attackerMove(player,attacker2,frame);
 						}
 						System.out.println("-");
 						playerMove(player,attacker);
@@ -71,23 +83,33 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 					break;
 					
 				case 2:
-					System.out.println("BattleLog:\n-");
+					//Clear the console 
+					frame.clearConsole();
+					
+					frame.console.append("BattleLog:\n-");
 					int tempArmor = player.armor;
 					player.armor = player.armor/2 + player.armor;;
-					attackerMove(player,attacker);
+					attackerMove(player,attacker,frame);
 					if(attacker2 != null) {
-						attackerMove(player,attacker2);
+						attackerMove(player,attacker2,frame);
 					}
 					player.armor = tempArmor;
 					break;
 					
 				case 3:
-					System.out.println("Bag Menu:");
-					useBag(player,bag,attacker);
+					//Clear the console 
+					frame.clearConsole();
+					
+					//Present bag menu
+					frame.console.append("Bag Menu:");
+					useBag(player,bag,attacker,frame);
 
 					break;
 					
 				case 4:
+					//Clear the console 
+					frame.clearConsole();
+					
 					//If the player is faster than the enemy, run from the fight
 					if(player.getAgility() > attacker.getAgility()) {
 						//Reset player wpnbonus and shieldbonus
@@ -104,15 +126,18 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 						Main.playerUpdater(player);
 						
 						//Return to menu
-						System.out.println("Bag Menu:");
+						frame.console.append("\nBag Menu:");
 						return 2;
 					}
 					break;
 					
 					
 				default:
-					System.out.println("Invalid option. Please try again.\n"); 
+					frame.console.append("\nInvalid option. Please try again.\n"); 
 			}
+			
+			//Clear the console 
+			frame.clearConsole();
 			
 			//Match win decider
 			if(attacker.getCurrentHp() <= 0) {
@@ -127,11 +152,11 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 				
 				//Return player // Player wins
 				attacker.currentHp = 0;
-				System.out.print("You won the fight!\n");
-				player.levelup(attacker);
+				frame.console.append("You won the fight!\n");
+				player.levelup(attacker, frame);
 				winStatus =  1;
-				player.reward(winStatus, attacker);
-				System.out.println("Returning to overworld\n");
+				player.reward(winStatus, attacker, frame);
+				frame.console.append("\nReturning to overworld\n");
 				Main.bagUpdater(player,bag);
 				Main.playerUpdater(player);
 				return winStatus;
@@ -147,11 +172,11 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 				
 				//Reset player // Player loses
 				player.currentHp = 0;
-				System.out.print("You lost the fight \n\n");
+				frame.console.append("You lost the fight \n\n");
 				winStatus = 0;
-				player.reward(winStatus, attacker);
+				player.reward(winStatus, attacker, frame);
 				player.currentHp = player.maxHp;
-				System.out.println("Returning to mainmenu\n");
+				frame.console.append("\nReturning to mainmenu\n");
 				Main.bagUpdater(player,bag);
 				Main.playerUpdater(player);
 				return winStatus;
@@ -160,7 +185,7 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 		return winStatus;
 	}
 
-	public static void attackerMove(Player player, Mob1 attacker) {
+	public static void attackerMove(Player player, Mob1 attacker, Frame frame) {
 		//Kill check
 		if(attacker.getCurrentHp() <= 0) {
 			return;
@@ -170,7 +195,7 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 		
 		//Miss
 		if(ThreadLocalRandom.current().nextInt(5, 10) == 5){
-			System.out.println(attacker.getName() + " MISSED");
+			frame.console.append(attacker.getName() + " MISSED");
 			return;
 		}
 		//Calculate the damage that the player will take
@@ -219,31 +244,49 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 		}
 	}
 	
-    public static boolean useBag(Player player,Bag bag,Mob1 attacker) {
+	public static void updateStatsFrame(Player player, Bag bag, Frame frame) {
+		
+		//Print out current user statistics
+		frame.setHP(player.getCurrentHp(), player.getMaxHp());
+		frame.setLVL(player.getLevel());
+		frame.setWPN(bag.getWeapon(), bag.getWeaponName());
+		frame.setSHD(bag.getShield(), bag.getShieldName());
+		frame.setEXP(player.exp, player.level);
+	}
+	
+    public static boolean useBag(Player player, Bag bag, Mob1 attacker, Frame frame) throws InterruptedException {
+		//Clear the console 
+		frame.clearConsole();
+    	
     	//Bag menu
-		System.out.println("What item would you like to use?: \n"
+		frame.console.append("What item would you like to use?: \n"
 				+ "1: " + bag.getPotions() + "\t- Potions\n"
 				+ "2: " + bag.getBoosters() + "\t- Boosters\n"
 				+ "3: Exit");
 		
     	@SuppressWarnings("unused") boolean alreadyAtMax = false;
-    	int bagOptions = scanner.nextInt();
+    	
+    	//Grab user input and clear console
+   		Frame.grabInput(frame,0);
+    	int bagOptions = frame.getUserIntInput();
+    	frame.clearConsole();
+    	
 		switch(bagOptions) {
 			case 1:
 			//Output potion menu
 				if(bag.potions == 0) {
-		    		System.out.println("No Potions can be used.");
+					frame.console.append("No Potions can be used.");
 		    		break;
 		    	}else if(bag.potions >= 0) {
 		    		//Check if players current hp is already maxed out
 		    		//If it is revert back to the player menu
 		    		if(player.currentHp == player.maxHp) {
-		    			System.out.println("Player is already at max Hp");
+		    			frame.console.append("Player is already at max Hp");
 		    			alreadyAtMax = true;
 		    			break;
 		    		}
 		    		//Refill players Hp by 25 hp
-		    		System.out.println(divider + "\n\tPotion used, 25maxHp recovered.");
+		    		frame.console.append(divider + "\n\tPotion used, 25maxHp recovered.");
 		    		player.currentHp = player.currentHp + 25;
 		    		bag.potions--;
 		    		
@@ -254,9 +297,8 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 		    		
 		    		//Attacker still gets a move
 		    		if(attacker!=null) {
-		    			System.out.println(divider);
-		    			System.out.println("BattleLog:");
-		    			attackerMove(player,attacker);
+		    			frame.console.append("BattleLog:");
+		    			attackerMove(player,attacker,frame);
 		    		}
 		    		break;
 		    	}
@@ -265,24 +307,25 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 			case 2:
 				//Make sure user has boosters in bag
 				if(bag.boosters == 0) {
-		    		System.out.println("No Potions can be used.");
+					frame.console.append("No Potions can be used.");
 		    		break;
 		    	}else if(bag.boosters >= 0) {
 		    		//If the user hasn't used a booster yet, add the statistics
 					if(boosterCheck == false) {
 						boosterCheck = true;
-						System.out.println("Booster has been used\n*Player attack +2*");
+						frame.console.append("Booster has been used\n*Player attack +2*");
 						bag.boosters--;
 						player.useBooster();
 						break;
 					}
-				System.out.println(player.getName() + " doesn't have any boosters.\n" + divider);
+					frame.console.append(player.getName() + " doesn't have any boosters.\n" + divider);
 	    		break;
 		    	}
 	    		
 	    	//Exit button
 			case 3:
-				System.out.println(divider);
+				//Clear the console 
+				frame.clearConsole();
 				return false;
 		}
 		if(alreadyAtMax = true) {

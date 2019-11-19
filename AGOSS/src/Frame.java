@@ -391,7 +391,7 @@ class Frame extends JFrame {
 		//If type == 1, Grab String		
 		//Wait for user input
 		do{
-		    Thread.sleep(650);
+		    Thread.sleep(400);
 		}while(frame.text == null);
 		
 		//After grabbing the selection, send it to user and reset text to null for later
