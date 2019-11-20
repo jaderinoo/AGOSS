@@ -257,7 +257,6 @@ public class PlayingField extends JFrame {
 			
 			//Save current location to a var
 			char current = map[enemy.getMapX()][enemy.getMapY()];
-			boolean check = false;
 			
 			//While the enemy still has moves
 			while(moveCounter != 0) {
@@ -269,6 +268,7 @@ public class PlayingField extends JFrame {
 					char right = map[enemy.getMapX()+1][enemy.getMapY()];
 					char up = map[enemy.getMapX()][enemy.getMapY()-1];
 					char down = map[enemy.getMapX()][enemy.getMapY()+1];
+					boolean check = false;
 					
 					// Left
 					if(enemy.getMapX() > player.getMapX() && check == false) {
@@ -289,11 +289,11 @@ public class PlayingField extends JFrame {
 									//Reset x and print the map for the player
 									x = 0;
 									check = true;
-									((Frame) frame).console.append(enemy.getName() + "'s Move: Left\nMovecount: " + (moveCounter) + "\n" + divider + "\n");
+									((Frame) frame).console.append(enemy.getName() + "'s Move: Left\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
 									printMap(map);
 									
 									//Adds a small delay between movements to better visualize the moves
-									Thread.sleep(750);
+									Thread.sleep(250);
 									
 									//Check if enemy can attack
 									if(moveCounter != 0) {
@@ -326,11 +326,11 @@ public class PlayingField extends JFrame {
 									//Reset x and print the map for the player
 									x = 0;
 									check = true;
-									((Frame) frame).console.append(enemy.getName() + "'s Move: Right\nMovecount: " + (moveCounter) + "\n" + divider + "\n");
+									((Frame) frame).console.append(enemy.getName() + "'s Move: Right\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
 									printMap(map);
 									
 									//Adds a small delay between movements to better visualize the moves
-									Thread.sleep(750);
+									Thread.sleep(250);
 									
 									//Check if enemy can attack
 									if(moveCounter != 0) {
@@ -362,11 +362,11 @@ public class PlayingField extends JFrame {
 									//Reset x and print the map for the player
 									x = 0;
 									check = true;
-									((Frame) frame).console.append(enemy.getName() + "'s Move: Up\nMovecount: " + (moveCounter) + "\n" + divider + "\n");
+									((Frame) frame).console.append(enemy.getName() + "'s Move: Up\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
 									printMap(map);
 									
 									//Adds a small delay between movements to better visualize the moves
-									Thread.sleep(750);
+									Thread.sleep(250);
 									
 									//Check if enemy can attack
 									if(moveCounter != 0) {
@@ -398,11 +398,11 @@ public class PlayingField extends JFrame {
 									//Reset x and print the map for the player
 									x = 0;
 									check = true;
-									((Frame) frame).console.append(enemy.getName() + "'s Move: Down\nMovecount: " + (moveCounter) + "\n" + divider + "\n");
+									((Frame) frame).console.append(enemy.getName() + "'s Move: Down\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
 									printMap(map);
 
 									//Adds a small delay between movements to better visualize the moves
-									Thread.sleep(750);
+									Thread.sleep(250);
 									
 									//Check if enemy can attack
 									if(moveCounter != 0) {
@@ -428,7 +428,7 @@ public class PlayingField extends JFrame {
 						((Frame) frame).console.append("\n" + enemy.getName() + "'s Move: None\nMovecount: " + (moveCounter+1) + "\n" + divider);
 						printMap(map);
 						//Adds a small delay between movements to better visualize the moves
-						Thread.sleep(750);
+						Thread.sleep(250);
 					}
 				}
 			}
