@@ -108,8 +108,8 @@ public class PlayingField extends JFrame {
 	
 	public static boolean playerMenu(Player player, char[][] map, Bag bag, String firstLine) throws Exception {
 		if(enemyCount == 0) {
-			System.out.println("You beat level: " + firstLine + "\nReturning to main menu\n\n\n\n\n\n");
-			return true;
+			((Frame) frame).console.append("You beat level: " + firstLine + "\nReturning to main menu");
+			Main.main(null);
 		}
 		
 		while(enemyCount != 0){
@@ -242,6 +242,10 @@ public class PlayingField extends JFrame {
 	 */
 	
 	public static void enemyMove(Player player, Bag bag, char[][] map, Mob1 enemy,int i) throws Exception {
+		
+		//Print map
+		printMap(map);
+
 		int x = 0;
 		//Calculate the total moves that the enemy gets
 		int moveCounter = enemy.getAgility() / 4;
@@ -251,19 +255,20 @@ public class PlayingField extends JFrame {
 			//Clear Console
 			((Frame) frame).clearConsole();
 			
+			//Save current location to a var
+			char current = map[enemy.getMapX()][enemy.getMapY()];
+			boolean check = false;
+			
 			//While the enemy still has moves
 			while(moveCounter != 0) {
-				
-				//Initialize easy to use variables
-				char left = map[enemy.getMapX()-1][enemy.getMapY()];
-				char right = map[enemy.getMapX()+1][enemy.getMapY()];
-				char up = map[enemy.getMapX()][enemy.getMapY()-1];
-				char down = map[enemy.getMapX()][enemy.getMapY()+1];
-				char current = map[enemy.getMapX()][enemy.getMapY()];
-				boolean check = false;
-				
 				//Checks if the mob is in 0,0
 				if(current != map[0][0]) {
+					
+					//Initialize easy to use variables
+					char left = map[enemy.getMapX()-1][enemy.getMapY()];
+					char right = map[enemy.getMapX()+1][enemy.getMapY()];
+					char up = map[enemy.getMapX()][enemy.getMapY()-1];
+					char down = map[enemy.getMapX()][enemy.getMapY()+1];
 					
 					// Left
 					if(enemy.getMapX() > player.getMapX() && check == false) {
@@ -278,6 +283,9 @@ public class PlayingField extends JFrame {
 									map[enemy.getMapX()-1][enemy.getMapY()] = enemy.getType();
 									enemy.setMapX(enemy.getMapX()-1);
 									
+									//drop movecounter down
+									moveCounter--;
+									
 									//Reset x and print the map for the player
 									x = 0;
 									check = true;
@@ -291,8 +299,7 @@ public class PlayingField extends JFrame {
 									if(moveCounter != 0) {
 										playerCheckAttack(player,map,bag,enemy);
 									}
-									//drop movecounter down
-									moveCounter--;
+
 								}
 							}
 						}
@@ -313,6 +320,9 @@ public class PlayingField extends JFrame {
 									map[enemy.getMapX()+1][enemy.getMapY()] = enemy.getType();
 									enemy.setMapX(enemy.getMapX()+1);
 									
+									//drop movecounter down
+									moveCounter--;
+									
 									//Reset x and print the map for the player
 									x = 0;
 									check = true;
@@ -326,9 +336,6 @@ public class PlayingField extends JFrame {
 									if(moveCounter != 0) {
 										playerCheckAttack(player,map,bag,enemy);
 									}
-									
-									//drop movecounter down
-									moveCounter--;
 								}
 							}
 				        }
@@ -349,6 +356,9 @@ public class PlayingField extends JFrame {
 									map[enemy.getMapX()][enemy.getMapY()-1] = enemy.getType();
 									enemy.setMapY(enemy.getMapY()-1);
 									
+									//drop movecounter down
+									moveCounter--;
+									
 									//Reset x and print the map for the player
 									x = 0;
 									check = true;
@@ -362,9 +372,6 @@ public class PlayingField extends JFrame {
 									if(moveCounter != 0) {
 										playerCheckAttack(player,map,bag,enemy);
 									}
-									
-									//drop movecounter down
-									moveCounter--;
 								}
 							}
 						}	
@@ -385,6 +392,9 @@ public class PlayingField extends JFrame {
 									map[enemy.getMapX()][enemy.getMapY()+1] = enemy.getType();
 									enemy.setMapY(enemy.getMapY()+1);
 									
+									//drop movecounter down
+									moveCounter--;
+									
 									//Reset x and print the map for the player
 									x = 0;
 									check = true;
@@ -398,9 +408,6 @@ public class PlayingField extends JFrame {
 									if(moveCounter != 0) {
 										playerCheckAttack(player,map,bag,enemy);
 									}
-									
-									//drop movecounter down
-									moveCounter--;
 								}
 							}
 						}

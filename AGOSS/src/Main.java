@@ -14,10 +14,20 @@ import javax.swing.JFrame;
 
 public class Main extends JFrame {
 	static Scanner scanner = new Scanner(System.in);
+	static boolean check = false;
+	static Frame frame = new Frame();
 	
 	public static void main(String[] args) throws Exception {
-		Frame frame = new Frame();
-	    frame.init();
+		
+		//Clear console and map
+		frame.clearConsole();
+		frame.clearMapArea();
+		frame.clearEnemyTable();
+		
+		if(check == false) {
+			check = true;
+			frame.init();
+		}
 		
 		//Print game art
 		System.out.println("Welcome to:\n" +
