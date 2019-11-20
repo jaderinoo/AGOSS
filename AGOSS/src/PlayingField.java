@@ -23,7 +23,7 @@ public class PlayingField extends JFrame {
 	static ArrayList<Mob1> mobList = new ArrayList<Mob1>();
 	static Merchant merchant = new Merchant(0,0);
 	static Scanner input = new Scanner(System.in);
-	public static JFrame frame;
+	public static Frame frame;
 	static int enemyCount = 0;
 	static int enemyMoveCount = 0;
 	static int enemyKillCount = 0;
@@ -90,13 +90,13 @@ public class PlayingField extends JFrame {
 			map = saveMap(data);
 			
 			//Prints initial map
-			((Frame) frame).setMapName(mapName);
+			frame.setMapName(mapName);
 			printMap(map);
 	
 			//Initial scan
 			enemyCount = scanMap(player,map);
 			enemyMoveCount = enemyCount;
-			((Frame) frame).setUserStats((String) player.getName());
+			frame.setUserStats((String) player.getName());
 			
 			playerMenu(player, map, bag, firstLine);
 			}else {
@@ -108,7 +108,7 @@ public class PlayingField extends JFrame {
 	
 	public static boolean playerMenu(Player player, char[][] map, Bag bag, String firstLine) throws Exception {
 		if(enemyCount == 0) {
-			((Frame) frame).console.append("You beat level: " + firstLine + "\nReturning to main menu");
+			frame.console.append("You beat level: " + firstLine + "\nReturning to main menu");
 			Main.main(null);
 		}
 		
@@ -142,37 +142,37 @@ public class PlayingField extends JFrame {
 				}
 				
 				//Prints out enemyCount, user turn amount, and turn #
-				((Frame) frame).setTurnNumber(turn);
-				((Frame) frame).setmoveCounter(moveCounter);
-				((Frame) frame).setEnemies(enemyCount);
+				frame.setTurnNumber(turn);
+				frame.setmoveCounter(moveCounter);
+				frame.setEnemies(enemyCount);
 				
 				//Print enemy locations
-				((Frame) frame).clearEnemyTable();
+				frame.clearEnemyTable();
 				printEnemyLocations();
 				
 				//Print out current user statistics
-				((Frame) frame).setHP(player.getCurrentHp(), player.getMaxHp());
-				((Frame) frame).setLVL(player.getLevel());
-				((Frame) frame).setWPN(bag.getWeapon(), bag.getWeaponName());
-				((Frame) frame).setSHD(bag.getShield(), bag.getShieldName());
-				((Frame) frame).setEXP(player.exp, player.level);
+				frame.setHP(player.getCurrentHp(), player.getMaxHp());
+				frame.setLVL(player.getLevel());
+				frame.setWPN(bag.getWeapon(), bag.getWeaponName());
+				frame.setSHD(bag.getShield(), bag.getShieldName());
+				frame.setEXP(player.exp, player.level);
 
 				//Clear Console
-				((Frame) frame).clearConsole();
+				frame.clearConsole();
 				
 				//Print out initial menu
-				((Frame) frame).console.append("Please make a selection: \n"
+				frame.console.append("Please make a selection: \n"
 						+ "1: Player move\n"
 						+ "2: Bag Menu");
 				
 				//Print out merchant menu
 				if(merchantFound == true) {
-					((Frame) frame).console.append("\n3: Merchant Menu");
+					frame.console.append("\n3: Merchant Menu");
 				}
 				
 				//Print out attack menu
 				if(initiateFight == true) {
-					((Frame) frame).console.append("\n4: Attack");
+					frame.console.append("\n4: Attack");
 				}
 				
 				Frame.grabInput(((Frame)frame),0);
@@ -198,7 +198,7 @@ public class PlayingField extends JFrame {
 						//Use merchant menu
 						useMerchant(player,merchant,bag);
 					}else {
-						((Frame) frame).console.append(divider + "\nPlease choose a valid option.");
+						frame.console.append(divider + "\nPlease choose a valid option.");
 					}
 					break;	
 					
@@ -208,12 +208,12 @@ public class PlayingField extends JFrame {
 						//Use attack menu
 						initiateFight(player, map, mobList.get(enemyNumber), bag);
 					}else {
-						((Frame) frame).console.append(divider + "\nPlease choose a valid option.");
+						frame.console.append(divider + "\nPlease choose a valid option.");
 					}
 					break;
 					
 				default:
-					((Frame) frame).console.append(divider + "\nPlease choose a valid option.");
+					frame.console.append(divider + "\nPlease choose a valid option.");
 					break;
 				}
 			}while(moveCounter != 0);
@@ -253,7 +253,7 @@ public class PlayingField extends JFrame {
 		if(movementCheck == true) {
 			
 			//Clear Console
-			((Frame) frame).clearConsole();
+			frame.clearConsole();
 			
 			//Save current location to a var
 			char current = map[enemy.getMapX()][enemy.getMapY()];
@@ -289,7 +289,7 @@ public class PlayingField extends JFrame {
 									//Reset x and print the map for the player
 									x = 0;
 									check = true;
-									((Frame) frame).console.append(enemy.getName() + "'s Move: Left\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
+									frame.console.append(enemy.getName() + "'s Move: Left\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
 									printMap(map);
 									
 									//Adds a small delay between movements to better visualize the moves
@@ -326,7 +326,7 @@ public class PlayingField extends JFrame {
 									//Reset x and print the map for the player
 									x = 0;
 									check = true;
-									((Frame) frame).console.append(enemy.getName() + "'s Move: Right\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
+									frame.console.append(enemy.getName() + "'s Move: Right\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
 									printMap(map);
 									
 									//Adds a small delay between movements to better visualize the moves
@@ -362,7 +362,7 @@ public class PlayingField extends JFrame {
 									//Reset x and print the map for the player
 									x = 0;
 									check = true;
-									((Frame) frame).console.append(enemy.getName() + "'s Move: Up\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
+									frame.console.append(enemy.getName() + "'s Move: Up\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
 									printMap(map);
 									
 									//Adds a small delay between movements to better visualize the moves
@@ -398,7 +398,7 @@ public class PlayingField extends JFrame {
 									//Reset x and print the map for the player
 									x = 0;
 									check = true;
-									((Frame) frame).console.append(enemy.getName() + "'s Move: Down\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
+									frame.console.append(enemy.getName() + "'s Move: Down\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
 									printMap(map);
 
 									//Adds a small delay between movements to better visualize the moves
@@ -425,7 +425,7 @@ public class PlayingField extends JFrame {
 						moveCounter--;
 						x = 0;
 						check = true;
-						((Frame) frame).console.append("\n" + enemy.getName() + "'s Move: None\nMovecount: " + (moveCounter+1) + "\n" + divider);
+						frame.console.append("\n" + enemy.getName() + "'s Move: None\nMovecount: " + (moveCounter+1) + "\n" + divider);
 						printMap(map);
 						//Adds a small delay between movements to better visualize the moves
 						Thread.sleep(250);
@@ -438,7 +438,7 @@ public class PlayingField extends JFrame {
 	public static void playerMove(char[][] map, Player player, Bag bag) throws Exception {
 		
 		//Clear Console
-		((Frame) frame).clearConsole();
+		frame.clearConsole();
 		
 		//Global var reset
 		movementCheck = false;
@@ -447,7 +447,7 @@ public class PlayingField extends JFrame {
 		while(movementCheck == false) {
 			
 			//Prompts the user to move in a direction
-			((Frame) frame).console.append("Please make a selection: \n"
+			frame.console.append("Please make a selection: \n"
 					+ "1: Up\n"
 					+ "2: Down\n"
 					+ "3: Left\n"
@@ -477,7 +477,7 @@ public class PlayingField extends JFrame {
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				   	((Frame) frame).console.append("You cannot move in that direction.\n" + divider);
+				   	frame.console.append("You cannot move in that direction.\n" + divider);
 				    break;
 				}
 				
@@ -494,7 +494,7 @@ public class PlayingField extends JFrame {
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				   	((Frame) frame).console.append("You cannot move in that direction.\n" + divider);
+				   	frame.console.append("You cannot move in that direction.\n" + divider);
 				    break;
 				}
 				
@@ -511,7 +511,7 @@ public class PlayingField extends JFrame {
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				   	((Frame) frame).console.append("You cannot move in that direction.\n" + divider);
+				   	frame.console.append("You cannot move in that direction.\n" + divider);
 				    break;
 				}
 				
@@ -528,7 +528,7 @@ public class PlayingField extends JFrame {
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				   	((Frame) frame).console.append("You cannot move in that direction.\n" + divider);
+				   	frame.console.append("You cannot move in that direction.\n" + divider);
 				    break;
 				}
 				
@@ -538,7 +538,7 @@ public class PlayingField extends JFrame {
 				break;
 				
 			default:
-				((Frame) frame).console.append("invalid selection\n" + divider);
+				frame.console.append("invalid selection\n" + divider);
 			}
 		}
 	}
@@ -566,25 +566,25 @@ public class PlayingField extends JFrame {
 				
 				//check if above
 		        if(player.getMapX() == enemy.getMapX() && player.getMapY()-1 == enemy.getMapY()){
-		        	((Frame) frame).console.append(enemy.getName() + " is attacking you!");
+		        	frame.console.append(enemy.getName() + " is attacking you!");
 		        	initiateFight(player, map, enemy, bag);
 		        	
 		        }
 		        //check if below
 		        if(player.getMapX() == enemy.getMapX() && player.getMapY()+1 == enemy.getMapY()){
-		        	((Frame) frame).console.append(enemy.getName() + " is attacking you!");
+		        	frame.console.append(enemy.getName() + " is attacking you!");
 		        	initiateFight(player, map, enemy, bag);
 		        	
 		        }
 		        //check if left
 		        if(player.getMapX()-1 == enemy.getMapX() && player.getMapY() == enemy.getMapY()){
-		        	((Frame) frame).console.append(enemy.getName() + " is attacking you!");
+		        	frame.console.append(enemy.getName() + " is attacking you!");
 		        	initiateFight(player, map, enemy, bag);
 		        	
 		        }
 		        //check if right
 		        if(player.getMapX()+1 == enemy.getMapX() && player.getMapY() == enemy.getMapY()){
-		        	((Frame) frame).console.append(enemy.getName() + " is attacking you!");
+		        	frame.console.append(enemy.getName() + " is attacking you!");
 		        	initiateFight(player, map, enemy, bag);
 		        	
 		        
@@ -639,7 +639,7 @@ public class PlayingField extends JFrame {
 	public static void printMap(char[][] map) throws InterruptedException {
     	
     	//Clear map screen
-    	((Frame) frame).clearMapArea();
+    	frame.clearMapArea();
 		
 		//Top border
 		for(int i = 0; i != cols*2+cols+2; i++) {
@@ -671,7 +671,7 @@ public class PlayingField extends JFrame {
 		for(int i = 0; i != enemyMoveCount; i++) {
 			if(mobList.get(i).getMapX() != 0 && mobList.get(i).getMapY() != 0) {
 			//Print enemy locations
-			((Frame) frame).model.addRow(new Object[]{mobList.get(i).getName(), "(" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY + ")", "(" + mobList.get(i).getCurrentHp() + "/" + mobList.get(i).getMaxHp()+")"});
+			frame.model.addRow(new Object[]{mobList.get(i).getName(), "(" + mobList.get(i).getMapX() + "," + mobList.get(i).getMapY + ")", "(" + mobList.get(i).getCurrentHp() + "/" + mobList.get(i).getMaxHp()+")"});
 			}
 		}
 	}
@@ -790,7 +790,7 @@ public class PlayingField extends JFrame {
 	}
 	
 	public static void useMerchant(Player player,Merchant merchant,Bag bag) throws IOException, InterruptedException {
-		((Frame) frame).console.append("Merchant Menu\nCurrent Gold:" + player.getGold() + "\n" + divider + "\nWhat item would you like to buy?: \n"
+		frame.console.append("Merchant Menu\nCurrent Gold:" + player.getGold() + "\n" + divider + "\nWhat item would you like to buy?: \n"
 				+ "1: " + bag.getPotions() + " \t- Potions (250g)\n"
 				+ "2: " + bag.getBoosters() + " \t- Boosters (250g)\n"
 				+ "3: " + (bag.getWeapon()+1) + "/4 \t- Weapon Upgrade (1000g)\n"
@@ -806,11 +806,11 @@ public class PlayingField extends JFrame {
 			//Purchase potions
 			case 1:
 				while(amount <= 0) {
-					((Frame) frame).console.append("How many would you like to purchase?");
+					frame.console.append("How many would you like to purchase?");
 					Frame.grabInput(((Frame)frame),0);
 					amount = ((Frame)frame).getUserIntInput();
 					if(amount <= 0) {
-						((Frame) frame).console.append("Please choose a number larger than 0\n" + divider);
+						frame.console.append("Please choose a number larger than 0\n" + divider);
 					}
 				}
 				((Frame)frame).clearConsole();
@@ -818,17 +818,17 @@ public class PlayingField extends JFrame {
 				for(int i = 0; i != amount;i++) {
 					bag.potions++;
 				}
-				((Frame) frame).console.append("You spent " + amount*250 + "g and recieved " + amount + " potion\n" + divider);
+				frame.console.append("You spent " + amount*250 + "g and recieved " + amount + " potion\n" + divider);
 				break;
 			
 			//Purchase boosters
 			case 2:
 				while(amount <= 0) {
-					((Frame) frame).console.append("How many would you like to purchase?");
+					frame.console.append("How many would you like to purchase?");
 					Frame.grabInput(((Frame)frame),0);
 					amount = ((Frame)frame).getUserIntInput();
 					if(amount <= 0) {
-						((Frame) frame).console.append("Please choose a number larger than 0\n" + divider);
+						frame.console.append("Please choose a number larger than 0\n" + divider);
 					}
 				}
 				((Frame)frame).clearConsole();
@@ -836,7 +836,7 @@ public class PlayingField extends JFrame {
 				for(int i = 0; i != amount;i++) {
 					bag.boosters++;
 				}
-				((Frame) frame).console.append("You spent " + amount*250 + "g and recieved " + amount + " Boosters\n" + divider);
+				frame.console.append("You spent " + amount*250 + "g and recieved " + amount + " Boosters\n" + divider);
 				break;
 				
 				//Upgrade weapon
@@ -844,10 +844,10 @@ public class PlayingField extends JFrame {
 				if(bag.weapon != 3) {
 					bag.weapon++;
 					player.purchase(1000, ((Frame)frame));
-					((Frame) frame).console.append("You spent 1000g and recieved a new weapon\n" + divider);
+					frame.console.append("You spent 1000g and recieved a new weapon\n" + divider);
 
 				}else {
-					((Frame) frame).console.append("Your weapon is at it's max level.\n" + divider);
+					frame.console.append("Your weapon is at it's max level.\n" + divider);
 				}
 				break;
 				
@@ -856,15 +856,15 @@ public class PlayingField extends JFrame {
 				if(bag.shield != 3) {
 					bag.shield++;
 					player.purchase(1000, ((Frame)frame));
-					((Frame) frame).console.append("You spent 1000g and recieved a new shield\n" + divider);
+					frame.console.append("You spent 1000g and recieved a new shield\n" + divider);
 
 				}else {
-					((Frame) frame).console.append("Your shield is at it's max level.\n" + divider);
+					frame.console.append("Your shield is at it's max level.\n" + divider);
 				}
 				break;
 				
 			default:
-				((Frame) frame).console.append("invalid selection\n" + divider);
+				frame.console.append("invalid selection\n" + divider);
 		}
 		Main.bagUpdater(player,bag);
 		Main.playerUpdater(player);
