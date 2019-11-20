@@ -61,7 +61,7 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 					//If the player is faster
 					if(player.getAgility() >= attacker.getAgility()) {
 						frame.console.append("\nYou moved first");
-						playerMove(player,attacker);
+						playerMove(player,attacker, frame);
 						frame.console.append("\n-");
 						attackerMove(player,attacker,frame);
 						//
@@ -78,7 +78,7 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 							attackerMove(player,attacker2,frame);
 						}
 						System.out.println("-");
-						playerMove(player,attacker);
+						playerMove(player,attacker, frame);
 					}
 					break;
 					
@@ -185,7 +185,7 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 		return winStatus;
 	}
 
-	public static void attackerMove(Player player, Mob1 attacker, Frame frame) {
+	public static void attackerMove(Player player, Mob1 attacker, Frame frame) throws InterruptedException {
 		//Kill check
 		if(attacker.getCurrentHp() <= 0) {
 			return;
@@ -195,7 +195,7 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 		
 		//Miss
 		if(ThreadLocalRandom.current().nextInt(5, 10) == 5){
-			frame.console.append(attacker.getName() + " MISSED");
+			frame.console.append("\n" + attacker.getName() + " MISSED");
 			return;
 		}
 		//Calculate the damage that the player will take
@@ -205,8 +205,9 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 		if(damageTaken < 0) {
 			damageTaken = 0;
 		}
-		System.out.println("You took:  " + damageTaken + "DMG");
+		frame.console.append("\nYou took:  " + damageTaken + "DMG");
 		player.currentHp = player.currentHp - damageTaken;
+		Thread.sleep(250);
 		
 		//If damageTaken is less than 0, reset it to 0 so the player doesnt gain currentHp
 		if(damageTaken < 0) {
@@ -215,7 +216,7 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 		return;
 	}
 	
-	public static void playerMove(Player player, Mob1 attacker) {
+	public static void playerMove(Player player, Mob1 attacker, Frame frame) throws InterruptedException {
 		//Kill check
 		if(attacker.getCurrentHp() <= 0) {
 			return;
@@ -225,7 +226,7 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 		
 		//Miss
 		if(ThreadLocalRandom.current().nextInt(0, 6) == 0){
-			System.out.println(player.getName() + " MISSED");
+			frame.console.append("\n" + player.getName() + " MISSED");
 			return;
 		}	
 		//Calculate the damage that the attacker will take
@@ -235,8 +236,9 @@ public static int Move(Player player,Mob1 attacker, Mob1 attacker2, Bag bag, Fra
 		if(damageDealt < 0) {
 			damageDealt = 0;
 		}
-		System.out.println("You dealt: " + damageDealt + "DMG");
+		frame.console.append("\nYou dealt: " + damageDealt + "DMG");
 		attacker.currentHp = attacker.currentHp - damageDealt;
+		Thread.sleep(250);
 		
 		//If damageTaken is less than 0, reset it to 0 so the player doesnt gain currentHp
 		if(damageTaken < 0) {
