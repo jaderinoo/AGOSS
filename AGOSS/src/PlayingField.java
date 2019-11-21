@@ -77,6 +77,7 @@ public class PlayingField extends JFrame {
 			rows = stats[0];
 			cols = stats[1];
 			int debug = stats[2];
+			int mapType = stats[3];
 			
 			//Present debug information
 			if(debug == 1) {

@@ -34,6 +34,7 @@ class Frame extends JFrame {
     public JProgressBar expBar;
     public JLabel mapName;
     public JLabel userStats;
+    public JLabel mapType;
     public DefaultTableModel model;
     public JTextField turnNumberLable;
     public JTextField enemyCount;
@@ -228,6 +229,10 @@ class Frame extends JFrame {
         userStats.setBounds(536, 380, 162, 14);
         frame.getContentPane().add(userStats);
         
+        mapType = new JLabel("Objective:");
+        mapType.setBounds(199, 11, 71, 14);
+        frame.getContentPane().add(mapType);
+        
         //Reset button listener
         reset.addActionListener(new ActionListener(){
             @Override
@@ -372,6 +377,28 @@ class Frame extends JFrame {
     	String formatMap = map.substring(0,1).toUpperCase() + map.substring(1).toLowerCase();
     	mapName.setText("Map: " + formatMap);
         return mapName;
+    }
+    
+    //MAP TYPE----------------------------------------------------------
+    public JLabel getMapType() {
+        return mapType;
+    }
+    
+    public JLabel setMapType(int type) {
+    	String formatType = "";
+    	
+    	//Decides what tpe of map is being played
+    	if(type == 0) {
+    		formatType = "Eleminate all enemies";
+    	}
+    	
+    	if(type == 1) {
+    		formatType = "Reach point X";
+    	}
+    	
+    	//Set the objective on GUI
+    	mapType.setText("Objective: " + formatType);
+        return mapType;
     }
     
 	public void init() {
