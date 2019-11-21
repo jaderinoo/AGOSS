@@ -104,7 +104,7 @@ class Frame extends JFrame {
         frame.getContentPane().add(lblNewLabel_2);
         
         JLabel lblNewLabel_3 = new JLabel("Turn #");
-        lblNewLabel_3.setBounds(107, 11, 46, 14);
+        lblNewLabel_3.setBounds(536, 362, 46, 14);
         frame.getContentPane().add(lblNewLabel_3);
         
         model = new DefaultTableModel(); 
@@ -123,7 +123,7 @@ class Frame extends JFrame {
         turnNumberLable.setText("0");
         turnNumberLable.setEditable(false);
         turnNumberLable.setColumns(10);
-        turnNumberLable.setBounds(152, 8, 21, 20);
+        turnNumberLable.setBounds(581, 359, 21, 20);
         frame.getContentPane().add(turnNumberLable);
         
         enemyCount = new JTextField();
@@ -230,7 +230,7 @@ class Frame extends JFrame {
         frame.getContentPane().add(userStats);
         
         mapType = new JLabel("Objective:");
-        mapType.setBounds(199, 11, 71, 14);
+        mapType.setBounds(123, 11, 288, 14);
         frame.getContentPane().add(mapType);
         
         //Reset button listener
@@ -380,9 +380,6 @@ class Frame extends JFrame {
     }
     
     //MAP TYPE----------------------------------------------------------
-    public JLabel getMapType() {
-        return mapType;
-    }
     
     public JLabel setMapType(int type) {
     	String formatType = "";

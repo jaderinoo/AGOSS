@@ -1,5 +1,5 @@
 testlevel
-17 17 0 0
+17 17 0 1
 A basic test map used for testing :)
 ThotGeneral 5 5 5 150 10 2 100
 /---------------\
@@ -15,7 +15,7 @@ ThotGeneral 5 5 5 150 10 2 100
 |  |  F   |     |
 |  |      |     |
 |  |      |     |
-|  |  PM  |     |
+|  |  P X |     |
 |  |______|     |
 |               |
 \_______________/

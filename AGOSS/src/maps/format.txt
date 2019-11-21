@@ -1,5 +1,5 @@
 Mapname
-Mapstats / Set map size, cols and rows NEED to be =
+Mapstats | cols and rows NEED to be == | Row Col Debug mapType
 Description
 *Required* General 0 0 0 0 0 0 0
 /-------------\

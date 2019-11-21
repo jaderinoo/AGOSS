@@ -38,6 +38,8 @@ public class PlayingField extends JFrame {
 	static String divider = "----------------------------------------------|";
 	static boolean initiateFight = false;
 	static String leaderName = null;
+	static int mapType = 0;
+	static int xCounter = 0;
 	static String[] splitStats = null;
 	
 	public static int map(Player player, Bag bag, String mapName, Frame frame2) throws Exception {
@@ -77,7 +79,7 @@ public class PlayingField extends JFrame {
 			rows = stats[0];
 			cols = stats[1];
 			int debug = stats[2];
-			int mapType = stats[3];
+			mapType = stats[3];
 			
 			//Present debug information
 			if(debug == 1) {
@@ -92,6 +94,7 @@ public class PlayingField extends JFrame {
 			
 			//Prints initial map
 			frame.setMapName(mapName);
+			frame.setMapType(mapType);
 			printMap(map);
 	
 			//Initial scan
@@ -113,7 +116,7 @@ public class PlayingField extends JFrame {
 			Main.main(null);
 		}
 		
-		while(enemyCount != 0){
+		while(enemyCount != 0 && mapType == 0 || xCounter != 1){
 			//Increment turn
 			turn++;
 			
@@ -470,6 +473,16 @@ public class PlayingField extends JFrame {
 				//Cycle through array to see if item is in the way of player
 				movementCheck = collisionCheck(up);
 				if(movementCheck == true){
+					if(map[player.getMapX()][player.getMapY()-1] == 'X') {
+						xCounter++;
+					}
+					
+					//If x = 1
+					if(xCounter == 1) {
+						frame.console.append("You beat level: " + firstLine + "\nReturning to main menu");
+						Main.main(null);
+					}
+					
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()][player.getMapY()-1] = 'P';
@@ -487,6 +500,16 @@ public class PlayingField extends JFrame {
 				//Cycle through array to see if item is in the way of player
 				movementCheck = collisionCheck(down);
 				if(movementCheck == true){
+					if(map[player.getMapX()][player.getMapY()+1] == 'X') {
+						xCounter++;
+					}
+					
+					//If x = 1
+					if(xCounter == 1) {
+						frame.console.append("You beat level: " + firstLine + "\nReturning to main menu");
+						Main.main(null);
+					}
+					
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()][player.getMapY()+1] = 'P';
@@ -504,6 +527,16 @@ public class PlayingField extends JFrame {
 				//Cycle through array to see if item is in the way of player
 				movementCheck = collisionCheck(left);
 				if(movementCheck == true){
+					if(map[player.getMapX()-1][player.getMapY()] == 'X') {
+						xCounter++;
+					}
+					
+					//If x = 1
+					if(xCounter == 1) {
+						frame.console.append("You beat level: " + firstLine + "\nReturning to main menu");
+						Main.main(null);
+					}
+					
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()-1][player.getMapY()] = 'P';
@@ -521,6 +554,16 @@ public class PlayingField extends JFrame {
 				//Cycle through array to see if item is in the way of player
 				movementCheck = collisionCheck(right);
 				if(movementCheck == true){
+					if(map[player.getMapX()+1][player.getMapY()] == 'X') {
+						xCounter++;
+					}
+					
+					//If x = 1
+					if(xCounter == 1) {
+						frame.console.append("You beat level: " + firstLine + "\nReturning to main menu");
+						Main.main(null);
+					}
+					
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()+1][player.getMapY()] = 'P';
