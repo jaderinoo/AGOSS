@@ -58,9 +58,9 @@ class Frame extends JFrame {
         panel.setBackground(Color.LIGHT_GRAY);
         panel.setBounds(0, 628, 885, 33);
         JLabel lblCommandLine = new JLabel("Command Line:");
-        lblCommandLine.setBounds(10, 9, 83, 14);
+        lblCommandLine.setBounds(10, 9, 96, 14);
         JTextField tf = new JTextField(10); // accepts upto 10 characters
-        tf.setBounds(103, 6, 367, 20);
+        tf.setBounds(97, 6, 432, 20);
         panel.setLayout(null);
         panel.add(lblCommandLine); // Components Added using Flow Layout
         panel.add(lblCommandLine); // Components Added using Flow Layout
@@ -84,10 +84,10 @@ class Frame extends JFrame {
         //Adding Components to the frame.
         frame.getContentPane().add(panel);
         JButton send = new JButton("Enter");
-        send.setBounds(480, 5, 67, 23);
+        send.setBounds(539, 5, 67, 23);
         panel.add(send);
         JButton reset = new JButton("Reset");
-        reset.setBounds(557, 5, 67, 23);
+        reset.setBounds(628, 5, 67, 23);
         panel.add(reset);
         
         mapName = new JLabel("Main Menu:");
@@ -161,7 +161,7 @@ class Frame extends JFrame {
         frame.getContentPane().add(console);
         
         JLabel lblUsersMovecount = new JLabel("User's Movecount:");
-        lblUsersMovecount.setBounds(566, 11, 111, 14);
+        lblUsersMovecount.setBounds(576, 11, 111, 14);
         frame.getContentPane().add(lblUsersMovecount);
         
         moveCounterLabel = new JTextField();
