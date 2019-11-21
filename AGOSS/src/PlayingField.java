@@ -790,6 +790,11 @@ public class PlayingField extends JFrame {
 	}
 	
 	public static void useMerchant(Player player,Merchant merchant,Bag bag) throws IOException, InterruptedException {
+		
+		//Clear Console
+		frame.clearConsole();
+		
+		//Presents merchant options
 		frame.console.append("Merchant Menu\nCurrent Gold:" + player.getGold() + "\n" + divider + "\nWhat item would you like to buy?: \n"
 				+ "1: " + bag.getPotions() + " \t- Potions (250g)\n"
 				+ "2: " + bag.getBoosters() + " \t- Boosters (250g)\n"
@@ -800,8 +805,13 @@ public class PlayingField extends JFrame {
     	@SuppressWarnings("unused") boolean alreadyAtMax = false;
     	int amount = 0;
     	
+    	//Take user input
     	Frame.grabInput(((Frame)frame),0);
 		int userOption = ((Frame)frame).getUserIntInput();
+		
+		//Clear Console
+		frame.clearConsole();
+		
 		switch(userOption) {
 			//Purchase potions
 			case 1:
