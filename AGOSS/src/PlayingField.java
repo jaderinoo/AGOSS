@@ -475,14 +475,8 @@ public class PlayingField extends JFrame {
 				if(movementCheck == true){
 					if(map[player.getMapX()][player.getMapY()-1] == 'X') {
 						xCounter++;
+						break;
 					}
-					
-					//If x = 1
-					if(xCounter == 1) {
-						frame.console.append("You beat level: " + firstLine + "\nReturning to main menu");
-						Main.main(null);
-					}
-					
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()][player.getMapY()-1] = 'P';
@@ -502,14 +496,8 @@ public class PlayingField extends JFrame {
 				if(movementCheck == true){
 					if(map[player.getMapX()][player.getMapY()+1] == 'X') {
 						xCounter++;
+						break;
 					}
-					
-					//If x = 1
-					if(xCounter == 1) {
-						frame.console.append("You beat level: " + firstLine + "\nReturning to main menu");
-						Main.main(null);
-					}
-					
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()][player.getMapY()+1] = 'P';
@@ -529,14 +517,8 @@ public class PlayingField extends JFrame {
 				if(movementCheck == true){
 					if(map[player.getMapX()-1][player.getMapY()] == 'X') {
 						xCounter++;
+						break;
 					}
-					
-					//If x = 1
-					if(xCounter == 1) {
-						frame.console.append("You beat level: " + firstLine + "\nReturning to main menu");
-						Main.main(null);
-					}
-					
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()-1][player.getMapY()] = 'P';
@@ -556,14 +538,8 @@ public class PlayingField extends JFrame {
 				if(movementCheck == true){
 					if(map[player.getMapX()+1][player.getMapY()] == 'X') {
 						xCounter++;
+						break;
 					}
-					
-					//If x = 1
-					if(xCounter == 1) {
-						frame.console.append("You beat level: " + firstLine + "\nReturning to main menu");
-						Main.main(null);
-					}
-					
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()+1][player.getMapY()] = 'P';
