@@ -33,8 +33,6 @@ public class PlayingField extends JFrame {
 	static String mapName;
 	static char[][] map = null;
 	static boolean movementCheck = false;
-	//Collision based items
-	static char [] collisionSet = {'/','|','\\','_','-','F','P','K','G','M','L'};
 	static String divider = "----------------------------------------------|";
 	static boolean initiateFight = false;
 	static String leaderName = null;
@@ -276,146 +274,113 @@ public class PlayingField extends JFrame {
 					
 					// Left
 					if(enemy.getMapX() > player.getMapX() && check == false) {
-						for(int z = 0; z != collisionSet.length; z++) {
-							//Checks collisionSet
-							if(left != (collisionSet[z])) {
-								x++;
-								//If x has passed through all collisionSet, it'll pass this check
-								if(x == collisionSet.length) {
-									//Executes movement
-									map[enemy.getMapX()][enemy.getMapY()] = ' ';
-									map[enemy.getMapX()-1][enemy.getMapY()] = enemy.getType();
-									enemy.setMapX(enemy.getMapX()-1);
-									
-									//drop movecounter down
-									moveCounter--;
-									
-									//Reset x and print the map for the player
-									x = 0;
-									check = true;
-									frame.console.append(enemy.getName() + "'s Move: Left\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
-									printMap(map);
-									
-									//Adds a small delay between movements to better visualize the moves
-									Thread.sleep(250);
-									
-									//Check if enemy can attack
-									if(moveCounter != 0) {
-										playerCheckAttack(player,map,bag,enemy);
-									}
-
-								}
+						if(left == ' ') {
+							//Executes movement
+							map[enemy.getMapX()][enemy.getMapY()] = ' ';
+							map[enemy.getMapX()-1][enemy.getMapY()] = enemy.getType();
+							enemy.setMapX(enemy.getMapX()-1);
+							
+							//drop movecounter down
+							moveCounter--;
+							
+							//Reset x and print the map for the player
+							x = 0;
+							check = true;
+							frame.console.append(enemy.getName() + "'s Move: Left\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
+							printMap(map);
+							
+							//Adds a small delay between movements to better visualize the moves
+							Thread.sleep(250);
+							
+							//Check if enemy can attack
+							if(moveCounter != 0) {
+								playerCheckAttack(player,map,bag,enemy);
 							}
+
 						}
 					}
 
-					//Reset x
-					x = 0;
 					// Right
 					if(enemy.getMapX() < player.getMapX() && check == false) {
-						for(int z = 0; z != collisionSet.length; z++) {
-							//Checks collisionSet
-							if(right != (collisionSet[z])) {
-								x++;
-								//If x has passed through all collisionSet, it'll pass this check
-								if(x == collisionSet.length) {
-									//Executes movement
-									map[enemy.getMapX()][enemy.getMapY()] = ' ';
-									map[enemy.getMapX()+1][enemy.getMapY()] = enemy.getType();
-									enemy.setMapX(enemy.getMapX()+1);
-									
-									//drop movecounter down
-									moveCounter--;
-									
-									//Reset x and print the map for the player
-									x = 0;
-									check = true;
-									frame.console.append(enemy.getName() + "'s Move: Right\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
-									printMap(map);
-									
-									//Adds a small delay between movements to better visualize the moves
-									Thread.sleep(250);
-									
-									//Check if enemy can attack
-									if(moveCounter != 0) {
-										playerCheckAttack(player,map,bag,enemy);
-									}
-								}
-							}
-				        }
-					}
-					
-					//Reset x
-					x = 0;
-					// Up
-					if(enemy.getMapY() > player.getMapY() && check == false){
-						for(int z = 0; z != collisionSet.length; z++) {
-							//Checks collisionSet
-							if(up != (collisionSet[z])) {
-								x++;
-								//If x has passed through all collisionSet, it'll pass this check
-								if(x == collisionSet.length) {
-									//Executes movement
-									map[enemy.getMapX()][enemy.getMapY()] = ' ';
-									map[enemy.getMapX()][enemy.getMapY()-1] = enemy.getType();
-									enemy.setMapY(enemy.getMapY()-1);
-									
-									//drop movecounter down
-									moveCounter--;
-									
-									//Reset x and print the map for the player
-									x = 0;
-									check = true;
-									frame.console.append(enemy.getName() + "'s Move: Up\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
-									printMap(map);
-									
-									//Adds a small delay between movements to better visualize the moves
-									Thread.sleep(250);
-									
-									//Check if enemy can attack
-									if(moveCounter != 0) {
-										playerCheckAttack(player,map,bag,enemy);
-									}
-								}
-							}
-						}	
-					}
-					
-					//Reset x
-					x = 0;
-					// Down
-					if(enemy.getMapY() < player.getMapY() && check == false){
-						for(int z = 0; z != collisionSet.length; z++) {
-							//Checks collisionSet
-							if(down != (collisionSet[z])) {
-								x++;
-								//If x has passed through all collisionSet, it'll pass this check
-								if(x == collisionSet.length) {
-									//Executes movement
-									map[enemy.getMapX()][enemy.getMapY()] = ' ';
-									map[enemy.getMapX()][enemy.getMapY()+1] = enemy.getType();
-									enemy.setMapY(enemy.getMapY()+1);
-									
-									//drop movecounter down
-									moveCounter--;
-									
-									//Reset x and print the map for the player
-									x = 0;
-									check = true;
-									frame.console.append(enemy.getName() + "'s Move: Down\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
-									printMap(map);
-
-									//Adds a small delay between movements to better visualize the moves
-									Thread.sleep(250);
-									
-									//Check if enemy can attack
-									if(moveCounter != 0) {
-										playerCheckAttack(player,map,bag,enemy);
-									}
-								}
+						if(right == ' ') {
+							//Executes movement
+							map[enemy.getMapX()][enemy.getMapY()] = ' ';
+							map[enemy.getMapX()+1][enemy.getMapY()] = enemy.getType();
+							enemy.setMapX(enemy.getMapX()+1);
+							
+							//drop movecounter down
+							moveCounter--;
+							
+							//Reset x and print the map for the player
+							x = 0;
+							check = true;
+							frame.console.append(enemy.getName() + "'s Move: Right\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
+							printMap(map);
+							
+							//Adds a small delay between movements to better visualize the moves
+							Thread.sleep(250);
+							
+							//Check if enemy can attack
+							if(moveCounter != 0) {
+								playerCheckAttack(player,map,bag,enemy);
 							}
 						}
 					}
+
+					// Up
+					if(enemy.getMapY() > player.getMapY() && check == false){
+						if(up == ' ') {
+							//Executes movement
+							map[enemy.getMapX()][enemy.getMapY()] = ' ';
+							map[enemy.getMapX()][enemy.getMapY()-1] = enemy.getType();
+							enemy.setMapY(enemy.getMapY()-1);
+							
+							//drop movecounter down
+							moveCounter--;
+							
+							//Reset x and print the map for the player
+							x = 0;
+							check = true;
+							frame.console.append(enemy.getName() + "'s Move: Up\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
+							printMap(map);
+							
+							//Adds a small delay between movements to better visualize the moves
+							Thread.sleep(250);
+							
+							//Check if enemy can attack
+							if(moveCounter != 0) {
+								playerCheckAttack(player,map,bag,enemy);
+							}
+						}
+					}
+					// Down
+					if(enemy.getMapY() < player.getMapY() && check == false){
+						if(down == ' ') {
+							//Executes movement
+							map[enemy.getMapX()][enemy.getMapY()] = ' ';
+							map[enemy.getMapX()][enemy.getMapY()+1] = enemy.getType();
+							enemy.setMapY(enemy.getMapY()+1);
+							
+							//drop movecounter down
+							moveCounter--;
+							
+							//Reset x and print the map for the player
+							x = 0;
+							check = true;
+							frame.console.append(enemy.getName() + "'s Move: Down\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
+							printMap(map);
+
+							//Adds a small delay between movements to better visualize the moves
+							Thread.sleep(250);
+							
+							//Check if enemy can attack
+							if(moveCounter != 0) {
+								playerCheckAttack(player,map,bag,enemy);
+							}
+						}
+					}
+						
+					
 					//Enemies get stuck after bumping into each other
 					
 					//Code should go here
@@ -470,17 +435,12 @@ public class PlayingField extends JFrame {
 			
 			case 1:
 				//Up
-				//Cycle through array to see if item is in the way of player
-				movementCheck = collisionCheck(up);
-				if(movementCheck == true){
-					if(map[player.getMapX()][player.getMapY()-1] == 'X') {
-						xCounter++;
-						break;
-					}
+				if(up == ' '){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()][player.getMapY()-1] = 'P';
 					player.setMapY(player.getMapY()-1);
+					movementCheck = true;
 					break;
 				} else {
 					//Print map and tell the player to move elsewhere
@@ -491,17 +451,12 @@ public class PlayingField extends JFrame {
 				
 			case 2:
 				//Down
-				//Cycle through array to see if item is in the way of player
-				movementCheck = collisionCheck(down);
-				if(movementCheck == true){
-					if(map[player.getMapX()][player.getMapY()+1] == 'X') {
-						xCounter++;
-						break;
-					}
+				if(down == ' '){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()][player.getMapY()+1] = 'P';
 					player.setMapY(player.getMapY()+1);
+					movementCheck = true;
 					break;
 				} else {
 					//Print map and tell the player to move elsewhere
@@ -512,17 +467,12 @@ public class PlayingField extends JFrame {
 				
 			case 3:
 				//Left
-				//Cycle through array to see if item is in the way of player
-				movementCheck = collisionCheck(left);
-				if(movementCheck == true){
-					if(map[player.getMapX()-1][player.getMapY()] == 'X') {
-						xCounter++;
-						break;
-					}
+				if(left == ' '){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()-1][player.getMapY()] = 'P';
 					player.setMapX(player.getMapX()-1);
+					movementCheck = true;
 					break;
 				} else {
 					//Print map and tell the player to move elsewhere
@@ -533,17 +483,12 @@ public class PlayingField extends JFrame {
 				
 			case 4:
 				//Right
-				//Cycle through array to see if item is in the way of player
-				movementCheck = collisionCheck(right);
-				if(movementCheck == true){
-					if(map[player.getMapX()+1][player.getMapY()] == 'X') {
-						xCounter++;
-						break;
-					}
+				if(right == ' '){
 				    //Move right and print map
 					map[player.getMapX()][player.getMapY()] = ' ';
 					map[player.getMapX()+1][player.getMapY()] = 'P';
 					player.setMapX(player.getMapX()+1);
+					movementCheck = true;
 					break;
 				} else {
 					//Print map and tell the player to move elsewhere
@@ -562,23 +507,6 @@ public class PlayingField extends JFrame {
 			}
 		}
 	}
-	
-	//Checks the collision in the sent direction
-	public static boolean collisionCheck(char direction) {
-		int x = 0;
-		for(int i = 0; i != collisionSet.length; i++) {
-			if(direction != (collisionSet[i])) {
-				x++;
-				//If X has enough clears, it'll pass this check
-				if(x == collisionSet.length) {
-					movementCheck = true;
-				}
-			}
-        }
-		
-		return movementCheck;
-	}
-	
 	
 	public static void playerCheckAttack(Player player, char[][] map, Bag bag, Mob1 enemy) throws Exception {
 
