@@ -585,7 +585,7 @@ public class PlayingField extends JFrame {
 		
 	//Prints the map for the player
 	public static void printMap(char[][] map) throws InterruptedException {
-    	
+    	int x = 0;
     	//Clear map screen
     	frame.clearMapArea();
 		
@@ -597,14 +597,14 @@ public class PlayingField extends JFrame {
 		
 		//Print map
 		for (int y=0; y < rows; y++) {
-			System.out.print("|");
-		    for (int x=0; x < cols; x++) {
+			System.out.print(y);
+		    for (x=0; x < cols; x++) {
 		        if(x % 2 == 0 && y % 2 == 0 && map[x][y] == ' ') {
 		        	map[x][y] = ' ';
 		        }
 		        System.out.print(" " + map[x][y] + " ");
 		    }
-		    System.out.println("|");
+		    System.out.println(x);
 		}
 		
 		//Bottom border
