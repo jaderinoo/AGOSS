@@ -248,7 +248,6 @@ public class PlayingField extends JFrame {
 		//Print map
 		printMap(map);
 
-		int x = 0;
 		//Calculate the total moves that the enemy gets
 		int moveCounter = enemy.getAgility() / 4;
 		//Checks to see if the player moved
@@ -282,9 +281,7 @@ public class PlayingField extends JFrame {
 							
 							//drop movecounter down
 							moveCounter--;
-							
-							//Reset x and print the map for the player
-							x = 0;
+
 							check = true;
 							frame.console.append(enemy.getName() + "'s Move: Left\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
 							printMap(map);
@@ -310,9 +307,7 @@ public class PlayingField extends JFrame {
 							
 							//drop movecounter down
 							moveCounter--;
-							
-							//Reset x and print the map for the player
-							x = 0;
+
 							check = true;
 							frame.console.append(enemy.getName() + "'s Move: Right\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
 							printMap(map);
@@ -337,9 +332,7 @@ public class PlayingField extends JFrame {
 							
 							//drop movecounter down
 							moveCounter--;
-							
-							//Reset x and print the map for the player
-							x = 0;
+
 							check = true;
 							frame.console.append(enemy.getName() + "'s Move: Up\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
 							printMap(map);
@@ -363,9 +356,7 @@ public class PlayingField extends JFrame {
 							
 							//drop movecounter down
 							moveCounter--;
-							
-							//Reset x and print the map for the player
-							x = 0;
+
 							check = true;
 							frame.console.append(enemy.getName() + "'s Move: Down\nMovecount: " + (moveCounter+1) + "\n" + divider + "\n");
 							printMap(map);
@@ -392,7 +383,7 @@ public class PlayingField extends JFrame {
 						
 						//Reset x while dropping moveCounter and printing the map for the player
 						moveCounter--;
-						x = 0;
+						
 						check = true;
 						frame.console.append("\n" + enemy.getName() + "'s Move: None\nMovecount: " + (moveCounter+1) + "\n" + divider);
 						printMap(map);
@@ -586,14 +577,36 @@ public class PlayingField extends JFrame {
 	//Prints the map for the player
 	public static void printMap(char[][] map) throws InterruptedException {
     	int x = 0;
+    	int spacer = 10;
+    	boolean firstCheck = false;
     	//Clear map screen
     	frame.clearMapArea();
 		
 		//Top border
 		for(int i = 0; i != cols*2+cols+2; i++) {
-			System.out.print("_");
+			int temp = i;
+			
+			if(i < 10) {
+				System.out.print("  " + i);
+			}
+			
+			if(i >= 10) {
+				spacer++;
+				do {
+					if(firstCheck == false) {
+						firstCheck = true;
+						System.out.print(" ");
+					}
+					System.out.print(" ");
+				}while(temp > spacer);
+				
+				System.out.print(i);
+			}
 		}
 		System.out.println();
+		
+		//Reset firstCheck
+		firstCheck = false;
 		
 		//Print map
 		for (int y=0; y < rows; y++) {
@@ -602,9 +615,13 @@ public class PlayingField extends JFrame {
 		        if(x % 2 == 0 && y % 2 == 0 && map[x][y] == ' ') {
 		        	map[x][y] = ' ';
 		        }
-		        System.out.print(" " + map[x][y] + " ");
+		        if(x == 0 && y >= 10) {
+		        	System.out.print(map[x][y] + " ");	
+		        } else {
+		        	System.out.print(" " + map[x][y] + " ");	
+		        }
 		    }
-		    System.out.println(x);
+		    System.out.println(" ");
 		}
 		
 		//Bottom border
