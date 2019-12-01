@@ -637,11 +637,6 @@ public class PlayingField extends JFrame {
 		    	
 		    	//Saves current sprite
 	        	char sprite = map[x][y];
-	        	
-		    	//add blank every in between
-		        if(x % 2 == 0 && y % 2 == 0 && sprite == ' ') {
-		        	sprite = ' ';
-		        }
 
 	        	//If item isnt blank, add delay
 	        	if(sprite == ' ') {
@@ -653,8 +648,15 @@ public class PlayingField extends JFrame {
 
 		        	//Print item
 		        	if(sprite != ' ') {
-		        		frame.printIcon(sprite);
-		        		System.out.print(" ");
+		   
+		        		//Print item
+		        		if(sprite == '_') {
+		        			frame.printIcon(sprite);
+		        			frame.printIcon(sprite);
+		        		}else {
+		        			frame.printIcon(sprite);
+			        		System.out.print(" ");
+		        		}
 		        	} else {
 		        	System.out.print(sprite + " ");	
 		        	}	
@@ -665,9 +667,15 @@ public class PlayingField extends JFrame {
 		        	if(sprite != ' ') {
 		        		
 		        		//Print item
-		        		System.out.print(" ");
-		        		frame.printIcon(sprite);
-		        		System.out.print(" ");
+		        		if(sprite == '_') {
+		        			frame.printIcon(sprite);
+		        			frame.printIcon(sprite);
+		        			frame.printIcon(sprite);
+		        		}else {
+			        		System.out.print(" ");
+		        			frame.printIcon(sprite);
+			        		System.out.print(" ");
+		        		}
 		        	} else {
 		        	System.out.print(" " + sprite + " ");	
 		        	}
