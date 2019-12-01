@@ -117,17 +117,17 @@ class Frame extends JFrame {
         mapName.setBounds(26, 11, 71, 14);
         frame.getContentPane().add(mapName);
         
-        JLabel lblNewLabel_1 = new JLabel("EnemyCount: ");
-        lblNewLabel_1.setBounds(437, 11, 86, 14);
-        frame.getContentPane().add(lblNewLabel_1);
+        JLabel lblEnemyCount = new JLabel("EnemyCount: ");
+        lblEnemyCount.setBounds(437, 11, 86, 14);
+        frame.getContentPane().add(lblEnemyCount);
         
-        JLabel lblNewLabel_2 = new JLabel("HP:");
-        lblNewLabel_2.setBounds(520, 411, 30, 14);
-        frame.getContentPane().add(lblNewLabel_2);
+        JLabel lblHP = new JLabel("HP:");
+        lblHP.setBounds(520, 411, 30, 14);
+        frame.getContentPane().add(lblHP);
         
-        JLabel lblNewLabel_3 = new JLabel("Turn #");
-        lblNewLabel_3.setBounds(520, 368, 46, 14);
-        frame.getContentPane().add(lblNewLabel_3);
+        JLabel lblTurn = new JLabel("Turn #");
+        lblTurn.setBounds(520, 368, 46, 14);
+        frame.getContentPane().add(lblTurn);
         
         model = new DefaultTableModel(); 
         enemyTable = new JTable(model);
