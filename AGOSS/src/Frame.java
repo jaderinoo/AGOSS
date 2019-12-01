@@ -3,12 +3,16 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import javax.print.DocFlavor.URL;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,6 +23,8 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import java.awt.SystemColor;
@@ -37,6 +43,7 @@ class Frame extends JFrame {
     public JTable enemyTable;
     public JTextPane mapArea;
     public JScrollPane scrollPane;
+    public StyledDocument doc;
     public JTextArea console;
     public JProgressBar expBar;
     public JLabel mapName;
@@ -90,8 +97,10 @@ class Frame extends JFrame {
 		mapArea.setForeground(Color.white);
 		mapArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
 		
+    	doc = mapArea.getStyledDocument();
+    	
+    	//Print to mapArea
 		System.setOut(new PrintStream(new OutputStream() {
-    	StyledDocument doc = mapArea.getStyledDocument();
     	public void write(int b) throws IOException {
     		try {
 				doc.insertString(doc.getLength(), String.valueOf((char) b), null);
@@ -291,6 +300,15 @@ class Frame extends JFrame {
     public String getUserStringInput() {
     	//Returns the userinput as a String
         return userStringInput;
+    }
+    //PRINT IMAGES---------------------------------------------------------
+    
+    public void printIcon(char type) {
+    	mapArea.setSelectionStart(doc.getLength());
+    	
+    	if(type == 'P') {
+    		mapArea.insertIcon(new ImageIcon("src\\tilesets\\Player.png"));
+    	}
     }
     
     //MAP AREA----------------------------------------------------------

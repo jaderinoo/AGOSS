@@ -653,7 +653,13 @@ public class PlayingField extends JFrame {
 		        		Thread.sleep(1);
 		        	}
 		        	//Print item
+		        	if(map[x][y] == 'P') {
+		        		System.out.print(" ");
+		        		frame.printIcon('P');
+		        		System.out.print(" ");
+		        	} else {
 		        	System.out.print(" " + map[x][y] + " ");	
+		        	}
 		        }
 		    }
 		    System.out.println(" ");
