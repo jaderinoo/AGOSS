@@ -69,7 +69,7 @@ class Frame extends JFrame {
 
 		mapArea = new JTextArea(24, 80);
 		mapArea.setEditable(false);
-		mapArea.setBounds(26, 36, 465, 397);
+		mapArea.setBounds(26, 36, 473, 397);
 		mapArea.setBackground(new Color(112, 128, 144));
 		mapArea.setForeground(Color.white);
 		mapArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
@@ -100,11 +100,11 @@ class Frame extends JFrame {
         frame.getContentPane().add(lblNewLabel_1);
         
         JLabel lblNewLabel_2 = new JLabel("HP:");
-        lblNewLabel_2.setBounds(501, 411, 30, 14);
+        lblNewLabel_2.setBounds(520, 411, 30, 14);
         frame.getContentPane().add(lblNewLabel_2);
         
         JLabel lblNewLabel_3 = new JLabel("Turn #");
-        lblNewLabel_3.setBounds(501, 366, 46, 14);
+        lblNewLabel_3.setBounds(520, 368, 46, 14);
         frame.getContentPane().add(lblNewLabel_3);
         
         model = new DefaultTableModel(); 
@@ -112,7 +112,7 @@ class Frame extends JFrame {
         enemyTable.setRowSelectionAllowed(false);
         enemyTable.setBackground(new Color(112, 128, 144));
         enemyTable.setToolTipText("");
-        enemyTable.setBounds(501, 36, 207, 316);
+        enemyTable.setBounds(520, 36, 188, 316);
         model.addColumn("Type");
         model.addColumn("Coords");
         model.addColumn("HP");
@@ -123,7 +123,7 @@ class Frame extends JFrame {
         turnNumberLable.setText("0");
         turnNumberLable.setEditable(false);
         turnNumberLable.setColumns(10);
-        turnNumberLable.setBounds(546, 363, 21, 20);
+        turnNumberLable.setBounds(565, 365, 21, 20);
         frame.getContentPane().add(turnNumberLable);
         
         enemyCount = new JTextField();
@@ -134,23 +134,23 @@ class Frame extends JFrame {
         frame.getContentPane().add(enemyCount);
         
         JLabel lblExp = new JLabel("EXP:");
-        lblExp.setBounds(501, 461, 39, 14);
+        lblExp.setBounds(520, 461, 39, 14);
         frame.getContentPane().add(lblExp);
         
         JLabel lblLvl = new JLabel("LVL:");
-        lblLvl.setBounds(501, 436, 39, 14);
+        lblLvl.setBounds(520, 436, 39, 14);
         frame.getContentPane().add(lblLvl);
         
         JLabel lblShield = new JLabel("Shield:");
-        lblShield.setBounds(501, 568, 71, 14);
+        lblShield.setBounds(520, 568, 71, 14);
         frame.getContentPane().add(lblShield);
         
         JLabel lblWeapon = new JLabel("Weapon:");
-        lblWeapon.setBounds(501, 543, 71, 14);
+        lblWeapon.setBounds(520, 543, 71, 14);
         frame.getContentPane().add(lblWeapon);
         
         JLabel lblBonuses = new JLabel("Bonuses:");
-        lblBonuses.setBounds(501, 518, 71, 14);
+        lblBonuses.setBounds(520, 518, 71, 14);
         frame.getContentPane().add(lblBonuses);
         
         console = new JTextArea(24, 80);
@@ -158,7 +158,7 @@ class Frame extends JFrame {
         console.setForeground(Color.WHITE);
         console.setFont(new Font("Monospaced", Font.PLAIN, 15));
         console.setBackground(new Color(112, 128, 144));
-        console.setBounds(26, 436, 465, 181);
+        console.setBounds(26, 436, 473, 181);
         frame.getContentPane().add(console);
         
         JLabel lblUsersMovecount = new JLabel("User's Movecount:");
@@ -201,7 +201,7 @@ class Frame extends JFrame {
         SHDField.setText("0");
         SHDField.setEditable(false);
         SHDField.setColumns(10);
-        SHDField.setBounds(565, 568, 122, 20);
+        SHDField.setBounds(576, 568, 111, 20);
         frame.getContentPane().add(SHDField);
         
         WPNField = new JTextField();
@@ -209,7 +209,7 @@ class Frame extends JFrame {
         WPNField.setText("0");
         WPNField.setEditable(false);
         WPNField.setColumns(10);
-        WPNField.setBounds(565, 543, 122, 20);
+        WPNField.setBounds(576, 543, 111, 20);
         frame.getContentPane().add(WPNField);
         frame.setVisible(true);
         
@@ -217,16 +217,16 @@ class Frame extends JFrame {
         frame.getRootPane().setDefaultButton(send);
         
         expBar = new JProgressBar();
-        expBar.setBounds(501, 486, 186, 14);
+        expBar.setBounds(520, 486, 167, 14);
         frame.getContentPane().add(expBar);
         
-        JLabel divider = new JLabel("__________________________");
+        JLabel divider = new JLabel("_______________________");
         divider.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        divider.setBounds(501, 501, 186, 14);
+        divider.setBounds(520, 501, 167, 14);
         frame.getContentPane().add(divider);
         
         userStats = new JLabel("Users Stats:");
-        userStats.setBounds(501, 384, 162, 14);
+        userStats.setBounds(520, 386, 162, 14);
         frame.getContentPane().add(userStats);
         
         mapType = new JLabel("Objective:");
@@ -400,7 +400,7 @@ class Frame extends JFrame {
     
 	public void init() {
 		this.pack();
-		this.setVisible(true);
+		this.setVisible(false);
 		this.setAlwaysOnTop(true);
 
 	}
