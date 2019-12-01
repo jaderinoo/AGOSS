@@ -436,7 +436,12 @@ public class PlayingField extends JFrame {
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				   	frame.console.append("You cannot move in that direction.\n" + divider);
+				   	
+					//Clear Console
+					frame.clearConsole();
+					
+					//Present error message
+				   	frame.console.append("You cannot move in that direction.\n" + divider + "\n");
 				    break;
 				}
 				
@@ -452,7 +457,12 @@ public class PlayingField extends JFrame {
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				   	frame.console.append("You cannot move in that direction.\n" + divider);
+				   	
+					//Clear Console
+					frame.clearConsole();
+					
+					//Present error message
+				   	frame.console.append("You cannot move in that direction.\n" + divider + "\n");
 				    break;
 				}
 				
@@ -468,7 +478,12 @@ public class PlayingField extends JFrame {
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				   	frame.console.append("You cannot move in that direction.\n" + divider);
+				   	
+					//Clear Console
+					frame.clearConsole();
+					
+					//Present error message
+				   	frame.console.append("You cannot move in that direction.\n" + divider + "\n");
 				    break;
 				}
 				
@@ -484,7 +499,12 @@ public class PlayingField extends JFrame {
 				} else {
 					//Print map and tell the player to move elsewhere
 				   	printMap(map);
-				   	frame.console.append("You cannot move in that direction.\n" + divider);
+				   	
+					//Clear Console
+					frame.clearConsole();
+					
+					//Present error message
+				   	frame.console.append("You cannot move in that direction.\n" + divider + "\n");
 				    break;
 				}
 				
@@ -494,6 +514,10 @@ public class PlayingField extends JFrame {
 				break;
 				
 			default:
+				//Clear Console
+				frame.clearConsole();
+				
+				//Present error message
 				frame.console.append("invalid selection\n" + divider);
 			}
 		}
@@ -616,8 +640,14 @@ public class PlayingField extends JFrame {
 		        	map[x][y] = ' ';
 		        }
 		        if(x == 0 && y >= 10) {
+		        	if(map[x][y] == ' ') {
+		        		Thread.sleep(1);
+		        	}
 		        	System.out.print(map[x][y] + " ");	
 		        } else {
+		        	if(map[x][y] == ' ') {
+		        		Thread.sleep(1);
+		        	}
 		        	System.out.print(" " + map[x][y] + " ");	
 		        }
 		    }
