@@ -1,5 +1,6 @@
 //Usually you will require both swing and awt packages
 // even if you are working with just swings.
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -17,8 +18,13 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+
 import java.awt.SystemColor;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 
 class Frame extends JFrame {
 	final JFrame frame = new JFrame();
@@ -29,7 +35,8 @@ class Frame extends JFrame {
     int userIntInput = 0;
     String userStringInput = "";
     public JTable enemyTable;
-    public JTextArea mapArea;
+    public JTextPane mapArea;
+    public JScrollPane scrollPane;
     public JTextArea console;
     public JProgressBar expBar;
     public JLabel mapName;
@@ -67,20 +74,35 @@ class Frame extends JFrame {
         panel.add(lblCommandLine); // Components Added using Flow Layout
         panel.add(tf);
 
-		mapArea = new JTextArea(24, 80);
+		mapArea = new JTextPane();
 		mapArea.setEditable(false);
-		mapArea.setBounds(26, 36, 473, 397);
+		
+		JPanel noWrapPanel = new JPanel( new BorderLayout() );
+		noWrapPanel.add(mapArea);
+		scrollPane = new JScrollPane(noWrapPanel);
+		
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setBorder(null);
+		scrollPane.setBounds(26, 36, 473, 397);
+		
 		mapArea.setBackground(new Color(112, 128, 144));
 		mapArea.setForeground(Color.white);
 		mapArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
+		
 		System.setOut(new PrintStream(new OutputStream() {
-    	@Override
+    	StyledDocument doc = mapArea.getStyledDocument();
     	public void write(int b) throws IOException {
-    		mapArea.append(String.valueOf((char) b));
+    		try {
+				doc.insertString(doc.getLength(), String.valueOf((char) b), null);
+			} catch (BadLocationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
     }));
     	frame.getContentPane().setLayout(null);
-    	frame.getContentPane().add(mapArea);
+    	frame.getContentPane().add(scrollPane);
 
         //Adding Components to the frame.
         frame.getContentPane().add(panel);
@@ -272,11 +294,6 @@ class Frame extends JFrame {
     }
     
     //MAP AREA----------------------------------------------------------
-    public void setMapArea() {
-        this.mapArea.append("Hello");
-    }
-    
-    //MAP AREA----------------------------------------------------------
     public void setUserStats(String name) {
     	String formatName = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
         this.userStats.setText(formatName + "'s Stats:");
@@ -284,8 +301,7 @@ class Frame extends JFrame {
     
     public void clearMapArea() throws InterruptedException {
     	Thread.sleep(500);
-        this.mapArea.selectAll();
-        this.mapArea.replaceSelection("");
+    	this.mapArea.setText("");
     }
     
     //CONSOLE--------------------------------------------------------------
