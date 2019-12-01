@@ -328,8 +328,13 @@ class Frame extends JFrame {
     		return;
     	}
     	
-    	if(type == 'b') {
-    		mapArea.insertIcon(new ImageIcon("src\\tilesets\\Background.png"));
+    	if(type == '|') {
+    		mapArea.insertIcon(new ImageIcon("src\\tilesets\\Sidewall.png"));
+    		return;
+    	}
+    	
+    	if(type == '_') {
+    		mapArea.insertIcon(new ImageIcon("src\\tilesets\\ToporBottom.png"));
     		return;
     	}
     	
