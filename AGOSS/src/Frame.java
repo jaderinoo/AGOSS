@@ -138,7 +138,7 @@ class Frame extends JFrame {
         reset.setBounds(628, 5, 67, 23);
         panel.add(reset);
         
-        mapName = new JLabel("Main Menu:");
+        mapName = new JLabel("Main Menu");
         mapName.setBounds(26, 11, 71, 14);
         frame.getContentPane().add(mapName);
         
@@ -158,6 +158,7 @@ class Frame extends JFrame {
         enemyTable = new JTable(model);
         enemyTable.setRowSelectionAllowed(false);
         enemyTable.setBackground(new Color(112, 128, 144));
+        enemyTable.setForeground(Color.white);
         enemyTable.setToolTipText("");
         enemyTable.setBounds(520, 36, 188, 316);
         model.addColumn("Type");
@@ -325,6 +326,26 @@ class Frame extends JFrame {
     	
     	if(type == 'P') {
     		mapArea.insertIcon(new ImageIcon("src\\tilesets\\Player.png"));
+    		return;
+    	}
+    	
+    	if(type == 'F') {
+    		mapArea.insertIcon(new ImageIcon("src\\tilesets\\FootSoldier.png"));
+    		return;
+    	}
+    	
+    	if(type == 'K') {
+    		mapArea.insertIcon(new ImageIcon("src\\tilesets\\Knight.png"));
+    		return;
+    	}
+    	
+    	if(type == 'G') {
+    		mapArea.insertIcon(new ImageIcon("src\\tilesets\\General.png"));
+    		return;
+    	}
+    	
+    	if(type == 'L') {
+    		mapArea.insertIcon(new ImageIcon("src\\tilesets\\Leader.png"));
     		return;
     	}
     	

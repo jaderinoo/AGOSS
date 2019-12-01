@@ -671,7 +671,10 @@ public class PlayingField extends JFrame {
 		        			frame.printIcon(sprite);
 		        			frame.printIcon(sprite);
 		        			frame.printIcon(sprite);
-		        		}else {
+		        		}else if(sprite == 'P' || sprite == 'F' || sprite == 'K' || sprite == 'G' || sprite == 'L'){
+		        			frame.printIcon(sprite);
+		        			System.out.print(" ");
+		        		} else {
 			        		System.out.print(" ");
 		        			frame.printIcon(sprite);
 			        		System.out.print(" ");
@@ -736,7 +739,7 @@ public class PlayingField extends JFrame {
 		        	enemyCreate(y,x,'G',G);
 		        }
 		        
-		        //If an G is found, create the object and add it to the arraylist: mobList
+		        //If an L is found, create the object and add it to the arraylist: mobList
 		        if(map[x][y] == 'L') {
 		        	L++;
 		        	enemyCount++;
