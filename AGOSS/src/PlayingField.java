@@ -28,7 +28,7 @@ public class PlayingField extends JFrame {
 	static int enemyMoveCount = 0;
 	static int enemyKillCount = 0;
 	static int enemyNumber = 0;
-	static String firstLine = "";
+	static String levelName = "";
 	static int turn = 0;
 	static String mapName;
 	static char[][] map = null;
@@ -58,9 +58,9 @@ public class PlayingField extends JFrame {
 	    	PlayingField.mapName = mapName;
 	    	
 			//Initialize vars
-			firstLine = batch[0];
+			levelName = batch[0];
 			String [] secondLine = batch[1].split(" ");
-			String thirdLine = batch[2];
+			String background = batch[2];
 			String leaderStats = batch[3];
 			String data = batch[4];
 
@@ -74,18 +74,10 @@ public class PlayingField extends JFrame {
 				String numberAsString = secondLine[i];
 				stats[i] = Integer.parseInt(numberAsString);
 			}
+			
 			rows = stats[0];
 			cols = stats[1];
-			int debug = stats[2];
-			mapType = stats[3];
-			
-			//Present debug information
-			if(debug == 1) {
-				//Test additional map information
-				System.out.println(firstLine);
-				System.out.println(batch[1]);
-				System.out.println(thirdLine);
-			}
+			mapType = stats[2];
 			
 			//Saves the initial map
 			map = saveMap(data);
@@ -93,6 +85,7 @@ public class PlayingField extends JFrame {
 			//Prints initial map
 			frame.setMapName(mapName);
 			frame.setMapType(mapType);
+	    	frame.setBackground(background);
 			printMap(map);
 	
 			//Initial scan
@@ -100,7 +93,7 @@ public class PlayingField extends JFrame {
 			enemyMoveCount = enemyCount;
 			frame.setUserStats((String) player.getName());
 			
-			playerMenu(player, map, bag, firstLine);
+			playerMenu(player, map, bag, levelName);
 			}else {
 			System.out.println("Missing " + mapName + ".txt");
 			return 1;
@@ -108,9 +101,10 @@ public class PlayingField extends JFrame {
 		return 1;
 	}
 	
-	public static boolean playerMenu(Player player, char[][] map, Bag bag, String firstLine) throws Exception {
+	public static boolean playerMenu(Player player, char[][] map, Bag bag, String levelName) throws Exception {
 		if(enemyCount == 0) {
-			frame.console.append("You beat level: " + firstLine + "\nReturning to main menu");
+			frame.removeBackground();
+			frame.console.append("You beat level: " + levelName + "\nReturning to main menu");
 			Main.main(null);
 		}
 		
@@ -582,7 +576,7 @@ public class PlayingField extends JFrame {
 
 			//Return to player menu
 			printMap(map);
-			playerMenu(player, map, bag, firstLine);
+			playerMenu(player, map, bag, levelName);
         }
 		
 		// If you lose; return to main
@@ -593,7 +587,7 @@ public class PlayingField extends JFrame {
 		//If player runs from a fight, escape and allow the player to move
 		if(winStatus == 2) {
 			printMap(map);
-			playerMenu(player, map, bag, firstLine);
+			playerMenu(player, map, bag, levelName);
 		}
     }
 	
@@ -609,6 +603,10 @@ public class PlayingField extends JFrame {
 		//Top border
 		for(int i = 0; i != cols*2+cols+2; i++) {
 			int temp = i;
+			
+			if(i == rows) {
+				break;
+			}
 			
 			if(i < 10) {
 				System.out.print("  " + i);
@@ -636,40 +634,47 @@ public class PlayingField extends JFrame {
 		for (int y=0; y < rows; y++) {
 			System.out.print(y);
 		    for (x=0; x < cols; x++) {
+		    	
+		    	//Saves current sprite
+	        	char sprite = map[x][y];
+	        	
 		    	//add blank every in between
-		        if(x % 2 == 0 && y % 2 == 0 && map[x][y] == ' ') {
-		        	map[x][y] = ' ';
+		        if(x % 2 == 0 && y % 2 == 0 && sprite == ' ') {
+		        	sprite = ' ';
 		        }
+
+	        	//If item isnt blank, add delay
+	        	if(sprite == ' ') {
+	        		Thread.sleep(1);
+	        	}
+
+		        //Print first 10 items
 		        if(x == 0 && y >= 10) {
-		        	//If item isnt blank, add delay
-		        	if(map[x][y] == ' ') {
-		        		Thread.sleep(1);
-		        	}
+
 		        	//Print item
-		        	System.out.print(map[x][y] + " ");	
-		        } else {
-		        	//If item isnt blank, add delay
-		        	if(map[x][y] == ' ') {
-		        		Thread.sleep(1);
-		        	}
-		        	//Print item
-		        	if(map[x][y] == 'P') {
-		        		System.out.print(" ");
-		        		frame.printIcon('P');
+		        	if(sprite != ' ') {
+		        		frame.printIcon(sprite);
 		        		System.out.print(" ");
 		        	} else {
-		        	System.out.print(" " + map[x][y] + " ");	
+		        	System.out.print(sprite + " ");	
+		        	}	
+		        	
+		        } else {//Print rest 
+		        	
+		        	//Print item
+		        	if(sprite != ' ') {
+		        		
+		        		//Print item
+		        		System.out.print(" ");
+		        		frame.printIcon(sprite);
+		        		System.out.print(" ");
+		        	} else {
+		        	System.out.print(" " + sprite + " ");	
 		        	}
 		        }
 		    }
 		    System.out.println(" ");
 		}
-		
-		//Bottom border
-		for(int i = 0; i != cols*2+cols+2; i++) {
-			System.out.print("-");
-		}
-		System.out.println();
 	}
 	
 	

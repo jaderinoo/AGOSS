@@ -3,13 +3,17 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import javax.imageio.ImageIO;
 import javax.print.DocFlavor.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -31,6 +35,7 @@ import java.awt.SystemColor;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.JViewport;
 
 class Frame extends JFrame {
 	final JFrame frame = new JFrame();
@@ -42,10 +47,12 @@ class Frame extends JFrame {
     String userStringInput = "";
     public JTable enemyTable;
     public JTextPane mapArea;
+    public JViewport viewport;
     public JScrollPane scrollPane;
     public StyledDocument doc;
     public JTextArea console;
     public JProgressBar expBar;
+    public JPanel noWrapPanel;
     public JLabel mapName;
     public JLabel userStats;
     public JLabel mapType;
@@ -57,6 +64,7 @@ class Frame extends JFrame {
     public JTextField lvlField;
     public JTextField expField;
     private JTextField SHDField;
+    private BufferedImage image;
     private JTextField WPNField;
     
     public Frame() {
@@ -68,34 +76,29 @@ class Frame extends JFrame {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(730, 700);
 
-        //Creating the panel at bottom and adding components
-        JPanel panel = new JPanel(); // the panel is not visible in output
-        panel.setBackground(Color.LIGHT_GRAY);
-        panel.setBounds(0, 628, 885, 33);
-        JLabel lblCommandLine = new JLabel("Command Line:");
-        lblCommandLine.setBounds(10, 9, 96, 14);
-        JTextField tf = new JTextField(10); // accepts upto 10 characters
-        tf.setBounds(97, 6, 432, 20);
-        panel.setLayout(null);
-        panel.add(lblCommandLine); // Components Added using Flow Layout
-        panel.add(lblCommandLine); // Components Added using Flow Layout
-        panel.add(tf);
-
 		mapArea = new JTextPane();
 		mapArea.setEditable(false);
-		
-		JPanel noWrapPanel = new JPanel( new BorderLayout() );
-		noWrapPanel.add(mapArea);
-		scrollPane = new JScrollPane(noWrapPanel);
+		scrollPane = new JScrollPane(mapArea);
 		
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBorder(null);
-		scrollPane.setBounds(26, 36, 473, 397);
+		scrollPane.setBounds(26, 36, 484, 386);
 		
 		mapArea.setBackground(new Color(112, 128, 144));
 		mapArea.setForeground(Color.white);
 		mapArea.setFont(new Font("Monospaced", Font.PLAIN, 15));
+
+        viewport = new JViewport() {
+            @Override
+            protected void paintComponent(Graphics g) {
+              g.drawImage(image, 0, 0, this);
+            }
+          };
+
+        scrollPane.setViewport(viewport);
+        scrollPane.setViewportView(mapArea);
+    	
 		
     	doc = mapArea.getStyledDocument();
     	
@@ -113,6 +116,19 @@ class Frame extends JFrame {
     	frame.getContentPane().setLayout(null);
     	frame.getContentPane().add(scrollPane);
 
+        //Creating the panel at bottom and adding components
+        JPanel panel = new JPanel(); // the panel is not visible in output
+        panel.setBackground(Color.LIGHT_GRAY);
+        panel.setBounds(0, 628, 885, 33);
+        JLabel lblCommandLine = new JLabel("Command Line:");
+        lblCommandLine.setBounds(10, 9, 96, 14);
+        JTextField tf = new JTextField(10); // accepts upto 10 characters
+        tf.setBounds(97, 6, 432, 20);
+        panel.setLayout(null);
+        panel.add(lblCommandLine); // Components Added using Flow Layout
+        panel.add(lblCommandLine); // Components Added using Flow Layout
+        panel.add(tf);
+    	
         //Adding Components to the frame.
         frame.getContentPane().add(panel);
         JButton send = new JButton("Enter");
@@ -189,7 +205,7 @@ class Frame extends JFrame {
         console.setForeground(Color.WHITE);
         console.setFont(new Font("Monospaced", Font.PLAIN, 15));
         console.setBackground(new Color(112, 128, 144));
-        console.setBounds(26, 436, 473, 181);
+        console.setBounds(26, 427, 484, 190);
         frame.getContentPane().add(console);
         
         JLabel lblUsersMovecount = new JLabel("User's Movecount:");
@@ -301,6 +317,7 @@ class Frame extends JFrame {
     	//Returns the userinput as a String
         return userStringInput;
     }
+    
     //PRINT IMAGES---------------------------------------------------------
     
     public void printIcon(char type) {
@@ -308,7 +325,33 @@ class Frame extends JFrame {
     	
     	if(type == 'P') {
     		mapArea.insertIcon(new ImageIcon("src\\tilesets\\Player.png"));
+    		return;
     	}
+    	
+    	if(type == 'b') {
+    		mapArea.insertIcon(new ImageIcon("src\\tilesets\\Background.png"));
+    		return;
+    	}
+    	
+    	System.out.print(type);
+    	
+    }
+    
+    //SET MAP BACKGROUND--------------------------------------------------
+    
+    public void setBackground(String bg) {
+    	
+    	mapArea.setOpaque(false);
+    	
+    	try {
+            image = ImageIO.read(new File("src\\tilesets\\" + bg + ".png"));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void removeBackground() {
+    	mapArea.setOpaque(true);
     }
     
     //MAP AREA----------------------------------------------------------
