@@ -636,18 +636,23 @@ public class PlayingField extends JFrame {
 		for (int y=0; y < rows; y++) {
 			System.out.print(y);
 		    for (x=0; x < cols; x++) {
+		    	//add blank every in between
 		        if(x % 2 == 0 && y % 2 == 0 && map[x][y] == ' ') {
 		        	map[x][y] = ' ';
 		        }
 		        if(x == 0 && y >= 10) {
+		        	//If item isnt blank, add delay
 		        	if(map[x][y] == ' ') {
 		        		Thread.sleep(1);
 		        	}
+		        	//Print item
 		        	System.out.print(map[x][y] + " ");	
 		        } else {
+		        	//If item isnt blank, add delay
 		        	if(map[x][y] == ' ') {
 		        		Thread.sleep(1);
 		        	}
+		        	//Print item
 		        	System.out.print(" " + map[x][y] + " ");	
 		        }
 		    }
@@ -806,7 +811,6 @@ public class PlayingField extends JFrame {
 		
 		//Clear Console
 		frame.clearConsole();
-		
 		switch(userOption) {
 			//Purchase potions
 			case 1:
@@ -815,7 +819,7 @@ public class PlayingField extends JFrame {
 					Frame.grabInput(((Frame)frame),0);
 					amount = ((Frame)frame).getUserIntInput();
 					if(amount <= 0) {
-						frame.console.append("Please choose a number larger than 0\n" + divider);
+						frame.console.append("Please choose a number larger than 0\n" + divider + "\n");
 					}
 				}
 				((Frame)frame).clearConsole();
@@ -823,7 +827,7 @@ public class PlayingField extends JFrame {
 				for(int i = 0; i != amount;i++) {
 					bag.potions++;
 				}
-				frame.console.append("You spent " + amount*250 + "g and recieved " + amount + " potion\n" + divider);
+				frame.console.append("You spent " + amount*250 + "g and recieved " + amount + " potion\n" + divider + "\n");
 				break;
 			
 			//Purchase boosters
@@ -833,7 +837,7 @@ public class PlayingField extends JFrame {
 					Frame.grabInput(((Frame)frame),0);
 					amount = ((Frame)frame).getUserIntInput();
 					if(amount <= 0) {
-						frame.console.append("Please choose a number larger than 0\n" + divider);
+						frame.console.append("Please choose a number larger than 0\n" + divider + "\n");
 					}
 				}
 				((Frame)frame).clearConsole();
@@ -841,7 +845,7 @@ public class PlayingField extends JFrame {
 				for(int i = 0; i != amount;i++) {
 					bag.boosters++;
 				}
-				frame.console.append("You spent " + amount*250 + "g and recieved " + amount + " Boosters\n" + divider);
+				frame.console.append("You spent " + amount*250 + "g and recieved " + amount + " Boosters\n" + divider + "\n");
 				break;
 				
 				//Upgrade weapon
@@ -849,10 +853,10 @@ public class PlayingField extends JFrame {
 				if(bag.weapon != 3) {
 					bag.weapon++;
 					player.purchase(1000, ((Frame)frame));
-					frame.console.append("You spent 1000g and recieved a new weapon\n" + divider);
+					frame.console.append("You spent 1000g and recieved a new weapon\n" + divider + "\n");
 
 				}else {
-					frame.console.append("Your weapon is at it's max level.\n" + divider);
+					frame.console.append("Your weapon is at it's max level.\n" + divider + "\n");
 				}
 				break;
 				
@@ -861,15 +865,15 @@ public class PlayingField extends JFrame {
 				if(bag.shield != 3) {
 					bag.shield++;
 					player.purchase(1000, ((Frame)frame));
-					frame.console.append("You spent 1000g and recieved a new shield\n" + divider);
+					frame.console.append("You spent 1000g and recieved a new shield\n" + divider + "\n");
 
 				}else {
-					frame.console.append("Your shield is at it's max level.\n" + divider);
+					frame.console.append("Your shield is at it's max level.\n" + divider + "\n");
 				}
 				break;
 				
 			default:
-				frame.console.append("invalid selection\n" + divider);
+				frame.console.append("invalid selection\n" + divider + "\n");
 		}
 		Main.bagUpdater(player,bag);
 		Main.playerUpdater(player);
