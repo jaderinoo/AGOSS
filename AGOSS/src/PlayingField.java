@@ -41,7 +41,7 @@ public class PlayingField extends JFrame {
 	static int xCounter = 0;
 	static String[] splitStats = null;
 	
-	public static int map(Player player, Bag bag, String mapName, Frame frame2) throws Exception {
+	public static boolean map(Player player, Bag bag, String mapName, Frame frame2) throws Exception {
 		frame = frame2;
 		//Clear mobList for reuse
 		mobList.clear();
@@ -76,38 +76,38 @@ public class PlayingField extends JFrame {
 				stats[i] = Integer.parseInt(numberAsString);
 			}
 			
-			rows = stats[0];
-			cols = stats[1];
-			mapType = stats[2];
-			
-			//Saves the initial map
-			map = saveMap(data);
-			
-			//Prints initial map
-			frame.setMapName(mapName);
-			frame.setMapType(mapType);
-	    	frame.setBackground(background);
-			printMap(map);
-	
-			//Initial scan
-			enemyCount = scanMap(player,map);
-			enemyMoveCount = enemyCount;
-			frame.setUserStats((String) player.getName());
-			
-			playerMenu(player, map, bag, levelName);
-			}else {
-			System.out.println("Missing " + mapName + ".txt");
-			return 1;
+		rows = stats[0];
+		cols = stats[1];
+		mapType = stats[2];
+		
+		//Saves the initial map
+		map = saveMap(data);
+		
+		//Prints initial map
+		frame.setMapName(mapName);
+		frame.setMapType(mapType);
+    	frame.setBackground(background);
+		printMap(map);
+
+		//Initial scan
+		enemyCount = scanMap(player,map);
+		enemyMoveCount = enemyCount;
+		frame.setUserStats((String) player.getName());
+		
+		playerMenu(player, map, bag, levelName);
+		}else {
+		System.out.println("Missing " + mapName + ".txt");
+		return false;
 		}
-		return 1;
+		
+		//If level is beat return to adventure
+		frame.removeBackground();
+		frame.console.append("You beat level: " + levelName + "\nReturning to main menu");
+		Thread.sleep(500);
+		return true;
 	}
 	
-	public static boolean playerMenu(Player player, char[][] map, Bag bag, String levelName) throws Exception {
-		if(enemyCount == 0) {
-			frame.removeBackground();
-			frame.console.append("You beat level: " + levelName + "\nReturning to main menu");
-			Main.main(null);
-		}
+	public static void playerMenu(Player player, char[][] map, Bag bag, String levelName) throws Exception {
 		
 		while(enemyCount != 0 && mapType == 0 || xCounter != 1){
 			//Increment turn
@@ -204,6 +204,12 @@ public class PlayingField extends JFrame {
 						moveCounter = 0;
 						//Use attack menu
 						initiateFight(player, map, mobList.get(enemyNumber), bag);
+						
+						//return to adventure if all enemies are cleared
+						if(enemyCount == 0) {
+							return;
+						}
+						
 					}else {
 						frame.console.append(divider + "\nPlease choose a valid option.");
 					}
@@ -228,7 +234,7 @@ public class PlayingField extends JFrame {
 			Main.bagUpdater(player,bag);
 			Main.playerUpdater(player);
 		}
-		return false;
+		return;
 	}
 
 	/*
@@ -577,7 +583,7 @@ public class PlayingField extends JFrame {
 
 			//Return to player menu
 			printMap(map);
-			playerMenu(player, map, bag, levelName);
+			return;
         }
 		
 		// If you lose; return to main
@@ -588,7 +594,7 @@ public class PlayingField extends JFrame {
 		//If player runs from a fight, escape and allow the player to move
 		if(winStatus == 2) {
 			printMap(map);
-			playerMenu(player, map, bag, levelName);
+			return;
 		}
     }
 	
@@ -597,7 +603,7 @@ public class PlayingField extends JFrame {
 	public static void printMap(char[][] map) throws InterruptedException, BadLocationException {
     	int x = 0;
     	int spacer = 10;
-    	boolean firstCheck = false;
+    	
     	//Clear map screen
     	frame.clearMapArea();
 		
@@ -616,19 +622,15 @@ public class PlayingField extends JFrame {
 			if(i >= 10) {
 				spacer++;
 				do {
-					if(firstCheck == false) {
-						firstCheck = true;
-					}
 					System.out.print(" ");
 				}while(temp > spacer);
 				
 				System.out.print(i);
 			}
 		}
-		System.out.println();
 		
-		//Reset firstCheck
-		firstCheck = false;
+		//Separate top border from map
+		System.out.println();
 		
 		//Print map
 		for (int y=0; y < rows; y++) {
@@ -671,7 +673,7 @@ public class PlayingField extends JFrame {
 		        			frame.printIcon(sprite);
 		        			frame.printIcon(sprite);
 		        			frame.printIcon(sprite);
-		        			//If sprit == a character, allow more room
+		        			//If sprite == a character, allow more room
 		        		}else if(sprite == 'P' || sprite == 'F' || sprite == 'K' || sprite == 'G' || sprite == 'L'){
 		        			frame.printIcon(sprite);
 		        			System.out.print(" ");

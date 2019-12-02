@@ -25,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
 import javax.swing.text.StyledDocument;
 
 import java.awt.SystemColor;
@@ -53,7 +54,7 @@ class Frame extends JFrame {
     public JLabel userStats;
     public JLabel mapType;
     public DefaultTableModel model;
-    public JTextField turnNumberLable;
+    public JTextField turnNumberLabel;
     public JTextField enemyCount;
     public JTextField moveCounterLabel;
     public JTextField hpField;
@@ -164,12 +165,12 @@ class Frame extends JFrame {
         model.addRow(new Object[]{"Type", "Coords", "HP"});
         frame.getContentPane().add(enemyTable);
         
-        turnNumberLable = new JTextField();
-        turnNumberLable.setText("0");
-        turnNumberLable.setEditable(false);
-        turnNumberLable.setColumns(10);
-        turnNumberLable.setBounds(565, 365, 21, 20);
-        frame.getContentPane().add(turnNumberLable);
+        turnNumberLabel = new JTextField();
+        turnNumberLabel.setText("0");
+        turnNumberLabel.setEditable(false);
+        turnNumberLabel.setColumns(10);
+        turnNumberLabel.setBounds(565, 365, 21, 20);
+        frame.getContentPane().add(turnNumberLabel);
         
         enemyCount = new JTextField();
         enemyCount.setText("0");
@@ -320,7 +321,7 @@ class Frame extends JFrame {
     
     public void printIcon(char type) throws BadLocationException {
     	mapArea.setSelectionStart(doc.getLength());
-        
+    	
     	if(type == 'P') {
     		mapArea.insertIcon(new ImageIcon("src\\tilesets\\Player.png")); 
     		mapArea.setSelectionStart(doc.getLength());
@@ -362,8 +363,8 @@ class Frame extends JFrame {
     }
     
     //SET MAP BACKGROUND--------------------------------------------------
-    
-    public void setBackground(String bg) {
+
+	public void setBackground(String bg) {
     	
     	mapArea.setOpaque(false);
     	
@@ -410,7 +411,7 @@ class Frame extends JFrame {
     //TURN NUMBER----------------------------------------------------------
     public int setTurnNumber(int x) {
 	    this.turnNumber = x;
-	    turnNumberLable.setText(Integer.toString(turnNumber));
+	    turnNumberLabel.setText(Integer.toString(turnNumber));
         return turnNumber;
     }
 
@@ -445,6 +446,13 @@ class Frame extends JFrame {
     	expBar.setMaximum(lvl*50);
     	expBar.setMinimum(0);
     	expBar.setValue(current);
+    }
+    
+  //EXP COUNT----------------------------------------------------------
+    public void setHPBar(int current, int total, JProgressBar hpBar) {
+    	hpBar.setMaximum(total);
+    	hpBar.setMinimum(0);
+    	hpBar.setValue(current);
     }
     
     //WPN COUNT----------------------------------------------------------

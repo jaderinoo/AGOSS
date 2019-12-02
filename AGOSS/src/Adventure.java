@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 
 public class Adventure extends JFrame {
 	static Scanner scanner = new Scanner(System.in);
-	static int winStatus = 0;
+	static boolean winStatus = false;
 	static ArrayList<String> listOfLines = new ArrayList<>();
 
 	public static void Resume(Player player, Bag bag, int choice, Frame frame) throws Exception {
@@ -57,7 +57,7 @@ public class Adventure extends JFrame {
 	    	while(check == false) {
 		    	for(int i = 0;i != listOfLines.size(); i++ ) {    
 		    		//Reset win status
-		    		winStatus = 0;
+		    		winStatus = false;
 		    		
 		    		//Map completion check
 		    		if(i == listOfLines.size()) {
@@ -70,7 +70,7 @@ public class Adventure extends JFrame {
 			    		winStatus = PlayingField.map(player, bag, listOfLines.get(i), frame);
 			    		
 				    	//If player wins a map, save progress
-				    	if(winStatus == 1 && i != listOfLines.size()-1) {
+				    	if(winStatus == true && i != listOfLines.size()-1) {
 				    		//Flavor
 				    		System.out.print("Saveing progress");
 				    		Thread.sleep(200);
@@ -83,6 +83,10 @@ public class Adventure extends JFrame {
 				    		//Set location and save
 				    		player.setPlayerLoc(listOfLines.get(i+1));
 				    		Main.playerUpdater(player);
+				    	} else if(winStatus == false) {
+				    		System.out.println("Level lost, Would you like to replay it?");
+				    		
+				    		//GET USER INPUT AND BASE OPTION OFF CHOICE
 				    	}
 			    	}
 		    	}
