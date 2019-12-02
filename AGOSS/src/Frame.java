@@ -1,10 +1,9 @@
 //Usually you will require both swing and awt packages
 // even if you are working with just swings.
-import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -14,8 +13,6 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 import javax.imageio.ImageIO;
-import javax.print.DocFlavor.URL;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,8 +24,6 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import java.awt.SystemColor;
@@ -67,7 +62,8 @@ class Frame extends JFrame {
     private BufferedImage image;
     private JTextField WPNField;
     
-    public Frame() {
+    @SuppressWarnings("serial")
+	public Frame() {
         frame.getContentPane().setForeground(Color.DARK_GRAY);
         frame.getContentPane().setBackground(SystemColor.activeCaption);
         frame.getContentPane().setFont(new Font("Roboto", Font.PLAIN, 12));
@@ -321,11 +317,12 @@ class Frame extends JFrame {
     
     //PRINT IMAGES---------------------------------------------------------
     
-    public void printIcon(char type) {
+    public void printIcon(char type) throws BadLocationException {
     	mapArea.setSelectionStart(doc.getLength());
-    	
+        
     	if(type == 'P') {
-    		mapArea.insertIcon(new ImageIcon("src\\tilesets\\Player.png"));
+    		mapArea.insertIcon(new ImageIcon("src\\tilesets\\Player.png")); 
+    		mapArea.setSelectionStart(doc.getLength());
     		return;
     	}
     	

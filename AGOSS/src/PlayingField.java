@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JFrame;
+import javax.swing.text.BadLocationException;
 
 //NOTES
 /*		
@@ -593,7 +594,7 @@ public class PlayingField extends JFrame {
 	
 		
 	//Prints the map for the player
-	public static void printMap(char[][] map) throws InterruptedException {
+	public static void printMap(char[][] map) throws InterruptedException, BadLocationException {
     	int x = 0;
     	int spacer = 10;
     	boolean firstCheck = false;
@@ -617,7 +618,6 @@ public class PlayingField extends JFrame {
 				do {
 					if(firstCheck == false) {
 						firstCheck = true;
-						System.out.print(" ");
 					}
 					System.out.print(" ");
 				}while(temp > spacer);
@@ -671,6 +671,7 @@ public class PlayingField extends JFrame {
 		        			frame.printIcon(sprite);
 		        			frame.printIcon(sprite);
 		        			frame.printIcon(sprite);
+		        			//If sprit == a character, allow more room
 		        		}else if(sprite == 'P' || sprite == 'F' || sprite == 'K' || sprite == 'G' || sprite == 'L'){
 		        			frame.printIcon(sprite);
 		        			System.out.print(" ");
