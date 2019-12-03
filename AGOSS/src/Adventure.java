@@ -22,7 +22,16 @@ public class Adventure extends JFrame {
 	    	String mapName = frame.getUserStringInput();
 	    	
 	    	//CHECK IF MAP EXIST
-	    	PlayingField.map(player, bag, mapName, frame);
+	    	winStatus = PlayingField.map(player, bag, mapName, frame);
+	    	
+	    	if(winStatus == true) {
+	    		frame.console.append("You beat level: " + mapName + "\nReturning to main menu");
+	    		Thread.sleep(500);
+	    	} else if (winStatus == false) {
+	    		frame.console.append("You lost on the level: " + mapName + "\nReturning to main menu with gold cut by 1/2.");
+	    		Thread.sleep(500);
+	    	}
+	    	
 			break;
 			
 		case 2:	
@@ -71,6 +80,10 @@ public class Adventure extends JFrame {
 			    		
 				    	//If player wins a map, save progress
 				    	if(winStatus == true && i != listOfLines.size()-1) {
+				    		
+				    		frame.console.append("You beat level: " + listOfLines.get(i) + "\nMoving to next Level");
+				    		Thread.sleep(500);
+				    		
 				    		//Flavor
 				    		System.out.print("Saveing progress");
 				    		Thread.sleep(200);
@@ -86,7 +99,26 @@ public class Adventure extends JFrame {
 				    	} else if(winStatus == false) {
 				    		System.out.println("Level lost, Would you like to replay it?");
 				    		
-				    		//GET USER INPUT AND BASE OPTION OFF CHOICE
+				    		System.out.print("Resume Game? Y/N: ");
+				    		Frame.grabInput(frame,1);
+				    		String reply = frame.getUserStringInput();
+
+				    		//Clear map screen
+				    		frame.clearMapArea();
+				    		
+				    		switch(reply.toLowerCase()) {
+				    			case "y":
+				    				System.out.println("Resuming game. . .");
+				    				Adventure.Resume(player,bag,choice,frame);
+				    				break;
+				    				
+				    			case "n":
+				    				System.out.println("Returning to menu\n");
+				    				return;
+				    				
+				    			default:
+				    				System.out.println("Invalid option. Please try again.\n"); 
+				    		}
 				    	}
 			    	}
 		    	}

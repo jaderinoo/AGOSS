@@ -102,8 +102,7 @@ public class PlayingField extends JFrame {
 		
 		//If level is beat return to adventure
 		frame.removeBackground();
-		frame.console.append("You beat level: " + levelName + "\nReturning to main menu");
-		Thread.sleep(500);
+
 		return true;
 	}
 	
