@@ -32,7 +32,7 @@ public class PlayingField extends JFrame {
 	static String levelName = "";
 	static int turn = 0;
 	static String mapName;
-	static char[][] map = null;
+	static GridSpace [][] map = null;
 	static boolean movementCheck = false;
 	static String divider = "----------------------------------------------|";
 	static boolean initiateFight = false;
@@ -106,7 +106,7 @@ public class PlayingField extends JFrame {
 		return true;
 	}
 	
-	public static void playerMenu(Player player, char[][] map, Bag bag, String levelName) throws Exception {
+	public static void playerMenu(Player player, GridSpace[][] map, Bag bag, String levelName) throws Exception {
 		
 		while(enemyCount != 0 && mapType == 0 || xCounter != 1){
 			//Increment turn
@@ -243,7 +243,7 @@ public class PlayingField extends JFrame {
 	 * have something like agility /3 = move amount
 	 */
 	
-	public static void enemyMove(Player player, Bag bag, char[][] map, Mob1 enemy,int i) throws Exception {
+	public static void enemyMove(Player player, Bag bag, GridSpace[][] map, Mob1 enemy,int i) throws Exception {
 		
 		//Print map
 		printMap(map);
@@ -257,26 +257,26 @@ public class PlayingField extends JFrame {
 			frame.clearConsole();
 			
 			//Save current location to a var
-			char current = map[enemy.getMapX()][enemy.getMapY()];
+			char current = map[enemy.getMapX()][enemy.getMapY()].getType();;
 			
 			//While the enemy still has moves
 			while(moveCounter != 0) {
 				//Checks if the mob is in 0,0
-				if(current != map[0][0]) {
+				if(current != map[0][0].getType()) {
 					
 					//Initialize easy to use variables
-					char left = map[enemy.getMapX()-1][enemy.getMapY()];
-					char right = map[enemy.getMapX()+1][enemy.getMapY()];
-					char up = map[enemy.getMapX()][enemy.getMapY()-1];
-					char down = map[enemy.getMapX()][enemy.getMapY()+1];
+					char left = map[enemy.getMapX()-1][enemy.getMapY()].getType();
+					char right = map[enemy.getMapX()+1][enemy.getMapY()].getType();
+					char up = map[enemy.getMapX()][enemy.getMapY()-1].getType();
+					char down = map[enemy.getMapX()][enemy.getMapY()+1].getType();
 					boolean check = false;
 					
 					// Left
 					if(enemy.getMapX() > player.getMapX() && check == false) {
 						if(left == ' ') {
 							//Executes movement
-							map[enemy.getMapX()][enemy.getMapY()] = ' ';
-							map[enemy.getMapX()-1][enemy.getMapY()] = enemy.getType();
+							map[enemy.getMapX()][enemy.getMapY()].setType(' ');
+							map[enemy.getMapX()-1][enemy.getMapY()].setType(enemy.getType());
 							enemy.setMapX(enemy.getMapX()-1);
 							
 							//drop movecounter down
@@ -301,8 +301,8 @@ public class PlayingField extends JFrame {
 					if(enemy.getMapX() < player.getMapX() && check == false) {
 						if(right == ' ') {
 							//Executes movement
-							map[enemy.getMapX()][enemy.getMapY()] = ' ';
-							map[enemy.getMapX()+1][enemy.getMapY()] = enemy.getType();
+							map[enemy.getMapX()][enemy.getMapY()].setType(' ');
+							map[enemy.getMapX()+1][enemy.getMapY()].setType(enemy.getType());
 							enemy.setMapX(enemy.getMapX()+1);
 							
 							//drop movecounter down
@@ -326,8 +326,8 @@ public class PlayingField extends JFrame {
 					if(enemy.getMapY() > player.getMapY() && check == false){
 						if(up == ' ') {
 							//Executes movement
-							map[enemy.getMapX()][enemy.getMapY()] = ' ';
-							map[enemy.getMapX()][enemy.getMapY()-1] = enemy.getType();
+							map[enemy.getMapX()][enemy.getMapY()].setType(' ');
+							map[enemy.getMapX()][enemy.getMapY()-1].setType(enemy.getType());
 							enemy.setMapY(enemy.getMapY()-1);
 							
 							//drop movecounter down
@@ -350,8 +350,8 @@ public class PlayingField extends JFrame {
 					if(enemy.getMapY() < player.getMapY() && check == false){
 						if(down == ' ') {
 							//Executes movement
-							map[enemy.getMapX()][enemy.getMapY()] = ' ';
-							map[enemy.getMapX()][enemy.getMapY()+1] = enemy.getType();
+							map[enemy.getMapX()][enemy.getMapY()].setType(' ');
+							map[enemy.getMapX()][enemy.getMapY()+1].setType(enemy.getType());
 							enemy.setMapY(enemy.getMapY()+1);
 							
 							//drop movecounter down
@@ -395,7 +395,7 @@ public class PlayingField extends JFrame {
 		}
 	}
 	
-	public static void playerMove(char[][] map, Player player, Bag bag) throws Exception {
+	public static void playerMove(GridSpace[][] map, Player player, Bag bag) throws Exception {
 		
 		//Clear Console
 		frame.clearConsole();
@@ -414,10 +414,10 @@ public class PlayingField extends JFrame {
 					+ "4: Right\n"
 					+ "5: Stand Ground");
 			
-			char left = map[player.getMapX()-1][player.getMapY()];
-			char right = map[player.getMapX()+1][player.getMapY()];
-			char up = map[player.getMapX()][player.getMapY()-1];
-			char down = map[player.getMapX()][player.getMapY()+1];
+			char left = map[player.getMapX()-1][player.getMapY()].getType();
+			char right = map[player.getMapX()+1][player.getMapY()].getType();
+			char up = map[player.getMapX()][player.getMapY()-1].getType();
+			char down = map[player.getMapX()][player.getMapY()+1].getType();
 			
 			//Ask user for movement input
 			Frame.grabInput(((Frame)frame),0);
@@ -428,8 +428,8 @@ public class PlayingField extends JFrame {
 				//Up
 				if(up == ' '){
 				    //Move right and print map
-					map[player.getMapX()][player.getMapY()] = ' ';
-					map[player.getMapX()][player.getMapY()-1] = 'P';
+					map[player.getMapX()][player.getMapY()].setType(' ');
+					map[player.getMapX()][player.getMapY()-1].setType('P');
 					player.setMapY(player.getMapY()-1);
 					movementCheck = true;
 					break;
@@ -449,8 +449,8 @@ public class PlayingField extends JFrame {
 				//Down
 				if(down == ' '){
 				    //Move right and print map
-					map[player.getMapX()][player.getMapY()] = ' ';
-					map[player.getMapX()][player.getMapY()+1] = 'P';
+					map[player.getMapX()][player.getMapY()].setType(' ');
+					map[player.getMapX()][player.getMapY()+1].setType('P');
 					player.setMapY(player.getMapY()+1);
 					movementCheck = true;
 					break;
@@ -470,8 +470,8 @@ public class PlayingField extends JFrame {
 				//Left
 				if(left == ' '){
 				    //Move right and print map
-					map[player.getMapX()][player.getMapY()] = ' ';
-					map[player.getMapX()-1][player.getMapY()] = 'P';
+					map[player.getMapX()][player.getMapY()].setType(' ');
+					map[player.getMapX()-1][player.getMapY()].setType('P');
 					player.setMapX(player.getMapX()-1);
 					movementCheck = true;
 					break;
@@ -491,8 +491,8 @@ public class PlayingField extends JFrame {
 				//Right
 				if(right == ' '){
 				    //Move right and print map
-					map[player.getMapX()][player.getMapY()] = ' ';
-					map[player.getMapX()+1][player.getMapY()] = 'P';
+					map[player.getMapX()][player.getMapY()].setType(' ');
+					map[player.getMapX()+1][player.getMapY()].setType('P');
 					player.setMapX(player.getMapX()+1);
 					movementCheck = true;
 					break;
@@ -523,7 +523,7 @@ public class PlayingField extends JFrame {
 		}
 	}
 	
-	public static void playerCheckAttack(Player player, char[][] map, Bag bag, Mob1 enemy) throws Exception {
+	public static void playerCheckAttack(Player player, GridSpace[][] map, Bag bag, Mob1 enemy) throws Exception {
 
 			if(enemy.getMapX() != 0 && enemy.getMapY() != 0) {
 				
@@ -556,7 +556,7 @@ public class PlayingField extends JFrame {
 		
 	}
 	
-	public static void initiateFight(Player player,char[][] map, Mob1 enemy, Bag bag) throws Exception {
+	public static void initiateFight(Player player,GridSpace[][] map, Mob1 enemy, Bag bag) throws Exception {
 
         //Initiate the fight
         int winStatus = Fight.Move(player, enemy, null, bag, ((Frame)frame));
@@ -574,7 +574,7 @@ public class PlayingField extends JFrame {
 			enemyKillCount++;
 
 			//Remove the space from the map
-			map[enemy.getMapX()][enemy.getMapY()] = ' ';
+			map[enemy.getMapX()][enemy.getMapY()].setType(' ');
 			
 			//Move the enemy to 0,0
 			enemy.setMapX(0);
@@ -599,7 +599,7 @@ public class PlayingField extends JFrame {
 	
 		
 	//Prints the map for the player
-	public static void printMap(char[][] map) throws InterruptedException, BadLocationException {
+	public static void printMap(GridSpace[][] map) throws InterruptedException, BadLocationException {
     	int x = 0;
     	int spacer = 10;
     	
@@ -637,7 +637,7 @@ public class PlayingField extends JFrame {
 		    for (x=0; x < cols; x++) {
 		    	
 		    	//Saves current sprite
-	        	char sprite = map[x][y];
+	        	char sprite = map[x][y].getType();
 
 	        	//If item isnt blank, add delay
 	        	if(sprite == ' ') {
@@ -701,21 +701,22 @@ public class PlayingField extends JFrame {
 	}
 	
 	//Saves map as a local variable
-	public static char[][] saveMap(String data){
-		char [][] map = new char[rows][cols];
+	public static GridSpace[][] saveMap(String data){
+		GridSpace [][] map = new GridSpace[rows][cols];
 		int next = 0;
 		double maxRow = 0;
 		maxRow = Math.sqrt(data.length());
 		for (int y=0; y < maxRow; y++) {
 		    for (int x=0; x < maxRow; x++) {
-		    	map[x][y] = data.charAt(next++);
+		    	char type = data.charAt(next++);
+		    	map[x][y] = new GridSpace(type);
 		    }
 		}
 		return map;
 	}
 	
 	//Scans the map for units
-	public static int scanMap(Player player, char[][] map) {
+	public static int scanMap(Player player, GridSpace[][] map) {
 		int enemyCount = 0;
 		int F = 0,K = 0,G = 0,L = 0;
 		
@@ -723,39 +724,39 @@ public class PlayingField extends JFrame {
 		    for (int x=0; x < cols; x++) {
 		    	
 		    	//If an F is found, create the object and add it to the arraylist: mobList
-		        if(map[x][y] == 'F') {
+		        if(map[x][y].getType() == 'F') {
 		        	F++;
 		        	enemyCount++;
 		        	enemyCreate(y,x,'F',F);
 		        }
 		        //If an K is found, create the object and add it to the arraylist: mobList
-		        if(map[x][y] == 'K') {
+		        if(map[x][y].getType() == 'K') {
 		        	K++;
 		        	enemyCount++;
 		        	enemyCreate(y,x,'K',K);
 		        }
 		        //If an G is found, create the object and add it to the arraylist: mobList
-		        if(map[x][y] == 'G') {
+		        if(map[x][y].getType() == 'G') {
 		        	G++;
 		        	enemyCount++;
 		        	enemyCreate(y,x,'G',G);
 		        }
 		        
 		        //If an L is found, create the object and add it to the arraylist: mobList
-		        if(map[x][y] == 'L') {
+		        if(map[x][y].getType() == 'L') {
 		        	L++;
 		        	enemyCount++;
 		        	enemyCreate(y,x,'L',L);
 		        }
 		        
 		        //If P is found, save the location 
-		        if(map[x][y] == 'P') {
+		        if(map[x][y].getType() == 'P') {
 		        	player.setMapY(y);
 		        	player.setMapX(x);
 		        }
 		        
 		        //If M is found, save merchant location
-		        if(map[x][y] == 'M') {
+		        if(map[x][y].getType() == 'M') {
 		        	merchant.setMapX(x);
 		        	merchant.setMapY(y);
 		        }
@@ -765,23 +766,23 @@ public class PlayingField extends JFrame {
 		return enemyCount;
 	}
 	
-	public static boolean findMerchant(char[][] map, Merchant merchant, Player player) {
+	public static boolean findMerchant(GridSpace[][] map, Merchant merchant, Player player) {
 		boolean found = false;
 		
 		//check if above
-        if(map[player.getMapX()][player.getMapY()-1] == map[merchant.getMapX()][merchant.getMapY()]){
+        if(map[player.getMapX()][player.getMapY()-1].getType() == map[merchant.getMapX()][merchant.getMapY()].getType()){
         	found = true;
         }
         //check if below
-        if(map[player.getMapX()][player.getMapY()+1] == map[merchant.getMapX()][merchant.getMapY()]){
+        if(map[player.getMapX()][player.getMapY()+1].getType() == map[merchant.getMapX()][merchant.getMapY()].getType()){
         	found = true;
         }
         //check if left
-        if(map[player.getMapX()-1][player.getMapY()] == map[merchant.getMapX()][merchant.getMapY()]){
+        if(map[player.getMapX()-1][player.getMapY()].getType() == map[merchant.getMapX()][merchant.getMapY()].getType()){
         	found = true;
         }
         //check if right
-        if(map[player.getMapX()+1][player.getMapY()] == map[merchant.getMapX()][merchant.getMapY()]){
+        if(map[player.getMapX()+1][player.getMapY()].getType() == map[merchant.getMapX()][merchant.getMapY()].getType()){
         	found = true;
 		}
         
@@ -789,23 +790,23 @@ public class PlayingField extends JFrame {
 		return found;
 	}
 	
-	public static boolean findAttack(char[][] map, Mob1 enemy, Player player) {
+	public static boolean findAttack(GridSpace[][] map, Mob1 enemy, Player player) {
 		boolean found = false;
 		
 		//check if above
-        if(map[player.getMapX()][player.getMapY()-1] == map[enemy.getMapX()][enemy.getMapY()]){
+        if(map[player.getMapX()][player.getMapY()-1].getType() == map[enemy.getMapX()][enemy.getMapY()].getType()){
         	found = true;
         }
         //check if below
-        if(map[player.getMapX()][player.getMapY()+1] == map[enemy.getMapX()][enemy.getMapY()]){
+        if(map[player.getMapX()][player.getMapY()+1].getType() == map[enemy.getMapX()][enemy.getMapY()].getType()){
         	found = true;
         }
         //check if left
-        if(map[player.getMapX()-1][player.getMapY()] == map[enemy.getMapX()][enemy.getMapY()]){
+        if(map[player.getMapX()-1][player.getMapY()].getType() == map[enemy.getMapX()][enemy.getMapY()].getType()){
         	found = true;
         }
         //check if right
-        if(map[player.getMapX()+1][player.getMapY()] == map[enemy.getMapX()][enemy.getMapY()]){
+        if(map[player.getMapX()+1][player.getMapY()].getType() == map[enemy.getMapX()][enemy.getMapY()].getType()){
         	found = true;
 		}
         
