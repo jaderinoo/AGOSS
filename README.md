@@ -13,8 +13,7 @@ A Game of Some Sort
 - [x] Item usage and upgrades
 - [x] Pokemon style fighting
 - [x] Basic AI
-- [ ] Advanced AI
-- [ ] Proper error catching
+- [x] Proper error catching
 - [ ] Creating a proper demo
 
 
